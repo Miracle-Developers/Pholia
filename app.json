@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "frontend-template",
-    "slug": "frontend-template",
+    "name": "Pholia",
+    "slug": "pholia",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,7 +13,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.Miracledevelopers.pholia"
     },
     "android": {
       "adaptiveIcon": {
@@ -21,10 +22,16 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.Miracledevelopers.pholia"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "34f59e62-1b7c-400a-b27d-060c1f0f86f6"
+      }
     }
   }
 }
