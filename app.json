@@ -2,6 +2,7 @@
   "expo": {
     "name": "Pholia",
     "slug": "pholia",
+    "scheme": "pholia", 
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -32,6 +33,9 @@
       "eas": {
         "projectId": "34f59e62-1b7c-400a-b27d-060c1f0f86f6"
       }
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
