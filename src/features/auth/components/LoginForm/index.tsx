@@ -12,20 +12,19 @@ import { StatusBar } from 'expo-status-bar';
 import { useRouter } from 'expo-router';
 import { styles } from './styles';
 
-export default function RegisterForm() {
+export default function LoginForm() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-
-  const handleNext = () => {
-    console.log('Register with:', email, password);
-    router.push('/register2');
-  };
 
   const handleLogin = () => {
-    console.log('Navigate to login');
-    router.push('/login');
+    console.log('Login with:', email, password);
+    // Add your login logic here
+  };
+
+  const handleSignUp = () => {
+    console.log('Navigate to sign up');
+    router.push('/register');
   };
 
   return (
@@ -82,30 +81,22 @@ export default function RegisterForm() {
             />
           </View>
 
-          <View style={styles.inputContainer}>
-            <View style={styles.labelRow}>
-              <Text style={styles.label}>パスワード再確認</Text>
-            </View>
-            <TextInput
-              style={styles.input}
-              placeholder=""
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              secureTextEntry
-              autoCapitalize="none"
-            />
-          </View>
-
-          <TouchableOpacity
-            style={styles.nextButton}
-            onPress={handleNext}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.nextButtonText}>次へ</Text>
+          <TouchableOpacity style={styles.forgotPassword}>
+            <Text style={styles.forgotPasswordText}>
+              パスワードをお忘れの方
+            </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={handleLogin}>
-            <Text style={styles.loginLink}>ログインはこちら</Text>
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={handleLogin}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.loginButtonText}>ログイン</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={handleSignUp}>
+            <Text style={styles.signupLink}>新規登録はこちら</Text>
           </TouchableOpacity>
         </View>
       </View>
