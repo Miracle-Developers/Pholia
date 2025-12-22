@@ -1,5 +1,5 @@
-import LoginForm from '../features/auth/components/LoginForm';
+import LoginContainer from '../features/auth/components/LoginContainer';
 
 export default function LoginPage() {
-  return <LoginForm />;
+  return <LoginContainer />;
 }
