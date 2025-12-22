@@ -1,57 +1,44 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-  Image,
-} from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { useRouter } from 'expo-router';
+import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { AuthFormData } from '../../types';
 import { styles } from './styles';
 
-export default function RegisterForm() {
-  const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+type Props = {
+  defaultValues?: Partial<AuthFormData>;
+  onSubmit: (values: AuthFormData) => void;
+  onPressLogin?: () => void;
+  submitLabel?: string;
+  loginLabel?: string;
+};
 
-  const handleNext = () => {
-    console.log('Register with:', email, password);
-    router.push('/register2');
-  };
-
-  const handleLogin = () => {
-    console.log('Navigate to login');
-    router.push('/login');
-  };
+const RegisterForm = ({
+  defaultValues,
+  onSubmit,
+  onPressLogin,
+  submitLabel = '次へ',
+  loginLabel = 'ログインはこちら',
+}: Props) => {
+  const {
+    control,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm<AuthFormData>({
+    defaultValues: {
+      email: defaultValues?.email ?? '',
+      password: defaultValues?.password ?? '',
+      confirmPassword: defaultValues?.confirmPassword ?? '',
+    },
+  });
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <StatusBar style="dark" />
-
-      <View style={styles.content}>
-        {/* Logo Section */}
-        <View style={styles.logoContainer}>
-          <Image
-            source={require('../../../../../assets/logo.png')}
-            style={styles.logoImage}
-            resizeMode="contain"
-          />
-          <Image
-            source={require('../../../../../assets/Pholia.png')}
-            style={styles.pholiaImage}
-            resizeMode="contain"
-          />
-        </View>
-
-        {/* Form Section */}
-        <View style={styles.formContainer}>
+    <View style={styles.formContainer}>
+      <Controller
+        control={control}
+        name="email"
+        rules={{ required: 'メールアドレスを入力してください' }}
+        render={({ field: { onChange, onBlur, value } }) => (
           <View style={styles.inputContainer}>
             <View style={styles.labelRow}>
               <Text style={styles.label}>メールアドレス / ユーザーID</Text>
@@ -59,14 +46,25 @@ export default function RegisterForm() {
             <TextInput
               style={styles.input}
               placeholder=""
-              value={email}
-              onChangeText={setEmail}
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
               keyboardType="email-address"
               autoCapitalize="none"
               autoCorrect={false}
             />
+            {errors.email ? (
+              <Text style={styles.errorText}>{errors.email.message}</Text>
+            ) : null}
           </View>
+        )}
+      />
 
+      <Controller
+        control={control}
+        name="password"
+        rules={{ required: 'パスワードを入力してください' }}
+        render={({ field: { onChange, onBlur, value } }) => (
           <View style={styles.inputContainer}>
             <View style={styles.labelRow}>
               <Text style={styles.label}>パスワード</Text>
@@ -75,13 +73,29 @@ export default function RegisterForm() {
             <TextInput
               style={styles.input}
               placeholder=""
-              value={password}
-              onChangeText={setPassword}
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
               secureTextEntry
               autoCapitalize="none"
             />
+            {errors.password ? (
+              <Text style={styles.errorText}>{errors.password.message}</Text>
+            ) : null}
           </View>
+        )}
+      />
 
+      <Controller
+        control={control}
+        name="confirmPassword"
+        rules={{
+          required: 'パスワードを再入力してください',
+          validate: (value) =>
+            value === getValues('password') ||
+            'パスワードが一致しません',
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
           <View style={styles.inputContainer}>
             <View style={styles.labelRow}>
               <Text style={styles.label}>パスワード再確認</Text>
@@ -89,26 +103,36 @@ export default function RegisterForm() {
             <TextInput
               style={styles.input}
               placeholder=""
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
               secureTextEntry
               autoCapitalize="none"
             />
+            {errors.confirmPassword ? (
+              <Text style={styles.errorText}>
+                {errors.confirmPassword.message}
+              </Text>
+            ) : null}
           </View>
+        )}
+      />
 
-          <TouchableOpacity
-            style={styles.nextButton}
-            onPress={handleNext}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.nextButtonText}>次へ</Text>
-          </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.nextButton}
+        onPress={handleSubmit(onSubmit)}
+        activeOpacity={0.8}
+      >
+        <Text style={styles.nextButtonText}>{submitLabel}</Text>
+      </TouchableOpacity>
 
-          <TouchableOpacity onPress={handleLogin}>
-            <Text style={styles.loginLink}>ログインはこちら</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </KeyboardAvoidingView>
+      {onPressLogin ? (
+        <TouchableOpacity onPress={onPressLogin}>
+          <Text style={styles.loginLink}>{loginLabel}</Text>
+        </TouchableOpacity>
+      ) : null}
+    </View>
   );
-}
+};
+
+export default RegisterForm;

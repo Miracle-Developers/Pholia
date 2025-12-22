@@ -1,56 +1,43 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-  Image,
-} from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { useRouter } from 'expo-router';
+import { Controller, useForm } from 'react-hook-form';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { LoginFormData } from '../../types';
 import { styles } from './styles';
 
-export default function LoginForm() {
-  const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+type Props = {
+  defaultValues?: Partial<LoginFormData>;
+  onSubmit: (values: LoginFormData) => void;
+  onPressForgotPassword?: () => void;
+  onPressSignUp?: () => void;
+  submitLabel?: string;
+  signUpLabel?: string;
+};
 
-  const handleLogin = () => {
-    console.log('Login with:', email, password);
-    // Add your login logic here
-  };
-
-  const handleSignUp = () => {
-    console.log('Navigate to sign up');
-    router.push('/register');
-  };
+const LoginForm = ({
+  defaultValues,
+  onSubmit,
+  onPressForgotPassword,
+  onPressSignUp,
+  submitLabel = 'ログイン',
+  signUpLabel = '新規登録はこちら',
+}: Props) => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    defaultValues: {
+      email: defaultValues?.email ?? '',
+      password: defaultValues?.password ?? '',
+    },
+  });
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <StatusBar style="dark" />
-
-      <View style={styles.content}>
-        {/* Logo Section */}
-        <View style={styles.logoContainer}>
-          <Image
-            source={require('../../../../../assets/logo.png')}
-            style={styles.logoImage}
-            resizeMode="contain"
-          />
-          <Image
-            source={require('../../../../../assets/Pholia.png')}
-            style={styles.pholiaImage}
-            resizeMode="contain"
-          />
-        </View>
-
-        {/* Form Section */}
-        <View style={styles.formContainer}>
+    <View style={styles.formContainer}>
+      <Controller
+        control={control}
+        name="email"
+        rules={{ required: 'メールアドレスを入力してください' }}
+        render={({ field: { onChange, onBlur, value } }) => (
           <View style={styles.inputContainer}>
             <View style={styles.labelRow}>
               <Text style={styles.label}>メールアドレス / ユーザーID</Text>
@@ -58,14 +45,25 @@ export default function LoginForm() {
             <TextInput
               style={styles.input}
               placeholder=""
-              value={email}
-              onChangeText={setEmail}
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
               keyboardType="email-address"
               autoCapitalize="none"
               autoCorrect={false}
             />
+            {errors.email ? (
+              <Text style={styles.errorText}>{errors.email.message}</Text>
+            ) : null}
           </View>
+        )}
+      />
 
+      <Controller
+        control={control}
+        name="password"
+        rules={{ required: 'パスワードを入力してください' }}
+        render={({ field: { onChange, onBlur, value } }) => (
           <View style={styles.inputContainer}>
             <View style={styles.labelRow}>
               <Text style={styles.label}>パスワード</Text>
@@ -74,32 +72,43 @@ export default function LoginForm() {
             <TextInput
               style={styles.input}
               placeholder=""
-              value={password}
-              onChangeText={setPassword}
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
               secureTextEntry
               autoCapitalize="none"
             />
+            {errors.password ? (
+              <Text style={styles.errorText}>{errors.password.message}</Text>
+            ) : null}
           </View>
+        )}
+      />
 
-          <TouchableOpacity style={styles.forgotPassword}>
-            <Text style={styles.forgotPasswordText}>
-              パスワードをお忘れの方
-            </Text>
-          </TouchableOpacity>
+      {onPressForgotPassword ? (
+        <TouchableOpacity
+          style={styles.forgotPassword}
+          onPress={onPressForgotPassword}
+        >
+          <Text style={styles.forgotPasswordText}>パスワードをお忘れの方</Text>
+        </TouchableOpacity>
+      ) : null}
 
-          <TouchableOpacity
-            style={styles.loginButton}
-            onPress={handleLogin}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.loginButtonText}>ログイン</Text>
-          </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.loginButton}
+        onPress={handleSubmit(onSubmit)}
+        activeOpacity={0.8}
+      >
+        <Text style={styles.loginButtonText}>{submitLabel}</Text>
+      </TouchableOpacity>
 
-          <TouchableOpacity onPress={handleSignUp}>
-            <Text style={styles.signupLink}>新規登録はこちら</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </KeyboardAvoidingView>
+      {onPressSignUp ? (
+        <TouchableOpacity onPress={onPressSignUp}>
+          <Text style={styles.signupLink}>{signUpLabel}</Text>
+        </TouchableOpacity>
+      ) : null}
+    </View>
   );
-}
+};
+
+export default LoginForm;
