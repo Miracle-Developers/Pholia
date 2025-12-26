@@ -1,25 +1,17 @@
 import { Controller, useForm } from 'react-hook-form';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { LoginFormData } from '../../types';
-import { styles } from './styles';
 
-type Props = {
-  defaultValues?: Partial<LoginFormData>;
-  onSubmit: (values: LoginFormData) => void;
-  onPressForgotPassword?: () => void;
-  onPressSignUp?: () => void;
-  submitLabel?: string;
-  signUpLabel?: string;
-};
+import { styles } from '@/features/auth/components/LoginForm/styles';
+import type { LoginFormData, LoginFormProps } from '@/features/auth/types';
 
-const LoginForm = ({
+export const LoginForm = ({
   defaultValues,
   onSubmit,
   onPressForgotPassword,
   onPressSignUp,
   submitLabel = 'ログイン',
   signUpLabel = '新規登録はこちら',
-}: Props) => {
+}: LoginFormProps) => {
   const {
     control,
     handleSubmit,
@@ -110,5 +102,3 @@ const LoginForm = ({
     </View>
   );
 };
-
-export default LoginForm;

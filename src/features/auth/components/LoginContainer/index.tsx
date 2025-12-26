@@ -1,23 +1,23 @@
-import React from 'react';
-import { View, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { useRouter } from 'expo-router';
+import { View } from 'react-native';
+
+import { Logo } from '@/components/Icons/Logo';
+import { LogoName } from '@/components/Icons/LogoName';
 import { KeyboardAvoidingContainer } from '@/components/Containers/KeyboardAvoidingContainer';
-import LoginForm from '../LoginForm';
-import { LoginFormData } from '../../types';
-import { styles } from './styles';
+import { useRouterNavigation } from '@/hooks/useRouter';
+import { LoginForm } from '@/features/auth/components/LoginForm';
+import { styles } from '@/features/auth/components/LoginContainer/styles';
+import type { LoginFormData } from '@/features/auth/types';
 
 export default function LoginContainer() {
-  const router = useRouter();
+  const { goToRegister } = useRouterNavigation();
 
   const handleLogin = (values: LoginFormData) => {
     console.log('Login with:', values.email, values.password);
-    // Add your login logic here
   };
 
   const handleSignUp = () => {
-    console.log('Navigate to sign up');
-    router.push('/register');
+    goToRegister();
   };
 
   return (
@@ -25,21 +25,11 @@ export default function LoginContainer() {
       <StatusBar style="dark" />
 
       <View style={styles.content}>
-        {/* Logo Section */}
         <View style={styles.logoContainer}>
-          <Image
-            source={require('../../../../../assets/logo.png')}
-            style={styles.logoImage}
-            resizeMode="contain"
-          />
-          <Image
-            source={require('../../../../../assets/Pholia.png')}
-            style={styles.pholiaImage}
-            resizeMode="contain"
-          />
+          <Logo style={styles.logoImage} />
+          <LogoName style={styles.pholiaImage} />
         </View>
 
-        {/* Form Section */}
         <View style={styles.formWrapper}>
           <LoginForm
             onSubmit={handleLogin}
