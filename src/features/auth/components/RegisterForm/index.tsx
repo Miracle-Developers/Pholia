@@ -1,24 +1,16 @@
-import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { AuthFormData } from '../../types';
-import { styles } from './styles';
 
-type Props = {
-  defaultValues?: Partial<AuthFormData>;
-  onSubmit: (values: AuthFormData) => void;
-  onPressLogin?: () => void;
-  submitLabel?: string;
-  loginLabel?: string;
-};
+import { styles } from '@/features/auth/components/RegisterForm/styles';
+import type { AuthFormData, RegisterFormProps } from '@/features/auth/types';
 
-const RegisterForm = ({
+export const RegisterForm = ({
   defaultValues,
   onSubmit,
   onPressLogin,
   submitLabel = '次へ',
   loginLabel = 'ログインはこちら',
-}: Props) => {
+}: RegisterFormProps) => {
   const {
     control,
     handleSubmit,
@@ -134,5 +126,3 @@ const RegisterForm = ({
     </View>
   );
 };
-
-export default RegisterForm;

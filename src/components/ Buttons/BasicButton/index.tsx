@@ -1,5 +1,6 @@
 import { Text, TouchableOpacity } from "react-native";
-import { styles } from "./styles";
+
+import { styles } from "@/components/ Buttons/BasicButton/styles";
 
 type Props = {
   label: string;

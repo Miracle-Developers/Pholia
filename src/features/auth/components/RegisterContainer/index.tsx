@@ -1,23 +1,24 @@
-import React from 'react';
-import { View, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { useRouter } from 'expo-router';
+import { View } from 'react-native';
+
 import { KeyboardAvoidingContainer } from '@/components/Containers/KeyboardAvoidingContainer';
-import RegisterForm from '../RegisterForm';
-import { AuthFormData } from '../../types';
-import { styles } from './styles';
+import { Logo } from '@/components/Icons/Logo';
+import { LogoName } from '@/components/Icons/LogoName';
+import { RegisterForm } from '@/features/auth/components/RegisterForm';
+import { styles } from '@/features/auth/components/RegisterContainer/styles';
+import { useRouterNavigation } from '@/hooks/useRouter';
+import type { AuthFormData } from '@/features/auth/types';
 
 export default function RegisterContainer() {
-  const router = useRouter();
+  const { goToRegister2, goToLogin } = useRouterNavigation();
 
   const handleNext = (values: AuthFormData) => {
     console.log('Register with:', values.email, values.password);
-    router.push('/register2');
+    goToRegister2();
   };
 
   const handleLogin = () => {
-    console.log('Navigate to login');
-    router.push('/login');
+    goToLogin();
   };
 
   return (
@@ -25,21 +26,11 @@ export default function RegisterContainer() {
       <StatusBar style="dark" />
 
       <View style={styles.content}>
-        {/* Logo Section */}
         <View style={styles.logoContainer}>
-          <Image
-            source={require('../../../../../assets/logo.png')}
-            style={styles.logoImage}
-            resizeMode="contain"
-          />
-          <Image
-            source={require('../../../../../assets/Pholia.png')}
-            style={styles.pholiaImage}
-            resizeMode="contain"
-          />
+          <Logo style={styles.logoImage} />
+          <LogoName style={styles.pholiaImage} />
         </View>
 
-        {/* Form Section */}
         <View style={styles.formWrapper}>
           <RegisterForm
             onSubmit={handleNext}

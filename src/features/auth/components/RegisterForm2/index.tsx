@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useRouter } from 'expo-router';
-import { styles } from './styles';
+import { styles } from '@/features/auth/components/RegisterForm2/styles';
 
 export default function RegisterForm2() {
   const router = useRouter();

@@ -1,29 +1,23 @@
 import { StatusBar } from "expo-status-bar";
-import { Image, Text, TouchableOpacity, View } from "react-native";
-import { useAuthNavigation } from "@/hooks/useRouter";
-import { styles } from "./styles";
+import { Text, TouchableOpacity, View } from "react-native";
+
+import { Logo } from "@/components/Icons/Logo";
+import { styles } from "@/features/auth/components/TopContainer/styles";
+import { useRouterNavigation } from "@/hooks/useRouter";
+import { LogoName } from "@/components/Icons/LogoName";
 
 export const TopContainer = () => {
-  const { goToRegister, goToLogin } = useAuthNavigation();
-
+  const { goToRegister, goToLogin } = useRouterNavigation();
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
       <View style={styles.topSection}>
         <View style={styles.sloganBox}>
-          <Image
-            source={require("../../../../assets/logo.png")}
-            style={styles.logoImage}
-            resizeMode="contain"
-          />
+          <Logo style={styles.logoImage} />
         </View>
       </View>
       <View style={styles.middleSection}>
-        <Image
-          source={require("../../../../assets/Pholia.png")}
-          style={styles.pholiaImage}
-          resizeMode="contain"
-        />
+        <LogoName style={styles.pholiaImage} />
       </View>
       <View style={styles.bottomSection}>
         <TouchableOpacity style={styles.signUpButton} onPress={goToRegister} activeOpacity={0.8}>
