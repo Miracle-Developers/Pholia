@@ -4,8 +4,8 @@ export const useRouterNavigation = () => {
   const router = useRouter();
 
   const goToRegister = () => router.push("/register");
-  const goToRegister2 = () => router.push("/register2");
+  const goToRegisterProfile = () => router.push("/register-profile");
   const goToLogin = () => router.push("/login");
 
-  return { goToRegister, goToRegister2, goToLogin };
+  return { goToRegister, goToRegisterProfile, goToLogin };
 };

@@ -4,21 +4,15 @@ import { View } from 'react-native';
 import { KeyboardAvoidingContainer } from '@/components/Containers/KeyboardAvoidingContainer';
 import { Logo } from '@/components/Icons/Logo';
 import { LogoName } from '@/components/Icons/LogoName';
-import { RegisterForm } from '@/features/auth/components/RegisterForm';
-import { styles } from '@/features/auth/components/RegisterContainer/styles';
-import { useRouterNavigation } from '@/hooks/useRouter';
-import type { AuthFormData } from '@/features/auth/types';
+import { RegisterProfileForm } from '@/features/auth/components/RegisterProfileForm';
+import { styles } from '@/features/auth/components/RegisterProfileContainer/styles';
+import type { RegisterProfileFormData } from '@/features/auth/types';
 
-export default function RegisterContainer() {
-  const { goToRegisterProfile, goToLogin } = useRouterNavigation();
-
-  const handleNext = (values: AuthFormData) => {
-    console.log('Register with:', values.email, values.password);
-    goToRegisterProfile();
-  };
-
-  const handleLogin = () => {
-    goToLogin();
+export default function RegisterProfileContainer() {
+  const handleRegister = (values: RegisterProfileFormData) => {
+    console.log('Register profile with:', values);
+    // After successful registration, navigate to login or home
+    // router.push('/login');
   };
 
   return (
@@ -32,10 +26,7 @@ export default function RegisterContainer() {
         </View>
 
         <View style={styles.formWrapper}>
-          <RegisterForm
-            onSubmit={handleNext}
-            onPressLogin={handleLogin}
-          />
+          <RegisterProfileForm onSubmit={handleRegister} />
         </View>
       </View>
     </KeyboardAvoidingContainer>
