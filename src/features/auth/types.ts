@@ -30,3 +30,14 @@ export type RegisterFormProps = {
   submitLabel?: string;
   loginLabel?: string;
 };
+
+export type RegisterProfileFormData = {
+  name: string;
+  userId: string;
+};
+
+export type RegisterProfileFormProps = {
+  defaultValues?: Partial<RegisterProfileFormData>;
+  onSubmit: (values: RegisterProfileFormData) => void;
+  submitLabel?: string;
+};
