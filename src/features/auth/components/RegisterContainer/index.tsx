@@ -11,11 +11,11 @@ import { useRouterNavigation } from '@/hooks/useRouter';
 import type { AuthFormData } from '@/features/auth/types';
 
 export default function RegisterContainer() {
-  const { goToRegister2, goToLogin } = useRouterNavigation();
+  const { goToRegisterProfile, goToLogin } = useRouterNavigation();
 
   const handleNext = (values: AuthFormData) => {
     console.log('Register with:', values.email, values.password);
-    goToRegister2();
+    goToRegisterProfile();
   };
 
   const handleLogin = () => {
