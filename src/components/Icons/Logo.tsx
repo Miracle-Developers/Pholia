@@ -6,5 +6,5 @@ type Props = {
 };
 
 export const Logo = ({ style, resizeMode = "contain" }: Props) => (
-  <Image source={require("../../../assets/logo.png")} style={style} resizeMode={resizeMode} />
+  <Image source={require("../../../assets/Logo.png")} style={style} resizeMode={resizeMode} />
 );

@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import { KeyboardAvoidingContainer } from '@/components/Containers/KeyboardAvoidingContainer';
 import { Logo } from '@/components/Icons/Logo';
 import { LogoName } from '@/components/Icons/LogoName';
+import { BackgroundContainer } from '@/components/Containers/BackgroundContainer';
 import { RegisterForm } from '@/features/auth/components/RegisterForm';
 import { styles } from '@/features/auth/components/RegisterContainer/styles';
 import { useRouterNavigation } from '@/hooks/useRouter';
@@ -22,22 +23,24 @@ export default function RegisterContainer() {
   };
 
   return (
-    <KeyboardAvoidingContainer style={styles.container}>
-      <StatusBar style="dark" />
+    <BackgroundContainer>
+      <KeyboardAvoidingContainer style={styles.container}>
+        <StatusBar style="dark" />
 
-      <View style={styles.content}>
-        <View style={styles.logoContainer}>
-          <Logo style={styles.logoImage} />
-          <LogoName style={styles.pholiaImage} />
-        </View>
+        <View style={styles.content}>
+          <View style={styles.logoContainer}>
+            <Logo style={styles.logoImage} />
+            <LogoName style={styles.pholiaImage} />
+          </View>
 
-        <View style={styles.formWrapper}>
-          <RegisterForm
-            onSubmit={handleNext}
-            onPressLogin={handleLogin}
-          />
+          <View style={styles.formWrapper}>
+            <RegisterForm
+              onSubmit={handleNext}
+              onPressLogin={handleLogin}
+            />
+          </View>
         </View>
-      </View>
-    </KeyboardAvoidingContainer>
+      </KeyboardAvoidingContainer>
+    </BackgroundContainer>
   );
 }
