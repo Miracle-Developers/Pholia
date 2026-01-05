@@ -1,6 +1,13 @@
 import { Controller, useForm } from 'react-hook-form';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
+import { AuthFormField } from '@/components/Forms/AuthFormField';
+import { AuthTextInput } from '@/components/Forms/AuthTextInput';
+import {
+  confirmPasswordRule,
+  emailOrIdRule,
+  passwordRule,
+} from '@/features/auth/validation/authRules';
 import { styles } from '@/features/auth/components/RegisterForm/styles';
 import type { AuthFormData, RegisterFormProps } from '@/features/auth/types';
 
@@ -15,7 +22,7 @@ export const RegisterForm = ({
     control,
     handleSubmit,
     getValues,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<AuthFormData>({
     defaultValues: {
       email: defaultValues?.email ?? '',
@@ -29,91 +36,81 @@ export const RegisterForm = ({
       <Controller
         control={control}
         name="email"
-        rules={{ required: 'メールアドレスを入力してください' }}
+        rules={emailOrIdRule}
         render={({ field: { onChange, onBlur, value } }) => (
-          <View style={styles.inputContainer}>
-            <View style={styles.labelRow}>
-              <Text style={styles.label}>メールアドレス / ユーザーID</Text>
-            </View>
-            <TextInput
-              style={styles.input}
-              placeholder=""
+          <AuthFormField
+            label="メールアドレス / ユーザーID"
+            errorMessage={errors.email?.message}
+          >
+            <AuthTextInput
+              placeholder="user@example.com"
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
               keyboardType="email-address"
+              autoComplete="email"
+              textContentType="emailAddress"
               autoCapitalize="none"
               autoCorrect={false}
             />
-            {errors.email ? (
-              <Text style={styles.errorText}>{errors.email.message}</Text>
-            ) : null}
-          </View>
+          </AuthFormField>
         )}
       />
 
       <Controller
         control={control}
         name="password"
-        rules={{ required: 'パスワードを入力してください' }}
+        rules={passwordRule}
         render={({ field: { onChange, onBlur, value } }) => (
-          <View style={styles.inputContainer}>
-            <View style={styles.labelRow}>
-              <Text style={styles.label}>パスワード</Text>
-              <Text style={styles.passwordHint}>半角英数字のみ・8文字以上</Text>
-            </View>
-            <TextInput
-              style={styles.input}
-              placeholder=""
+          <AuthFormField
+            label="パスワード"
+            hint="半角英数字のみ・8文字以上"
+            errorMessage={errors.password?.message}
+          >
+            <AuthTextInput
+              placeholder="8文字以上の英数字"
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
               secureTextEntry
               autoCapitalize="none"
+              autoComplete="password"
+              textContentType="password"
+              autoCorrect={false}
             />
-            {errors.password ? (
-              <Text style={styles.errorText}>{errors.password.message}</Text>
-            ) : null}
-          </View>
+          </AuthFormField>
         )}
       />
 
       <Controller
         control={control}
         name="confirmPassword"
-        rules={{
-          required: 'パスワードを再入力してください',
-          validate: (value) =>
-            value === getValues('password') ||
-            'パスワードが一致しません',
-        }}
+        rules={confirmPasswordRule(() => getValues('password'))}
         render={({ field: { onChange, onBlur, value } }) => (
-          <View style={styles.inputContainer}>
-            <View style={styles.labelRow}>
-              <Text style={styles.label}>パスワード再確認</Text>
-            </View>
-            <TextInput
-              style={styles.input}
-              placeholder=""
+          <AuthFormField
+            label="パスワード再確認"
+            errorMessage={errors.confirmPassword?.message}
+          >
+            <AuthTextInput
+              placeholder="もう一度入力してください"
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
               secureTextEntry
               autoCapitalize="none"
+              autoComplete="password"
+              textContentType="password"
+              autoCorrect={false}
             />
-            {errors.confirmPassword ? (
-              <Text style={styles.errorText}>
-                {errors.confirmPassword.message}
-              </Text>
-            ) : null}
-          </View>
+          </AuthFormField>
         )}
       />
 
       <TouchableOpacity
-        style={styles.nextButton}
+        style={[styles.nextButton, isSubmitting && styles.nextButtonDisabled]}
         onPress={handleSubmit(onSubmit)}
         activeOpacity={0.8}
+        disabled={isSubmitting}
       >
         <Text style={styles.nextButtonText}>{submitLabel}</Text>
       </TouchableOpacity>
