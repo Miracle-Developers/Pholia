@@ -1,7 +1,10 @@
 import { Controller, useForm } from 'react-hook-form';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
+import { AuthFormField } from '@/components/Forms/AuthFormField';
+import { AuthTextInput } from '@/components/Forms/AuthTextInput';
 import { styles } from '@/features/auth/components/RegisterProfileForm/styles';
+import { nameRule, userIdRule } from '@/features/auth/validation/authRules';
 import type { RegisterProfileFormData, RegisterProfileFormProps } from '@/features/auth/types';
 
 export const RegisterProfileForm = ({
@@ -12,7 +15,7 @@ export const RegisterProfileForm = ({
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<RegisterProfileFormData>({
     defaultValues: {
       name: defaultValues?.name ?? '',
@@ -25,57 +28,49 @@ export const RegisterProfileForm = ({
       <Controller
         control={control}
         name="name"
-        rules={{ required: '名前を入力してください' }}
+        rules={nameRule}
         render={({ field: { onChange, onBlur, value } }) => (
-          <View style={styles.inputContainer}>
-            <View style={styles.labelRow}>
-              <Text style={styles.label}>名前</Text>
-            </View>
-            <TextInput
-              style={styles.input}
-              placeholder=""
+          <AuthFormField
+            label="名前"
+            errorMessage={errors.name?.message}
+          >
+            <AuthTextInput
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
-              autoCapitalize="none"
+              autoCapitalize="words"
               autoCorrect={false}
             />
-            {errors.name ? (
-              <Text style={styles.errorText}>{errors.name.message}</Text>
-            ) : null}
-          </View>
+          </AuthFormField>
         )}
       />
 
       <Controller
         control={control}
         name="userId"
-        rules={{ required: 'ユーザーIDを入力してください' }}
+        rules={userIdRule}
         render={({ field: { onChange, onBlur, value } }) => (
-          <View style={styles.inputContainer}>
-            <View style={styles.labelRow}>
-              <Text style={styles.label}>ユーザーID</Text>
-            </View>
-            <TextInput
-              style={styles.input}
-              placeholder=""
+          <AuthFormField
+            label="ユーザーID"
+            errorMessage={errors.userId?.message}
+          >
+            <AuthTextInput
+              placeholder="user_id"
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
               autoCapitalize="none"
               autoCorrect={false}
             />
-            {errors.userId ? (
-              <Text style={styles.errorText}>{errors.userId.message}</Text>
-            ) : null}
-          </View>
+          </AuthFormField>
         )}
       />
 
       <TouchableOpacity
-        style={styles.registerButton}
+        style={[styles.registerButton, isSubmitting && styles.registerButtonDisabled]}
         onPress={handleSubmit(onSubmit)}
         activeOpacity={0.8}
+        disabled={isSubmitting}
       >
         <Text style={styles.registerButtonText}>{submitLabel}</Text>
       </TouchableOpacity>
