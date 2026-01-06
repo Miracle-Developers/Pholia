@@ -1,19 +1,19 @@
-import { Controller, useForm } from 'react-hook-form';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Controller, useForm } from "react-hook-form";
+import { Text, TouchableOpacity, View } from "react-native";
 
-import { AuthFormField } from '@/components/Forms/AuthFormField';
-import { AuthTextInput } from '@/components/Forms/AuthTextInput';
-import { emailOrIdRule, passwordRule } from '@/features/auth/validation/authRules';
-import { styles } from '@/features/auth/components/LoginForm/styles';
-import type { LoginFormData, LoginFormProps } from '@/features/auth/types';
+import { AuthFormField } from "@/components/Forms/AuthFormField";
+import { AuthTextInput } from "@/components/Forms/AuthTextInput";
+import { styles } from "@/features/auth/components/LoginForm/styles";
+import type { LoginFormData, LoginFormProps } from "@/features/auth/types";
+import { emailOrIdRule, passwordRule } from "@/features/auth/validation/authRules";
 
 export const LoginForm = ({
   defaultValues,
   onSubmit,
   onPressForgotPassword,
   onPressSignUp,
-  submitLabel = 'ログイン',
-  signUpLabel = '新規登録はこちら',
+  submitLabel = "ログイン",
+  signUpLabel = "新規登録はこちら",
 }: LoginFormProps) => {
   const {
     control,
@@ -21,8 +21,8 @@ export const LoginForm = ({
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
     defaultValues: {
-      email: defaultValues?.email ?? '',
-      password: defaultValues?.password ?? '',
+      email: defaultValues?.email ?? "",
+      password: defaultValues?.password ?? "",
     },
   });
 
@@ -33,10 +33,7 @@ export const LoginForm = ({
         name="email"
         rules={emailOrIdRule}
         render={({ field: { onChange, onBlur, value } }) => (
-          <AuthFormField
-            label="メールアドレス / ユーザーID"
-            errorMessage={errors.email?.message}
-          >
+          <AuthFormField label="メールアドレス / ユーザーID" errorMessage={errors.email?.message}>
             <AuthTextInput
               placeholder="user@example.com"
               value={value}
@@ -78,10 +75,7 @@ export const LoginForm = ({
       />
 
       {onPressForgotPassword ? (
-        <TouchableOpacity
-          style={styles.forgotPassword}
-          onPress={onPressForgotPassword}
-        >
+        <TouchableOpacity style={styles.forgotPassword} onPress={onPressForgotPassword}>
           <Text style={styles.forgotPasswordText}>パスワードをお忘れの方</Text>
         </TouchableOpacity>
       ) : null}
