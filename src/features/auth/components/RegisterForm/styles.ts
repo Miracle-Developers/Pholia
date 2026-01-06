@@ -1,14 +1,14 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   formContainer: {
-    width: '100%',
+    width: "100%",
   },
   nextButton: {
-    backgroundColor: '#E8E8E8',
+    backgroundColor: "#E8E8E8",
     paddingVertical: 16,
     borderRadius: 30,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 20,
     marginBottom: 24,
   },
@@ -16,14 +16,14 @@ export const styles = StyleSheet.create({
     opacity: 0.7,
   },
   nextButtonText: {
-    color: '#333333',
+    color: "#333333",
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   loginLink: {
     fontSize: 14,
-    color: '#333333',
-    textAlign: 'center',
-    fontWeight: '600',
+    color: "#333333",
+    textAlign: "center",
+    fontWeight: "600",
   },
 });

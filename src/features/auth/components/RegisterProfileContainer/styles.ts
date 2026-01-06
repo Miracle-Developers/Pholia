@@ -1,16 +1,16 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   content: {
     flex: 1,
     paddingHorizontal: 24,
   },
   logoContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 60,
     marginBottom: 40,
   },
