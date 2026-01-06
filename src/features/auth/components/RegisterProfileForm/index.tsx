@@ -1,16 +1,16 @@
-import { Controller, useForm } from 'react-hook-form';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Controller, useForm } from "react-hook-form";
+import { Text, TouchableOpacity, View } from "react-native";
 
-import { AuthFormField } from '@/components/Forms/AuthFormField';
-import { AuthTextInput } from '@/components/Forms/AuthTextInput';
-import { styles } from '@/features/auth/components/RegisterProfileForm/styles';
-import { nameRule, userIdRule } from '@/features/auth/validation/authRules';
-import type { RegisterProfileFormData, RegisterProfileFormProps } from '@/features/auth/types';
+import { AuthFormField } from "@/components/Forms/AuthFormField";
+import { AuthTextInput } from "@/components/Forms/AuthTextInput";
+import { styles } from "@/features/auth/components/RegisterProfileForm/styles";
+import type { RegisterProfileFormData, RegisterProfileFormProps } from "@/features/auth/types";
+import { nameRule, userIdRule } from "@/features/auth/validation/authRules";
 
 export const RegisterProfileForm = ({
   defaultValues,
   onSubmit,
-  submitLabel = '登録',
+  submitLabel = "登録",
 }: RegisterProfileFormProps) => {
   const {
     control,
@@ -18,8 +18,8 @@ export const RegisterProfileForm = ({
     formState: { errors, isSubmitting },
   } = useForm<RegisterProfileFormData>({
     defaultValues: {
-      name: defaultValues?.name ?? '',
-      userId: defaultValues?.userId ?? '',
+      name: defaultValues?.name ?? "",
+      userId: defaultValues?.userId ?? "",
     },
   });
 
@@ -30,10 +30,7 @@ export const RegisterProfileForm = ({
         name="name"
         rules={nameRule}
         render={({ field: { onChange, onBlur, value } }) => (
-          <AuthFormField
-            label="名前"
-            errorMessage={errors.name?.message}
-          >
+          <AuthFormField label="名前" errorMessage={errors.name?.message}>
             <AuthTextInput
               value={value}
               onChangeText={onChange}
@@ -50,10 +47,7 @@ export const RegisterProfileForm = ({
         name="userId"
         rules={userIdRule}
         render={({ field: { onChange, onBlur, value } }) => (
-          <AuthFormField
-            label="ユーザーID"
-            errorMessage={errors.userId?.message}
-          >
+          <AuthFormField label="ユーザーID" errorMessage={errors.userId?.message}>
             <AuthTextInput
               placeholder="user_id"
               value={value}
