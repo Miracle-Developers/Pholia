@@ -1,5 +1,5 @@
 import { Controller, useForm } from 'react-hook-form';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 import { AuthFormField } from '@/components/Forms/AuthFormField';
 import { AuthTextInput } from '@/components/Forms/AuthTextInput';
@@ -92,6 +92,7 @@ export const LoginForm = ({
         activeOpacity={0.8}
         disabled={isSubmitting}
       >
+        <Image source={require("@/../assets/wooden-btn.png")} style={styles.buttonBackground} />
         <Text style={styles.loginButtonText}>{submitLabel}</Text>
       </TouchableOpacity>
 
