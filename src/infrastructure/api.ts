@@ -1,15 +1,13 @@
-const BASE_URL =
-  typeof process !== "undefined" && process.env?.PHOLIA_API_URL
-    ? process.env.PHOLIA_API_URL
-    : "https://pholia-back.hanpenneko.workers.dev";
+const BASE_URL = typeof process !== 'undefined' && process.env?.PHOLIA_API_URL ? process.env.PHOLIA_API_URL : 'https://pholia-back.hanpenneko.workers.dev';
 
 import * as auth from "@/infrastructure/auth";
 
-async function request(path: string, method = "GET", body?: any, isForm = false) {
+// HTTP リクエストの共通処理
+async function request(path: string, method = 'GET', body?: any, isForm = false) {
   const headers: Record<string, string> = {};
-  if (!isForm) headers["Content-Type"] = "application/json";
+  if (!isForm) headers['Content-Type'] = 'application/json';
   const token = auth.getToken();
-  if (token) headers["Authorization"] = `Bearer ${token}`;
+  if (token) headers['Authorization'] = `Bearer ${token}`;
 
   const res = await fetch(`${BASE_URL}${path}`, {
     method,
@@ -22,22 +20,16 @@ async function request(path: string, method = "GET", body?: any, isForm = false)
     throw new Error(`API ${method} ${path} failed: ${res.status} ${text}`);
   }
 
-  const contentType = res.headers.get("content-type") || "";
-  if (contentType.includes("application/json")) return res.json();
+  const contentType = res.headers.get('content-type') || '';
+  if (contentType.includes('application/json')) return res.json();
   return res.text();
 }
 
 export async function login(payload: { email?: string; id?: string; password: string }) {
-  return request("/auth/login", "POST", payload);
+  return request('/auth/login', 'POST', payload);
 }
 
-export async function registerUser(payload: {
-  user_handle?: string;
-  id?: string;
-  name: string;
-  email: string;
-  password: string;
-}) {
+export async function registerUser(payload: { user_handle?: string; id?: string; name: string; email: string; password: string }) {
   const body: any = {
     name: payload.name,
     email: payload.email,
@@ -45,7 +37,7 @@ export async function registerUser(payload: {
   };
   if (payload.user_handle) body.user_handle = payload.user_handle;
   if (payload.id) body.id = payload.id;
-  return request("/users", "POST", body);
+  return request('/users', 'POST', body);
 }
 
 export async function getUser(id: string) {
