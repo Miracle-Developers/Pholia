@@ -2,7 +2,7 @@
   "expo": {
     "name": "Pholia",
     "slug": "pholia",
-    "scheme": "pholia", 
+    "scheme": "pholia",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -35,7 +35,8 @@
       }
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-secure-store"
     ]
   }
 }
