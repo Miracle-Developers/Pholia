@@ -5,8 +5,8 @@ import { BackgroundContainer } from '@/components/Containers/BackgroundContainer
 import { KeyboardAvoidingContainer } from '@/components/Containers/KeyboardAvoidingContainer';
 import { Logo } from '@/components/Icons/Logo';
 import { LogoName } from '@/components/Icons/LogoName';
-import { RegisterProfileForm } from '@/features/auth/components/RegisterProfileForm';
 import { styles } from '@/features/auth/components/RegisterProfileContainer/styles';
+import { RegisterProfileForm } from '@/features/auth/components/RegisterProfileForm';
 import type { RegisterProfileFormData } from '@/features/auth/types';
 
 export default function RegisterProfileContainer() {

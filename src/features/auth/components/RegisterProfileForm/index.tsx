@@ -4,8 +4,8 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { AuthFormField } from '@/components/Forms/AuthFormField';
 import { AuthTextInput } from '@/components/Forms/AuthTextInput';
 import { styles } from '@/features/auth/components/RegisterProfileForm/styles';
-import { nameRule, userIdRule } from '@/features/auth/validation/authRules';
 import type { RegisterProfileFormData, RegisterProfileFormProps } from '@/features/auth/types';
+import { nameRule, userIdRule } from '@/features/auth/validation/authRules';
 
 export const RegisterProfileForm = ({
   defaultValues,
