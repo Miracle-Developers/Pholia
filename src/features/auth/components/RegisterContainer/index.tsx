@@ -1,13 +1,14 @@
-import { StatusBar } from "expo-status-bar";
-import { View } from "react-native";
-import { BackgroundContainer } from "@/components/Containers/BackgroundContainer";
-import { KeyboardAvoidingContainer } from "@/components/Containers/KeyboardAvoidingContainer";
-import { Logo } from "@/components/Icons/Logo";
-import { LogoName } from "@/components/Icons/LogoName";
-import { styles } from "@/features/auth/components/RegisterContainer/styles";
-import { RegisterForm } from "@/features/auth/components/RegisterForm";
-import type { AuthFormData } from "@/features/auth/types";
-import { useRouterNavigation } from "@/hooks/useRouter";
+import { StatusBar } from 'expo-status-bar';
+import { View } from 'react-native';
+
+import { BackgroundContainer } from '@/components/Containers/BackgroundContainer';
+import { KeyboardAvoidingContainer } from '@/components/Containers/KeyboardAvoidingContainer';
+import { Logo } from '@/components/Icons/Logo';
+import { LogoName } from '@/components/Icons/LogoName';
+import { styles } from '@/features/auth/components/RegisterContainer/styles';
+import { RegisterForm } from '@/features/auth/components/RegisterForm';
+import type { AuthFormData } from '@/features/auth/types';
+import { useRouterNavigation } from '@/hooks/useRouter';
 
 export default function RegisterContainer() {
   const { goToRegisterProfile, goToLogin } = useRouterNavigation();

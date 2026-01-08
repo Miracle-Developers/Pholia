@@ -1,15 +1,15 @@
-import { Controller, useForm } from "react-hook-form";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Controller, useForm } from 'react-hook-form';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 
-import { AuthFormField } from "@/components/Forms/AuthFormField";
-import { AuthTextInput } from "@/components/Forms/AuthTextInput";
-import { styles } from "@/features/auth/components/RegisterForm/styles";
-import type { AuthFormData, RegisterFormProps } from "@/features/auth/types";
+import { AuthFormField } from '@/components/Forms/AuthFormField';
+import { AuthTextInput } from '@/components/Forms/AuthTextInput';
+import { styles } from '@/features/auth/components/RegisterForm/styles';
+import type { AuthFormData, RegisterFormProps } from '@/features/auth/types';
 import {
   confirmPasswordRule,
   emailOrIdRule,
   passwordRule,
-} from "@/features/auth/validation/authRules";
+} from '@/features/auth/validation/authRules';
 
 export const RegisterForm = ({
   defaultValues,
@@ -106,6 +106,7 @@ export const RegisterForm = ({
         activeOpacity={0.8}
         disabled={isSubmitting}
       >
+        <Image source={require("@/../assets/wooden-btn.png")} style={styles.buttonBackground} />
         <Text style={styles.nextButtonText}>{submitLabel}</Text>
       </TouchableOpacity>
 
