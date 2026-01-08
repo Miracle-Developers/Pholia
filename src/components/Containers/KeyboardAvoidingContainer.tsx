@@ -1,10 +1,5 @@
-import type { ReactNode } from 'react';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  type StyleProp,
-  type ViewStyle,
-} from 'react-native';
+import type { ReactNode } from "react";
+import { KeyboardAvoidingView, Platform, type StyleProp, type ViewStyle } from "react-native";
 
 type Props = {
   children: ReactNode;
@@ -12,10 +7,7 @@ type Props = {
 };
 
 export const KeyboardAvoidingContainer = ({ children, style }: Props) => (
-  <KeyboardAvoidingView
-    style={style}
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-  >
+  <KeyboardAvoidingView style={style} behavior={Platform.OS === "ios" ? "padding" : "height"}>
     {children}
   </KeyboardAvoidingView>
 );

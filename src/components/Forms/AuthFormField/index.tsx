@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react';
-import { Text, View } from 'react-native';
+import type { ReactNode } from "react";
+import { Text, View } from "react-native";
 
-import { styles } from '@/components/Forms/AuthFormField/styles';
+import { styles } from "@/components/Forms/AuthFormField/styles";
 
 type Props = {
   label: string;

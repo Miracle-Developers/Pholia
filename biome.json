@@ -16,13 +16,7 @@
     }
   },
   "files": {
-    "includes": [
-      "**",
-      "!node_modules",
-      "!.expo",
-      "!dist",
-      "!build"
-    ]
+    "includes": ["**", "!node_modules", "!.expo", "!dist", "!build"]
   },
   "vcs": {
     "enabled": true,

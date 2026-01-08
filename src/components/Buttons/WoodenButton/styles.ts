@@ -1,26 +1,26 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   button: {
-    width: '75%',
+    width: "75%",
     height: 85,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
   },
   buttonDisabled: {
     opacity: 0.7,
   },
   buttonText: {
-    color: '#5D3A1A',
+    color: "#5D3A1A",
     fontSize: 20,
-    fontWeight: '700',
+    fontWeight: "700",
     zIndex: 1,
   },
   buttonBackground: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    resizeMode: 'stretch',
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    resizeMode: "stretch",
   },
 });
