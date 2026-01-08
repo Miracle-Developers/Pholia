@@ -1,6 +1,7 @@
 import { Controller, useForm } from 'react-hook-form';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 
+import { WoodenButton } from '@/components/Buttons/WoodenButton';
 import { AuthFormField } from '@/components/Forms/AuthFormField';
 import { AuthTextInput } from '@/components/Forms/AuthTextInput';
 import { styles } from '@/features/auth/components/RegisterProfileForm/styles';
@@ -60,15 +61,12 @@ export const RegisterProfileForm = ({
         )}
       />
 
-      <TouchableOpacity
-        style={[styles.registerButton, isSubmitting && styles.registerButtonDisabled]}
+      <WoodenButton
+        title={submitLabel}
         onPress={handleSubmit(onSubmit)}
-        activeOpacity={0.8}
         disabled={isSubmitting}
-      >
-        <Image source={require("@/../assets/wooden-btn.png")} style={styles.buttonBackground} />
-        <Text style={styles.registerButtonText}>{submitLabel}</Text>
-      </TouchableOpacity>
+        style={styles.registerButton}
+      />
     </View>
   );
 };
