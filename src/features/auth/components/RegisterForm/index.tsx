@@ -3,13 +3,13 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 
 import { AuthFormField } from '@/components/Forms/AuthFormField';
 import { AuthTextInput } from '@/components/Forms/AuthTextInput';
+import { styles } from '@/features/auth/components/RegisterForm/styles';
+import type { AuthFormData, RegisterFormProps } from '@/features/auth/types';
 import {
   confirmPasswordRule,
   emailOrIdRule,
   passwordRule,
 } from '@/features/auth/validation/authRules';
-import { styles } from '@/features/auth/components/RegisterForm/styles';
-import type { AuthFormData, RegisterFormProps } from '@/features/auth/types';
 
 export const RegisterForm = ({
   defaultValues,
