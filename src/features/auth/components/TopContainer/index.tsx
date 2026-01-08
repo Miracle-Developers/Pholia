@@ -1,7 +1,8 @@
 import { StatusBar } from "expo-status-bar";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, View } from "react-native";
 
 import { BackgroundContainer } from "@/components/Containers/BackgroundContainer";
+import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { Logo } from "@/components/Icons/Logo";
 import { LogoName } from "@/components/Icons/LogoName";
 import { styles } from "@/features/auth/components/TopContainer/styles";
@@ -24,14 +25,16 @@ export const TopContainer = () => {
         <View style={styles.bottomSection}>
           <Image source={require("@/../assets/fox.png")} style={styles.foxImage} />
           <Image source={require("@/../assets/bear.png")} style={styles.bearImage} />
-          <TouchableOpacity style={styles.signUpButton} onPress={goToRegister} activeOpacity={0.8}>
-            <Image source={require("@/../assets/wooden-btn.png")} style={styles.buttonBackground} />
-            <Text style={styles.signUpButtonText}>新規登録</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.loginButton} onPress={goToLogin} activeOpacity={0.8}>
-            <Image source={require("@/../assets/wooden-btn.png")} style={styles.buttonBackground} />
-            <Text style={styles.loginButtonText}>ログイン</Text>
-          </TouchableOpacity>
+          <WoodenButton
+            title="新規登録"
+            onPress={goToRegister}
+            style={styles.signUpButton}
+          />
+          <WoodenButton
+            title="ログイン"
+            onPress={goToLogin}
+            style={styles.loginButton}
+          />
           <Text style={styles.termsText}>
             利用規約 と プライバシーポリシーに同意して{"\n"}Pholiaを利用します。
           </Text>
