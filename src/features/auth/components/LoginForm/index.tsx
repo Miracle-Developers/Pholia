@@ -1,11 +1,11 @@
-import { Controller, useForm } from "react-hook-form";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Controller, useForm } from 'react-hook-form';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 
-import { AuthFormField } from "@/components/Forms/AuthFormField";
-import { AuthTextInput } from "@/components/Forms/AuthTextInput";
-import { styles } from "@/features/auth/components/LoginForm/styles";
-import type { LoginFormData, LoginFormProps } from "@/features/auth/types";
-import { emailOrIdRule, passwordRule } from "@/features/auth/validation/authRules";
+import { AuthFormField } from '@/components/Forms/AuthFormField';
+import { AuthTextInput } from '@/components/Forms/AuthTextInput';
+import { styles } from '@/features/auth/components/LoginForm/styles';
+import type { LoginFormData, LoginFormProps } from '@/features/auth/types';
+import { emailOrIdRule, passwordRule } from '@/features/auth/validation/authRules';
 
 export const LoginForm = ({
   defaultValues,
@@ -86,6 +86,7 @@ export const LoginForm = ({
         activeOpacity={0.8}
         disabled={isSubmitting}
       >
+        <Image source={require("@/../assets/wooden-btn.png")} style={styles.buttonBackground} />
         <Text style={styles.loginButtonText}>{submitLabel}</Text>
       </TouchableOpacity>
 
