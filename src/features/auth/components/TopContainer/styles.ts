@@ -55,36 +55,10 @@ export const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   signUpButton: {
-    width: "75%",
-    height: 90,
-    justifyContent: "center",
-    alignItems: "center",
     marginBottom: 30,
-  },
-  signUpButtonText: {
-    fontSize: 25,
-    fontWeight: "700",
-    color: "#5D3A1A",
-    zIndex: 1,
   },
   loginButton: {
-    width: "75%",
-    height: 85,
-    justifyContent: "center",
-    alignItems: "center",
     marginBottom: 30,
-  },
-  loginButtonText: {
-    fontSize: 25,
-    fontWeight: "700",
-    color: "#5D3A1A",
-    zIndex: 1,
-  },
-  buttonBackground: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    resizeMode: "stretch",
   },
   termsText: {
     fontSize: 13,

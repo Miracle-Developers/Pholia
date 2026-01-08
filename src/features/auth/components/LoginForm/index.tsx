@@ -1,6 +1,7 @@
 import { Controller, useForm } from 'react-hook-form';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
+import { WoodenButton } from '@/components/Buttons/WoodenButton';
 import { AuthFormField } from '@/components/Forms/AuthFormField';
 import { AuthTextInput } from '@/components/Forms/AuthTextInput';
 import { styles } from '@/features/auth/components/LoginForm/styles';
@@ -80,15 +81,12 @@ export const LoginForm = ({
         </TouchableOpacity>
       ) : null}
 
-      <TouchableOpacity
-        style={[styles.loginButton, isSubmitting && styles.loginButtonDisabled]}
+      <WoodenButton
+        title={submitLabel}
         onPress={handleSubmit(onSubmit)}
-        activeOpacity={0.8}
         disabled={isSubmitting}
-      >
-        <Image source={require("@/../assets/wooden-btn.png")} style={styles.buttonBackground} />
-        <Text style={styles.loginButtonText}>{submitLabel}</Text>
-      </TouchableOpacity>
+        style={styles.loginButton}
+      />
 
       {onPressSignUp ? (
         <TouchableOpacity onPress={onPressSignUp}>
