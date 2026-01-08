@@ -1,6 +1,6 @@
-import { Image, Text, TouchableOpacity, type StyleProp, type ViewStyle } from 'react-native';
+import { Image, type StyleProp, Text, TouchableOpacity, type ViewStyle } from "react-native";
 
-import { styles } from './styles';
+import { styles } from "./styles";
 
 type WoodenButtonProps = {
   onPress: () => void;
@@ -9,12 +9,7 @@ type WoodenButtonProps = {
   style?: StyleProp<ViewStyle>;
 };
 
-export const WoodenButton = ({
-  onPress,
-  title,
-  disabled = false,
-  style,
-}: WoodenButtonProps) => {
+export const WoodenButton = ({ onPress, title, disabled = false, style }: WoodenButtonProps) => {
   return (
     <TouchableOpacity
       style={[styles.button, disabled && styles.buttonDisabled, style]}
@@ -22,10 +17,7 @@ export const WoodenButton = ({
       activeOpacity={0.8}
       disabled={disabled}
     >
-      <Image
-        source={require('@/../assets/wooden-btn.png')}
-        style={styles.buttonBackground}
-      />
+      <Image source={require("@/../assets/wooden-btn.png")} style={styles.buttonBackground} />
       <Text style={styles.buttonText}>{title}</Text>
     </TouchableOpacity>
   );

@@ -1,45 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import { View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { View } from "react-native";
 
-import { BackgroundContainer } from '@/components/Containers/BackgroundContainer';
-import { KeyboardAvoidingContainer } from '@/components/Containers/KeyboardAvoidingContainer';
-import { Logo } from '@/components/Icons/Logo';
-import { LogoName } from '@/components/Icons/LogoName';
-import { styles } from '@/features/auth/components/RegisterContainer/styles';
-import { RegisterForm } from '@/features/auth/components/RegisterForm';
-import type { AuthFormData } from '@/features/auth/types';
-import { useRouterNavigation } from '@/hooks/useRouter';
+import { KeyboardAvoidingContainer } from "@/components/Containers/KeyboardAvoidingContainer";
+import { Logo } from "@/components/Icons/Logo";
+import { LogoName } from "@/components/Icons/LogoName";
+import { styles } from "@/features/auth/components/RegisterContainer/styles";
+import { RegisterForm } from "@/features/auth/components/RegisterForm";
+import { useRegisterStepOne } from "@/features/auth/hooks/useRegisterStepOne";
+import { useRouterNavigation } from "@/hooks/useRouter";
 
 export default function RegisterContainer() {
-  const { goToRegisterProfile, goToLogin } = useRouterNavigation();
-
-  const handleNext = (values: AuthFormData) => {
-    import('@\/lib/registrationTemp').then(mod => {
-      mod.setStepOne({ email: values.email, password: values.password });
-      goToRegisterProfile();
-    });
-  };
+  const { goToLogin } = useRouterNavigation();
+  const { handleNext } = useRegisterStepOne();
 
   const handleLogin = () => {
     goToLogin();
   };
 
   return (
-    <BackgroundContainer>
-      <KeyboardAvoidingContainer style={styles.container}>
-        <StatusBar style="dark" />
+    <KeyboardAvoidingContainer style={styles.container}>
+      <StatusBar style="dark" />
 
-        <View style={styles.content}>
-          <View style={styles.logoContainer}>
-            <Logo style={styles.logoImage} />
-            <LogoName style={styles.pholiaImage} />
-          </View>
-
-          <View style={styles.formWrapper}>
-            <RegisterForm onSubmit={handleNext} onPressLogin={handleLogin} />
-          </View>
+      <View style={styles.content}>
+        <View style={styles.logoContainer}>
+          <Logo style={styles.logoImage} />
+          <LogoName style={styles.pholiaImage} />
         </View>
-      </KeyboardAvoidingContainer>
-    </BackgroundContainer>
+
+        <View style={styles.formWrapper}>
+          <RegisterForm onSubmit={handleNext} onPressLogin={handleLogin} />
+        </View>
+      </View>
+    </KeyboardAvoidingContainer>
   );
 }
