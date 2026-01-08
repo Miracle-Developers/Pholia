@@ -14,7 +14,7 @@ export default function RegisterContainer() {
   const { goToRegisterProfile, goToLogin } = useRouterNavigation();
 
   const handleNext = (values: AuthFormData) => {
-    console.log('Register with:', values.email, values.password);
+    console.log("Register with:", values.email, values.password);
     goToRegisterProfile();
   };
 
@@ -34,10 +34,7 @@ export default function RegisterContainer() {
           </View>
 
           <View style={styles.formWrapper}>
-            <RegisterForm
-              onSubmit={handleNext}
-              onPressLogin={handleLogin}
-            />
+            <RegisterForm onSubmit={handleNext} onPressLogin={handleLogin} />
           </View>
         </View>
       </KeyboardAvoidingContainer>

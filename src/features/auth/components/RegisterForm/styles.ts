@@ -1,8 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   formContainer: {
-    width: '100%',
+    width: "100%",
   },
   nextButton: {
     width: '75%',
@@ -30,8 +30,8 @@ export const styles = StyleSheet.create({
   },
   loginLink: {
     fontSize: 14,
-    color: '#333333',
-    textAlign: 'center',
-    fontWeight: '600',
+    color: "#333333",
+    textAlign: "center",
+    fontWeight: "600",
   },
 });

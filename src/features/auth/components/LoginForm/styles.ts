@@ -1,17 +1,17 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   formContainer: {
-    width: '100%',
+    width: "100%",
   },
   forgotPassword: {
-    alignSelf: 'flex-end',
+    alignSelf: "flex-end",
     marginBottom: 30,
   },
   forgotPasswordText: {
     fontSize: 14,
-    color: '#333333',
-    textDecorationLine: 'underline',
+    color: "#333333",
+    textDecorationLine: "underline",
   },
   loginButton: {
     width: '75%',
@@ -38,8 +38,8 @@ export const styles = StyleSheet.create({
   },
   signupLink: {
     fontSize: 14,
-    color: '#333333',
-    textAlign: 'center',
-    fontWeight: '600',
+    color: "#333333",
+    textAlign: "center",
+    fontWeight: "600",
   },
 });

@@ -15,8 +15,8 @@ export const RegisterForm = ({
   defaultValues,
   onSubmit,
   onPressLogin,
-  submitLabel = '次へ',
-  loginLabel = 'ログインはこちら',
+  submitLabel = "次へ",
+  loginLabel = "ログインはこちら",
 }: RegisterFormProps) => {
   const {
     control,
@@ -25,9 +25,9 @@ export const RegisterForm = ({
     formState: { errors, isSubmitting },
   } = useForm<AuthFormData>({
     defaultValues: {
-      email: defaultValues?.email ?? '',
-      password: defaultValues?.password ?? '',
-      confirmPassword: defaultValues?.confirmPassword ?? '',
+      email: defaultValues?.email ?? "",
+      password: defaultValues?.password ?? "",
+      confirmPassword: defaultValues?.confirmPassword ?? "",
     },
   });
 
@@ -38,10 +38,7 @@ export const RegisterForm = ({
         name="email"
         rules={emailOrIdRule}
         render={({ field: { onChange, onBlur, value } }) => (
-          <AuthFormField
-            label="メールアドレス / ユーザーID"
-            errorMessage={errors.email?.message}
-          >
+          <AuthFormField label="メールアドレス / ユーザーID" errorMessage={errors.email?.message}>
             <AuthTextInput
               placeholder="user@example.com"
               value={value}
@@ -85,12 +82,9 @@ export const RegisterForm = ({
       <Controller
         control={control}
         name="confirmPassword"
-        rules={confirmPasswordRule(() => getValues('password'))}
+        rules={confirmPasswordRule(() => getValues("password"))}
         render={({ field: { onChange, onBlur, value } }) => (
-          <AuthFormField
-            label="パスワード再確認"
-            errorMessage={errors.confirmPassword?.message}
-          >
+          <AuthFormField label="パスワード再確認" errorMessage={errors.confirmPassword?.message}>
             <AuthTextInput
               placeholder="もう一度入力してください"
               value={value}
