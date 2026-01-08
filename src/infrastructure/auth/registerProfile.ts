@@ -39,7 +39,7 @@ export async function registerProfileAndLogin(
       registrationTemp.clearTemp();
       return { status: "auto-login-success" };
     }
-  } catch (loginErr: any) {
+  } catch (loginErr: unknown) {
     console.warn("Auto-login failed after registration", loginErr);
   }
 
