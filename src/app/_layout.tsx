@@ -1,5 +1,14 @@
-import { Stack } from "expo-router";
+import { Slot } from "expo-router";
+
+import { BackgroundContainer } from "@/components/Containers/BackgroundContainer";
+import { ToastProvider } from "@/components/Toast/ToastProvider";
 
 export default function RootLayout() {
-  return <Stack screenOptions={{ headerShown: false, freezeOnBlur: false }} />;
+  return (
+    <ToastProvider>
+      <BackgroundContainer>
+        <Slot />
+      </BackgroundContainer>
+    </ToastProvider>
+  );
 }

@@ -1,8 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { Image, Text, View } from "react-native";
-
-import { BackgroundContainer } from "@/components/Containers/BackgroundContainer";
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
+import { BackgroundContainer } from "@/components/Containers/BackgroundContainer";
 import { Logo } from "@/components/Icons/Logo";
 import { LogoName } from "@/components/Icons/LogoName";
 import { styles } from "@/features/auth/components/TopContainer/styles";
@@ -25,16 +24,8 @@ export const TopContainer = () => {
         <View style={styles.bottomSection}>
           <Image source={require("@/../assets/fox.png")} style={styles.foxImage} />
           <Image source={require("@/../assets/bear.png")} style={styles.bearImage} />
-          <WoodenButton
-            title="新規登録"
-            onPress={goToRegister}
-            style={styles.signUpButton}
-          />
-          <WoodenButton
-            title="ログイン"
-            onPress={goToLogin}
-            style={styles.loginButton}
-          />
+          <WoodenButton title="新規登録" onPress={goToRegister} style={styles.signUpButton} />
+          <WoodenButton title="ログイン" onPress={goToLogin} style={styles.loginButton} />
           <Text style={styles.termsText}>
             利用規約 と プライバシーポリシーに同意して{"\n"}Pholiaを利用します。
           </Text>

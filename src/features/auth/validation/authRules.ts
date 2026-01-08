@@ -27,34 +27,10 @@ export const nameRule = {
 export const userIdRule = {
   required: "ユーザーIDを入力してください",
   pattern: {
-    value: /^@?[a-zA-Z0-9._-]{3,}$/,    
+    value: /^@?[a-zA-Z0-9._-]{3,}$/,
     message: "英数字・._-を含む3文字以上で入力してください",
   },
 };
 
 export const isEmail = (value?: string) => !!(value && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value));
 export const isUserId = (value?: string) => !!(value && /^@?[a-zA-Z0-9._-]{3,}$/.test(value));
-
-export async function showAlert(title: string, message?: string, buttons?: Array<{ text: string; onPress?: () => void }>) {
-  const { Alert } = await import('react-native');
-  Alert.alert(title, message, buttons as any);
-}
-
-export async function loginSuccess(onOk?: () => void) {
-  await showAlert('ログインしました', undefined, [{ text: 'OK', onPress: onOk }]);
-}
-
-export async function loginFailed(message?: string) {
-  await showAlert('ログインに失敗しました', message);
-}
-
-export async function missingRegistrationStep1(onBack?: () => void) {
-  await showAlert('情報が不足しています', 'メールアドレスとパスワードを先に入力してください', [
-    { text: '戻る', onPress: onBack },
-  ]);
-}
-
-export async function registerFailed(message?: string) {
-  await showAlert('登録に失敗しました', message);
-}
-

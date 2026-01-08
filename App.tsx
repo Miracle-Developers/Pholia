@@ -1,14 +1,10 @@
-import * as auth from '@/lib/auth';
 import { ExpoRoot } from "expo-router";
 import { ctx } from "expo-router/_ctx";
-import React, { useEffect } from 'react';
+
+import { useAuthBootstrap } from "@/hooks/useAuthBootstrap";
 
 export default function App() {
-  useEffect(() => {
-    auth.restoreToken().then(() => {
-      /* restored */
-    });
-  }, []);
+  useAuthBootstrap();
 
   return <ExpoRoot context={ctx} />;
 }
