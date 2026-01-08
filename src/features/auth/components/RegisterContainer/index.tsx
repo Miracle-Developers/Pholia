@@ -14,8 +14,10 @@ export default function RegisterContainer() {
   const { goToRegisterProfile, goToLogin } = useRouterNavigation();
 
   const handleNext = (values: AuthFormData) => {
-    console.log("Register with:", values.email, values.password);
-    goToRegisterProfile();
+    import('@\/lib/registrationTemp').then(mod => {
+      mod.setStepOne({ email: values.email, password: values.password });
+      goToRegisterProfile();
+    });
   };
 
   const handleLogin = () => {

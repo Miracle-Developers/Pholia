@@ -11,10 +11,35 @@ import type { LoginFormData } from '@/features/auth/types';
 import { useRouterNavigation } from '@/hooks/useRouter';
 
 export default function LoginContainer() {
-  const { goToRegister } = useRouterNavigation();
+  const { goToRegister, goToHome } = useRouterNavigation();
 
-  const handleLogin = (values: LoginFormData) => {
-    console.log("Login with:", values.email, values.password);
+  const handleLogin = async (values: LoginFormData) => {
+    try {
+      const api = await import('@\/lib/api');
+      const auth = await import('@\/lib/auth');
+      const { email, password } = values;
+      const payload: any = { password };
+      const { isEmail } = await import('@/features/auth/validation/authRules');
+      if (isEmail(email)) {
+        payload.email = email;
+      } else {
+        const normalizedId = email?.startsWith('@') ? email.slice(1) : email;
+        payload.id = normalizedId;
+      }
+
+      const res = await api.login(payload);
+      if (res?.token) {
+        auth.setToken(res.token);
+        const { loginSuccess } = await import('@/features/auth/validation/authRules');
+        loginSuccess(() => goToHome());
+      } else {
+        console.warn('Login response missing token', res);
+      }
+    } catch (err: any) {
+      console.error('Login failed', err);
+      const { loginFailed } = await import('@/features/auth/validation/authRules');
+      loginFailed(err?.message || String(err));
+    }
   };
 
   const handleSignUp = () => {
