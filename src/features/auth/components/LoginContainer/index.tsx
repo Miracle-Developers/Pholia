@@ -14,7 +14,7 @@ export default function LoginContainer() {
   const { goToRegister } = useRouterNavigation();
 
   const handleLogin = (values: LoginFormData) => {
-    console.log('Login with:', values.email, values.password);
+    console.log("Login with:", values.email, values.password);
   };
 
   const handleSignUp = () => {
@@ -36,7 +36,7 @@ export default function LoginContainer() {
             <LoginForm
               onSubmit={handleLogin}
               onPressForgotPassword={() => {
-                console.log('Navigate to forgot password');
+                console.log("Navigate to forgot password");
               }}
               onPressSignUp={handleSignUp}
             />

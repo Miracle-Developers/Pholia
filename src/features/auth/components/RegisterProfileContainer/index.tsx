@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import { View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { View } from "react-native";
 
 import { BackgroundContainer } from '@/components/Containers/BackgroundContainer';
 import { KeyboardAvoidingContainer } from '@/components/Containers/KeyboardAvoidingContainer';
@@ -11,7 +11,7 @@ import type { RegisterProfileFormData } from '@/features/auth/types';
 
 export default function RegisterProfileContainer() {
   const handleRegister = (values: RegisterProfileFormData) => {
-    console.log('Register profile with:', values);
+    console.log("Register profile with:", values);
     // After successful registration, navigate to login or home
     // router.push('/login');
   };
