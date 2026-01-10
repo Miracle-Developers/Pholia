@@ -1,4 +1,4 @@
-import * as registrationTemp from "@/infrastructure/registrationTemp";
+import * as registrationTemp from "@/application/auth/state/registrationTemp";
 
 type RegisterStepOneInput = {
   email: string;

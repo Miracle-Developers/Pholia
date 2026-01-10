@@ -5,12 +5,12 @@ import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { AuthFormField } from "@/components/Forms/AuthFormField";
 import { AuthTextInput } from "@/components/Forms/AuthTextInput";
 import { styles } from "@/features/auth/components/RegisterForm/styles";
-import type { AuthFormData, RegisterFormProps } from "@/features/auth/types";
+import type { AuthFormData, RegisterFormProps } from "@/application/auth/types";
 import {
   confirmPasswordRule,
   emailOrIdRule,
   passwordRule,
-} from "@/features/auth/validation/authRules";
+} from "@/application/auth/validation/authRules";
 
 export const RegisterForm = ({
   defaultValues,

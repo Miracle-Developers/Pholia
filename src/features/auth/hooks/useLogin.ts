@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import type { LoginFormData } from "@/features/auth/types";
+import type { LoginFormData } from "@/application/auth/types";
 import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
 import { loginWithCredentials } from "@/provider/auth/loginProvider";

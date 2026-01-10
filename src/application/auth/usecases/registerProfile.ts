@@ -1,6 +1,6 @@
 import * as api from "@/infrastructure/api";
 import * as auth from "@/infrastructure/auth";
-import * as registrationTemp from "@/infrastructure/registrationTemp";
+import * as registrationTemp from "@/application/auth/state/registrationTemp";
 
 type RegisterProfileInput = {
   userId?: string;
