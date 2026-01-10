@@ -5,8 +5,8 @@ import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { AuthFormField } from "@/components/Forms/AuthFormField";
 import { AuthTextInput } from "@/components/Forms/AuthTextInput";
 import { styles } from "@/features/auth/components/RegisterProfileForm/styles";
-import type { RegisterProfileFormData, RegisterProfileFormProps } from "@/features/auth/types";
-import { nameRule, userIdRule } from "@/features/auth/validation/authRules";
+import type { RegisterProfileFormData, RegisterProfileFormProps } from "@/application/auth/types";
+import { nameRule, userIdRule } from "@/application/auth/validation/authRules";
 
 export const RegisterProfileForm = ({
   defaultValues,

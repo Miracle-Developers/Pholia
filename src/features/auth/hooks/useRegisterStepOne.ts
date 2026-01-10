@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-import type { AuthFormData } from "@/features/auth/types";
+import type { AuthFormData } from "@/application/auth/types";
 import { useRouterNavigation } from "@/hooks/useRouter";
 import { registerStepOne } from "@/provider/auth/registerStepOneProvider";
 

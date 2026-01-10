@@ -2,7 +2,7 @@ import {
   type LoginPayload,
   type LoginResult,
   loginAndStoreToken,
-} from "@/infrastructure/auth/login";
+} from "@/application/auth/usecases/login";
 
 type LoginInput = {
   email: string;

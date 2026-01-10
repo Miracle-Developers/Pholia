@@ -5,8 +5,8 @@ import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { AuthFormField } from "@/components/Forms/AuthFormField";
 import { AuthTextInput } from "@/components/Forms/AuthTextInput";
 import { styles } from "@/features/auth/components/LoginForm/styles";
-import type { LoginFormData, LoginFormProps } from "@/features/auth/types";
-import { emailOrIdRule, passwordRule } from "@/features/auth/validation/authRules";
+import type { LoginFormData, LoginFormProps } from "@/application/auth/types";
+import { emailOrIdRule, passwordRule } from "@/application/auth/validation/authRules";
 
 export const LoginForm = ({
   defaultValues,
