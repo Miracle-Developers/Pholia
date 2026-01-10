@@ -1,4 +1,4 @@
-import { saveRegistrationStepOne } from "@/infrastructure/auth/registerStepOne";
+import { saveRegistrationStepOne } from "@/application/auth/usecases/registerStepOne";
 
 type RegisterStepOneInput = {
   email: string;

@@ -1,7 +1,7 @@
 import {
   type RegisterProfileResult,
   registerProfileAndLogin,
-} from "@/infrastructure/auth/registerProfile";
+} from "@/application/auth/usecases/registerProfile";
 
 type RegisterProfileInput = {
   userId?: string;
