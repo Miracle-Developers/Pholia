@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import type { RegisterProfileFormData } from "@/features/auth/types";
+import type { RegisterProfileFormData } from "@/application/auth/types";
 import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
 import { registerProfile } from "@/provider/auth/registerProfileProvider";
