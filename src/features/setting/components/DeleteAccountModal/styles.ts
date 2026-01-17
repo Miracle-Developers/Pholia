@@ -8,8 +8,8 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalContent: {
-    backgroundColor: "white",
-    borderRadius: 12,
+    backgroundColor: "#F5F8E8",
+    borderRadius: 20,
     width: "80%",
     maxWidth: 300,
     padding: 24,
@@ -26,13 +26,13 @@ export const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#333",
+    color: "#E74C3C",
     marginBottom: 12,
     textAlign: "center",
   },
   modalDescription: {
     fontSize: 14,
-    color: "#666",
+    color: "#8B6F47",
     textAlign: "center",
     marginBottom: 24,
     lineHeight: 20,
@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
   },
   cancelButton: {
     flex: 1,
-    backgroundColor: "#E8E8E8",
+    backgroundColor: "#D4C5A0",
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: "center",
@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
   cancelButtonText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#333",
+    color: "#FFFFFF",
   },
   deleteButton: {
     flex: 1,
