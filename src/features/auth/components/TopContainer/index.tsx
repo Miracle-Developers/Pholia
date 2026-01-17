@@ -1,18 +1,30 @@
-import { StatusBar } from "expo-status-bar";
-import { Image, Text, View } from "react-native";
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { BackgroundContainer } from "@/components/Containers/BackgroundContainer";
 import { Logo } from "@/components/Icons/Logo";
 import { LogoName } from "@/components/Icons/LogoName";
 import { styles } from "@/features/auth/components/TopContainer/styles";
 import { useRouterNavigation } from "@/hooks/useRouter";
+import { StatusBar } from "expo-status-bar";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+// 仮置き
+import { MaterialIcons } from "@expo/vector-icons";
+// 仮置きここまで
 
 export const TopContainer = () => {
-  const { goToRegister, goToLogin } = useRouterNavigation();
+  const { goToRegister, goToLogin, goToProfile } = useRouterNavigation();
+
   return (
     <BackgroundContainer>
       <View style={styles.container}>
         <StatusBar style="dark" />
+        {/* 仮置き */}
+        <TouchableOpacity
+          style={styles.profileButton}
+          onPress={goToProfile}
+        >
+          <MaterialIcons name="account-circle" size={28} color="#333" />
+        </TouchableOpacity>
+        {/* 仮置きここまで */}
         <View style={styles.topSection}>
           <View style={styles.sloganBox}>
             <Logo style={styles.logoImage} />
