@@ -86,10 +86,15 @@ export const ProfileContainer = () => {
                         {getAvatarUrl() ? (
                             <Image
                                 source={{ uri: getAvatarUrl() || "" }}
-                                style={{ width: 100, height: 100, borderRadius: 50 }}
+                                style={styles.avatarImage}
+                                resizeMode="contain"
                             />
                         ) : (
-                            <MaterialIcons name="account-circle" size={100} color="#CCC" />
+                            <Image
+                                source={require("@/../assets/logo.png")}
+                                style={styles.avatarImage}
+                                resizeMode="contain"
+                            />
                         )}
                     </View>
                 </View>
@@ -98,32 +103,46 @@ export const ProfileContainer = () => {
                     <Text style={styles.userName}>{user.name}</Text>
                     <Text style={styles.userId}>@{user.userId}</Text>
 
+                    <View style={styles.divider} />
+
                     <View style={styles.infoItem}>
-                        <MaterialIcons name="mail" size={16} color="#666" />
+                        <MaterialIcons name="mail" size={20} color="#8B6F47" />
                         <Text style={styles.infoText}>{user.email}</Text>
                     </View>
 
                     <View style={styles.infoItem}>
-                        <MaterialIcons name="calendar-today" size={16} color="#666" />
+                        <MaterialIcons name="calendar-today" size={20} color="#8B6F47" />
                         <Text style={styles.infoText}>{user.joinDate}</Text>
                     </View>
-                </View>
 
-                <View style={styles.bioSection}>
-                    <Text style={styles.bioLabel}>一言</Text>
-                    <View style={styles.bioBox}>
-                        <Text style={styles.bioText}>{user.bio || "まだ一言が設定されていません"}</Text>
+                    <View style={styles.bioSection}>
+                        <Text style={styles.bioLabel}>一言</Text>
+                        <View style={styles.bioBox}>
+                            <Text style={styles.bioText}>{user.bio || "まだ一言が設定されていません"}</Text>
+                        </View>
                     </View>
                 </View>
 
                 <View style={styles.statsContainer}>
-                    <View style={styles.statBox}>
-                        <Text style={styles.statLabel}>友達</Text>
-                        <Text style={styles.statValue}>{user.forestCount}</Text>
+                    <View style={styles.statBoxWrapper}>
+                        <Image
+                            source={require("@/../assets/wooden-view.png")}
+                            style={styles.statBoxBackground}
+                        />
+                        <View style={styles.statBox}>
+                            <Text style={styles.statLabel}>友達の数</Text>
+                            <Text style={styles.statValue}>{user.forestCount}</Text>
+                        </View>
                     </View>
-                    <View style={styles.statBox}>
-                        <Text style={styles.statLabel}>関係性</Text>
-                        <Text style={styles.statValue}>{user.treeCount}</Text>
+                    <View style={styles.statBoxWrapper}>
+                        <Image
+                            source={require("@/../assets/wooden-view.png")}
+                            style={styles.statBoxBackground}
+                        />
+                        <View style={styles.statBox}>
+                            <Text style={styles.statLabel}>関係の数</Text>
+                            <Text style={styles.statValue}>{user.treeCount}</Text>
+                        </View>
                     </View>
                 </View>
             </ScrollView>

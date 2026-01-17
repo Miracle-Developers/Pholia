@@ -8,11 +8,11 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalContent: {
-    backgroundColor: "white",
-    borderRadius: 12,
+    backgroundColor: "#F5F8E8",
+    borderRadius: 20,
     width: "85%",
     maxWidth: 320,
-    padding: 20,
+    padding: 24,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#333",
+    color: "#8B6F47",
   },
   inputContainer: {
     marginBottom: 20,
@@ -34,26 +34,28 @@ export const styles = StyleSheet.create({
   label: {
     fontSize: 13,
     fontWeight: "600",
-    color: "#666",
+    color: "#8B6F47",
     marginBottom: 8,
   },
   passwordInput: {
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#DDD",
+    borderColor: "#D4C5A0",
     borderRadius: 8,
     paddingRight: 12,
+    backgroundColor: "#FFFEF7",
   },
   input: {
     flex: 1,
     paddingHorizontal: 12,
     paddingVertical: 10,
     fontSize: 14,
-    color: "#333",
+    color: "#8B6F47",
   },
   eyeIcon: {
     padding: 4,
+    color: "#8B6F47",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -61,7 +63,7 @@ export const styles = StyleSheet.create({
   },
   cancelButton: {
     flex: 1,
-    backgroundColor: "#E8E8E8",
+    backgroundColor: "#D4C5A0",
     paddingVertical: 10,
     borderRadius: 8,
     alignItems: "center",
@@ -69,11 +71,11 @@ export const styles = StyleSheet.create({
   cancelButtonText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#333",
+    color: "#FFFFFF",
   },
   saveButton: {
     flex: 1,
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#8B6F47",
     paddingVertical: 10,
     borderRadius: 8,
     alignItems: "center",

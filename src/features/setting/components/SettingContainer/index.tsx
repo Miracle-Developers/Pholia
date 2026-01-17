@@ -113,6 +113,16 @@ export const SettingContainer = () => {
         }
     };
 
+    const handleLogout = async () => {
+        try {
+            await auth.setToken(null);
+            await auth.setUserId(null);
+            router.replace("/");
+        } catch (error) {
+            Alert.alert("エラー", "ログアウトに失敗しました");
+        }
+    };
+
     return (
         <View style={styles.container}>
             <StatusBar style="dark" />
@@ -135,10 +145,15 @@ export const SettingContainer = () => {
                                 source={{
                                     uri: profile.getAvatarUrl(user.avatarFileKey) || ""
                                 }}
-                                style={{ width: 80, height: 80, borderRadius: 40 }}
+                                style={styles.avatarImage}
+                                resizeMode="contain"
                             />
                         ) : (
-                            <MaterialIcons name="account-circle" size={80} color="#CCC" />
+                            <Image
+                                source={require("@/../assets/logo.png")}
+                                style={styles.avatarImage}
+                                resizeMode="contain"
+                            />
                         )}
                         <View style={styles.editBadge}>
                             <MaterialIcons name="edit" size={16} color="white" />
@@ -157,13 +172,13 @@ export const SettingContainer = () => {
                         onPress={() => setEditNameVisible(true)}
                     >
                         <View style={styles.settingItemLabel}>
-                            <MaterialIcons name="person" size={20} color="#333" />
+                            <MaterialIcons name="person" size={20} color="#8B6F47" />
                             <View style={styles.settingLabelContainer}>
                                 <Text style={styles.settingLabel}>ユーザー名</Text>
                                 <Text style={styles.settingValue}>{user.name}</Text>
                             </View>
                         </View>
-                        <MaterialIcons name="chevron-right" size={24} color="#999" />
+                        <MaterialIcons name="chevron-right" size={24} color="#8B6F47" />
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -171,13 +186,13 @@ export const SettingContainer = () => {
                         onPress={() => setEditUserIdVisible(true)}
                     >
                         <View style={styles.settingItemLabel}>
-                            <MaterialIcons name="tag" size={20} color="#333" />
+                            <MaterialIcons name="tag" size={20} color="#8B6F47" />
                             <View style={styles.settingLabelContainer}>
                                 <Text style={styles.settingLabel}>ユーザーID</Text>
                                 <Text style={styles.settingValue}>@{user.userId}</Text>
                             </View>
                         </View>
-                        <MaterialIcons name="chevron-right" size={24} color="#999" />
+                        <MaterialIcons name="chevron-right" size={24} color="#8B6F47" />
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -185,13 +200,13 @@ export const SettingContainer = () => {
                         onPress={() => setEditEmailVisible(true)}
                     >
                         <View style={styles.settingItemLabel}>
-                            <MaterialIcons name="mail" size={20} color="#333" />
+                            <MaterialIcons name="mail" size={20} color="#8B6F47" />
                             <View style={styles.settingLabelContainer}>
                                 <Text style={styles.settingLabel}>メールアドレス</Text>
                                 <Text style={styles.settingValue}>{user.email}</Text>
                             </View>
                         </View>
-                        <MaterialIcons name="chevron-right" size={24} color="#999" />
+                        <MaterialIcons name="chevron-right" size={24} color="#8B6F47" />
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -199,7 +214,7 @@ export const SettingContainer = () => {
                         onPress={() => setEditBioVisible(true)}
                     >
                         <View style={styles.settingItemLabel}>
-                            <MaterialIcons name="subject" size={20} color="#333" />
+                            <MaterialIcons name="subject" size={20} color="#8B6F47" />
                             <View style={styles.settingLabelContainer}>
                                 <Text style={styles.settingLabel}>一言</Text>
                                 <Text style={styles.settingValue} numberOfLines={1}>
@@ -207,7 +222,7 @@ export const SettingContainer = () => {
                                 </Text>
                             </View>
                         </View>
-                        <MaterialIcons name="chevron-right" size={24} color="#999" />
+                        <MaterialIcons name="chevron-right" size={24} color="#8B6F47" />
                     </TouchableOpacity>
                 </View>
 
@@ -221,14 +236,23 @@ export const SettingContainer = () => {
                         onPress={() => setEditPasswordVisible(true)}
                     >
                         <View style={styles.settingItemLabel}>
-                            <MaterialIcons name="lock" size={20} color="#333" />
+                            <MaterialIcons name="lock" size={20} color="#8B6F47" />
                             <Text style={styles.settingLabel}>パスワード変更</Text>
                         </View>
-                        <MaterialIcons name="chevron-right" size={24} color="#999" />
+                        <MaterialIcons name="chevron-right" size={24} color="#8B6F47" />
                     </TouchableOpacity>
-                </View>
 
-                <View style={styles.settingSection}>
+                    <TouchableOpacity
+                        style={[styles.settingItem, styles.settingItemLogout]}
+                        onPress={handleLogout}
+                    >
+                        <View style={styles.settingItemLabel}>
+                            <MaterialIcons name="logout" size={20} color="#8B6F47" />
+                            <Text style={styles.settingLabel}>ログアウト</Text>
+                        </View>
+                        <MaterialIcons name="chevron-right" size={24} color="#8B6F47" />
+                    </TouchableOpacity>
+
                     <TouchableOpacity
                         style={[styles.settingItem, styles.settingItemDanger]}
                         onPress={() => setDeleteAccountVisible(true)}

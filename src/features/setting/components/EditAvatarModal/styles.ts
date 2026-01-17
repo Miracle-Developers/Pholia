@@ -8,11 +8,11 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalContent: {
-    backgroundColor: "white",
-    borderRadius: 12,
+    backgroundColor: "#F5F8E8",
+    borderRadius: 20,
     width: "85%",
     maxWidth: 300,
-    padding: 20,
+    padding: 24,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#333",
+    color: "#8B6F47",
   },
   optionContainer: {
     marginBottom: 20,
@@ -37,13 +37,15 @@ export const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 12,
     marginBottom: 12,
-    backgroundColor: "#F8F8F8",
+    backgroundColor: "#FFFEF7",
     borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#D4C5A0",
   },
   optionText: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#333",
+    color: "#8B6F47",
     marginTop: 8,
   },
   buttonContainer: {
@@ -52,7 +54,7 @@ export const styles = StyleSheet.create({
   },
   cancelButton: {
     flex: 1,
-    backgroundColor: "#E8E8E8",
+    backgroundColor: "#D4C5A0",
     paddingVertical: 10,
     borderRadius: 8,
     alignItems: "center",
@@ -60,11 +62,11 @@ export const styles = StyleSheet.create({
   cancelButtonText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#333",
+    color: "#FFFFFF",
   },
   saveButton: {
     flex: 1,
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#8B6F47",
     paddingVertical: 10,
     borderRadius: 8,
     alignItems: "center",
