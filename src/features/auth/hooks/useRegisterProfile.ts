@@ -1,8 +1,8 @@
-import { useCallback } from "react";
 import type { RegisterProfileFormData } from "@/application/auth/types";
 import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
 import { registerProfile } from "@/provider/auth/registerProfileProvider";
+import { useCallback } from "react";
 
 export function useRegisterProfile() {
   const { goToLogin, goToRegister, goToHome } = useRouterNavigation();
@@ -38,9 +38,17 @@ export function useRegisterProfile() {
         });
       } catch (err: any) {
         console.error("Register failed", err);
+        
+        let errorMessage = err?.message || String(err);
+        
+        // 409エラー（すでに存在するユーザー）
+        if (err?.status === 409 || err?.message?.includes("409")) {
+          errorMessage = "このメールアドレスまたはユーザーIDは既に登録されています";
+        }
+        
         showToast({
           title: "登録に失敗しました",
-          message: err?.message || String(err),
+          message: errorMessage,
         });
       }
     },

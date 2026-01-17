@@ -22,12 +22,23 @@ export async function registerProfileAndLogin(
 
   const idValue = input.userId?.startsWith("@") ? input.userId.slice(1) : input.userId;
 
-  const registerRes = await api.registerUser({
-    id: idValue,
-    name: input.name,
-    email: registration.email ?? "",
-    password: registration.password ?? "",
-  });
+  try {
+    const registerRes = await api.registerUser({
+      id: idValue,
+      name: input.name,
+      email: registration.email ?? "",
+      password: registration.password ?? "",
+    });
+  } catch (registerErr: any) {
+    console.error("Registration failed", registerErr);
+    // 409エラーを上位に伝播させる
+    if (registerErr?.status === 409 || registerErr?.message?.includes("409")) {
+      const error = new Error("このメールアドレスまたはユーザーIDは既に登録されています");
+      (error as any).status = 409;
+      throw error;
+    }
+    throw registerErr;
+  }
 
   try {
     const loginRes = await api.login({

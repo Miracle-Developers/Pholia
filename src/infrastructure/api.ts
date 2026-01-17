@@ -50,7 +50,9 @@ async function request<T>(
 
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`API ${method} ${path} failed: ${res.status} ${text}`);
+    const error = new Error(`API ${method} ${path} failed: ${res.status} ${text}`);
+    (error as any).status = res.status;
+    throw error;
   }
 
   const contentType = res.headers.get('content-type') || '';
