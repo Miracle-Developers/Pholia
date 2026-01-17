@@ -2,24 +2,69 @@ import { useRouterNavigation } from "@/hooks/useRouter";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 import { styles } from "@/features/profile/ProfileContainer/styles";
-
+import * as auth from "@/infrastructure/auth";
+import * as profile from "@/infrastructure/profile";
 
 export const ProfileContainer = () => {
     const router = useRouter();
     const { goToSetting } = useRouterNavigation();
+    const [isLoading, setIsLoading] = useState(true);
 
-    // TODO: 実際のユーザーデータはAPI/ストレージから取得する
-    const user = {
-        name: "ぽっぽ",
-        userId: "poppo_123",
-        email: "poppo@example.com",
-        joinDate: "2025年11月28日から利用しています",
+    const [user, setUser] = useState({
+        name: "",
+        userId: "",
+        email: "",
+        joinDate: "",
         bio: "",
-        friendCount: 25,
-        relationCount: 40,
+        forestCount: 0,
+        treeCount: 0,
+        avatarFileKey: null as string | null,
+    });
+
+    useEffect(() => {
+        const loadProfileData = async () => {
+            try {
+                setIsLoading(true);
+
+                let userId = auth.getUserId();
+                if (!userId) {
+                    userId = await auth.restoreUserId();
+                }
+
+                if (!userId) {
+                    console.warn("ユーザーIDが見つかりません");
+                    return;
+                }
+
+                const userData = await profile.loadUserProfile(userId);
+                if (userData) {
+                    setUser({
+                        name: userData.name,
+                        userId: userData.userId,
+                        email: userData.email,
+                        joinDate: userData.joinDate || "",
+                        bio: userData.bio || "",
+                        forestCount: userData.forestCount || 0,
+                        treeCount: userData.treeCount || 0,
+                        avatarFileKey: userData.avatarFileKey,
+                    });
+                }
+            } catch (error) {
+                console.warn("プロフィールデータの読み込みに失敗:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadProfileData();
+    }, []);
+
+    const getAvatarUrl = () => {
+        return profile.getAvatarUrl(user.avatarFileKey);
     };
 
     return (
@@ -38,7 +83,14 @@ export const ProfileContainer = () => {
             <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
                 <View style={styles.avatarSection}>
                     <View style={styles.avatarContainer}>
-                        <MaterialIcons name="account-circle" size={100} color="#CCC" />
+                        {getAvatarUrl() ? (
+                            <Image
+                                source={{ uri: getAvatarUrl() || "" }}
+                                style={{ width: 100, height: 100, borderRadius: 50 }}
+                            />
+                        ) : (
+                            <MaterialIcons name="account-circle" size={100} color="#CCC" />
+                        )}
                     </View>
                 </View>
 
@@ -67,11 +119,11 @@ export const ProfileContainer = () => {
                 <View style={styles.statsContainer}>
                     <View style={styles.statBox}>
                         <Text style={styles.statLabel}>友達</Text>
-                        <Text style={styles.statValue}>{user.friendCount}</Text>
+                        <Text style={styles.statValue}>{user.forestCount}</Text>
                     </View>
                     <View style={styles.statBox}>
-                        <Text style={styles.statLabel}>関係</Text>
-                        <Text style={styles.statValue}>{user.relationCount}</Text>
+                        <Text style={styles.statLabel}>関係性</Text>
+                        <Text style={styles.statValue}>{user.treeCount}</Text>
                     </View>
                 </View>
             </ScrollView>
