@@ -66,13 +66,4 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     lineHeight: 20,
   },
-// 仮置き
-  profileButton: {
-    position: "absolute",
-    top: 40,
-    right: 20,
-    zIndex: 10,
-    padding: 8,
-  },
-// 仮置きここまで
 });
