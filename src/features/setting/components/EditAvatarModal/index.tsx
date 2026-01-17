@@ -1,24 +1,22 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
-import { Alert, Modal, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Image, Modal, Text, TouchableOpacity, View } from "react-native";
 
+import { EditAvatarModalProps } from "@/application/profile/types";
+import { updateProfile, uploadAvatar } from "@/application/profile/usecases";
 import { styles } from "@/features/setting/components/EditAvatarModal/styles";
-import * as api from "@/infrastructure/api";
+import { useToast } from "@/hooks/useToast";
 
-export type EditAvatarModalProps = {
-    visible: boolean;
-    onClose: () => void;
-    onSave: () => void;
-};
-
-export const EditAvatarModal = ({ visible, onClose, onSave }: EditAvatarModalProps) => {
+export const EditAvatarModal = ({ visible, onClose, onSave, userId }: EditAvatarModalProps) => {
+    const { showToast } = useToast();
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    const [isUploading, setIsUploading] = useState(false);
 
     const handleSelectPhoto = async () => {
         try {
             const result = await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                mediaTypes: ["images"],
                 allowsEditing: true,
                 aspect: [1, 1],
                 quality: 1,
@@ -28,7 +26,7 @@ export const EditAvatarModal = ({ visible, onClose, onSave }: EditAvatarModalPro
                 setSelectedImage(result.assets[0].uri);
             }
         } catch (error) {
-            Alert.alert("エラー", "画像の選択に失敗しました");
+            showToast({ title: "エラー", message: "画像の選択に失敗しました" });
         }
     };
 
@@ -36,7 +34,7 @@ export const EditAvatarModal = ({ visible, onClose, onSave }: EditAvatarModalPro
         try {
             const permission = await ImagePicker.requestCameraPermissionsAsync();
             if (!permission.granted) {
-                Alert.alert("権限が必要", "カメラへのアクセスが許可されていません");
+                showToast({ title: "権限が必要", message: "カメラへのアクセスが許可されていません" });
                 return;
             }
 
@@ -50,36 +48,44 @@ export const EditAvatarModal = ({ visible, onClose, onSave }: EditAvatarModalPro
                 setSelectedImage(result.assets[0].uri);
             }
         } catch (error) {
-            Alert.alert("エラー", "カメラの起動に失敗しました");
+            showToast({ title: "エラー", message: "カメラの起動に失敗しました" });
         }
     };
 
     const handleSave = async () => {
         if (selectedImage) {
+            setIsUploading(true);
             try {
                 const filename = selectedImage.split("/").pop() || "avatar.jpg";
+                const mimeType = filename.toLowerCase().endsWith(".png") ? "image/png" : "image/jpeg";
 
                 const file = {
                     uri: selectedImage,
                     name: filename,
-                    type: "image/jpeg",
+                    type: mimeType,
                 };
 
-                const response = await api.uploadAvatar(file);
+                const response = await uploadAvatar(userId, file);
 
                 if (response?.file_key) {
-                    Alert.alert("成功", "プロフィール画像が更新されました");
+                    await updateProfile(userId, { avatar_url: response.file_key });
+
+                    showToast({ title: "成功", message: "プロフィール画像が更新されました" });
                     setSelectedImage(null);
+                    setIsUploading(false);
                     onSave();
                 } else {
-                    Alert.alert("エラー", "画像のアップロードに失敗しました");
+                    showToast({ title: "エラー", message: "画像のアップロードに失敗しました" });
+                    setIsUploading(false);
                 }
-            } catch (error) {
+            } catch (error: any) {
                 console.error("Avatar upload error:", error);
-                Alert.alert("エラー", "画像のアップロード中にエラーが発生しました");
+                const errorMsg = error?.message || "画像のアップロード中にエラーが発生しました";
+                showToast({ title: "エラー", message: errorMsg});
+                setIsUploading(false);
             }
         } else {
-            Alert.alert("選択してください", "画像を選択してください");
+            showToast({ title: "選択してください", message: "画像を選択してください" });
         }
     };
 
@@ -99,23 +105,36 @@ export const EditAvatarModal = ({ visible, onClose, onSave }: EditAvatarModalPro
                         <Text style={styles.modalTitle}>プロフィール画像を変更</Text>
                     </View>
 
-                    <View style={styles.optionContainer}>
-                        <TouchableOpacity
-                            style={styles.optionButton}
-                            onPress={handleTakePhoto}
-                        >
-                            <MaterialIcons name="camera-alt" size={32} color="#333" />
-                            <Text style={styles.optionText}>カメラで撮影</Text>
-                        </TouchableOpacity>
+                    {selectedImage && (
+                        <View style={styles.imagePreviewContainer}>
+                            <Image
+                                source={{ uri: selectedImage }}
+                                style={styles.imagePreview}
+                            />
+                        </View>
+                    )}
 
-                        <TouchableOpacity
-                            style={styles.optionButton}
-                            onPress={handleSelectPhoto}
-                        >
-                            <MaterialIcons name="image" size={32} color="#333" />
-                            <Text style={styles.optionText}>ギャラリーから選択</Text>
-                        </TouchableOpacity>
-                    </View>
+                    {!selectedImage && (
+                        <View style={styles.optionContainer}>
+                            <TouchableOpacity
+                                style={styles.optionButton}
+                                onPress={handleTakePhoto}
+                                disabled={isUploading}
+                            >
+                                <MaterialIcons name="camera-alt" size={32} color="#333" />
+                                <Text style={styles.optionText}>カメラで撮影</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                style={styles.optionButton}
+                                onPress={handleSelectPhoto}
+                                disabled={isUploading}
+                            >
+                                <MaterialIcons name="image" size={32} color="#333" />
+                                <Text style={styles.optionText}>ギャラリーから選択</Text>
+                            </TouchableOpacity>
+                        </View>
+                    )}
 
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
@@ -124,15 +143,29 @@ export const EditAvatarModal = ({ visible, onClose, onSave }: EditAvatarModalPro
                                 setSelectedImage(null);
                                 onClose();
                             }}
+                            disabled={isUploading}
                         >
                             <Text style={styles.cancelButtonText}>キャンセル</Text>
                         </TouchableOpacity>
                         {selectedImage && (
                             <TouchableOpacity
-                                style={styles.saveButton}
+                                style={[styles.saveButton, isUploading && { opacity: 0.6 }]}
                                 onPress={handleSave}
+                                disabled={isUploading}
                             >
-                                <Text style={styles.saveButtonText}>保存</Text>
+                                {isUploading ? (
+                                    <ActivityIndicator color="#fff" />
+                                ) : (
+                                    <Text style={styles.saveButtonText}>保存</Text>
+                                )}
+                            </TouchableOpacity>
+                        )}
+                        {selectedImage && !isUploading && (
+                            <TouchableOpacity
+                                style={styles.cancelButton}
+                                onPress={() => setSelectedImage(null)}
+                            >
+                                <Text style={styles.cancelButtonText}>やり直す</Text>
                             </TouchableOpacity>
                         )}
                     </View>

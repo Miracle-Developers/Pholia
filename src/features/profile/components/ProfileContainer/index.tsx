@@ -4,14 +4,18 @@ import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-import { getAvatarUrl } from "@/application/profile/usecases";
 import { styles } from "@/features/profile/components/ProfileContainer/styles";
 import { useLoadProfile } from "@/features/profile/hooks/useLoadProfile";
+import * as profile from "@/infrastructure/profile";
 
 export const ProfileContainer = () => {
     const router = useRouter();
     const { goToSetting } = useRouterNavigation();
     const { isLoading, user } = useLoadProfile();
+
+    const getAvatarUrl = () => {
+        return profile.getAvatarUrl(user.avatarFileKey);
+    };
 
     return (
         <View style={styles.container}>
@@ -29,9 +33,9 @@ export const ProfileContainer = () => {
             <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
                 <View style={styles.avatarSection}>
                     <View style={styles.avatarContainer}>
-                        {getAvatarUrl(user.avatarFileKey) ? (
+                        {getAvatarUrl() ? (
                             <Image
-                                source={{ uri: getAvatarUrl(user.avatarFileKey) || "" }}
+                                source={{ uri: getAvatarUrl() || "" }}
                                 style={styles.avatarImage}
                                 resizeMode="contain"
                             />

@@ -1,46 +1,15 @@
+import { UserProfile } from "@/application/profile/types";
 import * as api from "@/infrastructure/api";
-
-export type UserProfile = {
-    name: string;
-    userId: string;
-    email: string;
-    bio?: string;
-    avatarFileKey: string | null;
-    joinDate?: string;
-    forestCount?: number;
-    treeCount?: number;
-};
+import { ApiStatsResponse, ApiUserResponse } from "@/infrastructure/api";
 
 /**
- * ユーザープロフィールを取得
+ * ユーザープロフィール情報を取得
  */
-export async function loadUserProfile(userId: string): Promise<UserProfile | null> {
+export async function loadUserProfile(userId: string): Promise<ApiUserResponse | null> {
     try {
-        // まずgetUser()でプロフィール情報を取得
-        const userData = await api.getUser(userId);
+        const userData = await api.getUser(userId) as ApiUserResponse;
         if (!userData) return null;
-
-        // 統計情報を取得
-        let stats: any = {};
-        try {
-            stats = await api.getUserStats(userId);
-        } catch (statsError) {
-            console.warn("Failed to load user stats:", statsError);
-        }
-
-        const data = userData as any;
-        return {
-            name: data.name || "ユーザー",
-            userId: data.user_handle || userId,
-            email: data.email || "",
-            bio: data.bio || "",
-            avatarFileKey: data.avatar_url ? extractFileKeyFromUrl(data.avatar_url) : null,
-            joinDate: data.created_at
-                ? `${new Date(data.created_at).getFullYear()}年${new Date(data.created_at).getMonth() + 1}月${new Date(data.created_at).getDate()}日から利用しています`
-                : "取得できませんでした",
-            forestCount: stats.friends_count || 0,
-            treeCount: stats.tree_count || 0,
-        };
+        return userData;
     } catch (error) {
         console.error("Failed to load user profile:", error);
         return null;
@@ -48,66 +17,25 @@ export async function loadUserProfile(userId: string): Promise<UserProfile | nul
 }
 
 /**
- * ユーザー名を更新
+ * ユーザーの統計情報を取得
  */
-export async function updateUserName(userId: string, name: string): Promise<boolean> {
+export async function getUserStats(userId: string): Promise<ApiStatsResponse> {
     try {
-        await api.updateUserSettings(userId, { name });
-        return true;
+        return (await api.getUserStats(userId)) as ApiStatsResponse;
     } catch (error) {
-        console.error("Failed to update user name:", error);
-        throw error;
+        console.warn("Failed to load user stats:", error);
+        return {};
     }
 }
 
 /**
- * ユーザーIDを更新
+ * ユーザー情報を更新
  */
-export async function updateUserId(userId: string, newUserId: string): Promise<boolean> {
+export async function updateUser(userId: string, data: Record<string, unknown>): Promise<void> {
     try {
-        await api.updateUserSettings(userId, { user_handle: newUserId });
-        return true;
+        await api.updateUser(userId, data);
     } catch (error) {
-        console.error("Failed to update user ID:", error);
-        throw error;
-    }
-}
-
-/**
- * メールアドレスを更新
- */
-export async function updateUserEmail(userId: string, email: string): Promise<boolean> {
-    try {
-        await api.updateUserSettings(userId, { email });
-        return true;
-    } catch (error) {
-        console.error("Failed to update email:", error);
-        throw error;
-    }
-}
-
-/**
- * 一言（バイオ）を更新
- */
-export async function updateUserBio(userId: string, bio: string): Promise<boolean> {
-    try {
-        await api.updateUserSettings(userId, { bio });
-        return true;
-    } catch (error) {
-        console.error("Failed to update bio:", error);
-        throw error;
-    }
-}
-
-/**
- * パスワードを変更
- */
-export async function changePassword(userId: string, password: string): Promise<boolean> {
-    try {
-        await api.updateUser(userId, { password });
-        return true;
-    } catch (error) {
-        console.error("Failed to change password:", error);
+        console.error("Failed to update user:", error);
         throw error;
     }
 }
@@ -115,13 +43,13 @@ export async function changePassword(userId: string, password: string): Promise<
 /**
  * プロフィール画像をアップロード
  */
-export async function uploadProfileAvatar(file: {
+export async function uploadProfileAvatar(userId: string, file: {
     uri: string;
     name: string;
     type: string;
 }): Promise<string | null> {
     try {
-        const response = await api.uploadAvatar(file);
+        const response = await api.uploadAvatar(userId, file);
         return response.file_key || null;
     } catch (error) {
         console.error("Failed to upload avatar:", error);
@@ -145,21 +73,6 @@ export async function deleteAccount(userId: string): Promise<boolean> {
 /**
  * プロフィール画像のURLを取得
  */
-/**
- * URLからファイルキーを抽出（R2形式）
- */
-function extractFileKeyFromUrl(url: string): string | null {
-    if (!url) return null;
-    // URLがすでにファイルキーの場合
-    if (!url.includes("/")) return url;
-    // /files/keyの形式から keyを抽出
-    const match = url.match(/\/files\/(.+)$/);
-    return match ? match[1] : null;
-}
-
-/**
- * プロフィール画像のURLを取得
- */
 export function getAvatarUrl(avatarFileKey: string | null): string | null {
     if (!avatarFileKey) return null;
     const baseUrl = process.env.EXPO_PUBLIC_API_URL || "https://pholia-back.hanpenneko.workers.dev";
@@ -168,12 +81,12 @@ export function getAvatarUrl(avatarFileKey: string | null): string | null {
 
 export default {
     loadUserProfile,
-    updateUserName,
-    updateUserId,
-    updateUserEmail,
-    updateUserBio,
-    changePassword,
+    getUserStats,
+    updateUser,
     uploadProfileAvatar,
     deleteAccount,
     getAvatarUrl,
 };
+
+export type { UserProfile };
+

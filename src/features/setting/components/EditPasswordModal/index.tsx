@@ -1,9 +1,10 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
-import { Alert, Modal, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Modal, Text, TextInput, TouchableOpacity, View } from "react-native";
 
+import { updatePassword } from "@/application/profile/usecases";
 import { styles } from "@/features/setting/components/EditPasswordModal/styles";
-import * as profile from "@/infrastructure/profile";
+import { useToast } from "@/hooks/useToast";
 
 export type EditPasswordModalProps = {
     visible: boolean;
@@ -13,27 +14,34 @@ export type EditPasswordModalProps = {
 };
 
 export const EditPasswordModal = ({ visible, onClose, onSave, userId }: EditPasswordModalProps) => {
-    const [password, setPassword] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
+    const { showToast } = useToast();
+    const [currentPassword, setCurrentPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSave = async () => {
-        if (password.trim()) {
+        if (currentPassword.trim() && newPassword.trim()) {
             try {
                 setIsLoading(true);
 
-                await profile.changePassword(userId, password);
+                await updatePassword(userId, currentPassword, newPassword);
 
-                Alert.alert("成功", "パスワードが変更されました");
-                onSave(password);
-                setPassword("");
-                setShowPassword(false);
+                showToast({ title: "成功", message: "パスワードが変更されました" });
+                onSave(newPassword);
+                setCurrentPassword("");
+                setNewPassword("");
+                setShowCurrentPassword(false);
+                setShowNewPassword(false);
             } catch (error) {
                 console.error("Password change error:", error);
-                Alert.alert("エラー", "パスワード変更に失敗しました");
+                showToast({ title: "エラー", message: "パスワード変更に失敗しました" });
             } finally {
                 setIsLoading(false);
             }
+        } else {
+            showToast({ title: "入力してください", message: "現在のパスワードと新しいパスワードの両方を入力してください" });
         }
     };
 
@@ -42,7 +50,13 @@ export const EditPasswordModal = ({ visible, onClose, onSave, userId }: EditPass
             visible={visible}
             transparent
             animationType="fade"
-            onRequestClose={onClose}
+            onRequestClose={() => {
+                setCurrentPassword("");
+                setNewPassword("");
+                setShowCurrentPassword(false);
+                setShowNewPassword(false);
+                onClose();
+            }}
         >
             <View style={styles.modalOverlay}>
                 <View style={styles.modalContent}>
@@ -51,22 +65,48 @@ export const EditPasswordModal = ({ visible, onClose, onSave, userId }: EditPass
                     </View>
 
                     <View style={styles.inputContainer}>
-                        <Text style={styles.label}>パスワード</Text>
+                        <Text style={styles.label}>現在のパスワード</Text>
+                        <View style={styles.passwordInput}>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="現在のパスワード"
+                                value={currentPassword}
+                                onChangeText={setCurrentPassword}
+                                secureTextEntry={!showCurrentPassword}
+                                placeholderTextColor="#CCC"
+                                editable={!isLoading}
+                            />
+                            <TouchableOpacity
+                                onPress={() => setShowCurrentPassword(!showCurrentPassword)}
+                                style={styles.eyeIcon}
+                            >
+                                <MaterialIcons
+                                    name={showCurrentPassword ? "visibility" : "visibility-off"}
+                                    size={20}
+                                    color="#999"
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>新しいパスワード</Text>
                         <View style={styles.passwordInput}>
                             <TextInput
                                 style={styles.input}
                                 placeholder="※英数記号のみ。8文字以上"
-                                value={password}
-                                onChangeText={setPassword}
-                                secureTextEntry={!showPassword}
+                                value={newPassword}
+                                onChangeText={setNewPassword}
+                                secureTextEntry={!showNewPassword}
                                 placeholderTextColor="#CCC"
+                                editable={!isLoading}
                             />
                             <TouchableOpacity
-                                onPress={() => setShowPassword(!showPassword)}
+                                onPress={() => setShowNewPassword(!showNewPassword)}
                                 style={styles.eyeIcon}
                             >
                                 <MaterialIcons
-                                    name={showPassword ? "visibility" : "visibility-off"}
+                                    name={showNewPassword ? "visibility" : "visibility-off"}
                                     size={20}
                                     color="#999"
                                 />
@@ -77,13 +117,20 @@ export const EditPasswordModal = ({ visible, onClose, onSave, userId }: EditPass
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
                             style={styles.cancelButton}
-                            onPress={onClose}
+                            onPress={() => {
+                                setCurrentPassword("");
+                                setNewPassword("");
+                                setShowCurrentPassword(false);
+                                setShowNewPassword(false);
+                                onClose();
+                            }}
                         >
                             <Text style={styles.cancelButtonText}>キャンセル</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.saveButton}
                             onPress={handleSave}
+                            disabled={isLoading}
                         >
                             <Text style={styles.saveButtonText}>保存</Text>
                         </TouchableOpacity>
