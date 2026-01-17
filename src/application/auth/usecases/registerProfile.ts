@@ -1,6 +1,6 @@
+import * as registrationTemp from "@/application/auth/state/registrationTemp";
 import * as api from "@/infrastructure/api";
 import * as auth from "@/infrastructure/auth";
-import * as registrationTemp from "@/application/auth/state/registrationTemp";
 
 type RegisterProfileInput = {
   userId?: string;
@@ -22,7 +22,7 @@ export async function registerProfileAndLogin(
 
   const idValue = input.userId?.startsWith("@") ? input.userId.slice(1) : input.userId;
 
-  await api.registerUser({
+  const registerRes = await api.registerUser({
     id: idValue,
     name: input.name,
     email: registration.email ?? "",
@@ -36,6 +36,12 @@ export async function registerProfileAndLogin(
     });
     if (loginRes?.token) {
       auth.setToken(loginRes.token);
+
+      const userId = idValue || (loginRes as any)?.user?.id || (loginRes as any)?.user_id;
+      if (userId) {
+        auth.setUserId(userId);
+      }
+
       registrationTemp.clearTemp();
       return { status: "auto-login-success" };
     }
