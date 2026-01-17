@@ -17,17 +17,13 @@ export async function loginAndStoreToken(payload: LoginPayload): Promise<LoginRe
     auth.setToken(res.token);
 
     if (res?.user?.id) {
-      auth.setUserId(res.user.id);
-    } else if (res?.user_id) {
-      auth.setUserId(res.user_id);
-    } else if (res?.userId) {
-      auth.setUserId(res.userId);
+      auth.setUserId(String(res.user.id));
     }
 
     return {
       status: "success",
       token: res.token,
-      userId: res?.user?.id || res?.user_id || res?.userId
+      userId: res?.user?.id ? String(res.user.id) : undefined
     };
   }
 

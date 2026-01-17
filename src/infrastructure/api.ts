@@ -5,10 +5,22 @@ import * as auth from "@/infrastructure/auth";
 type JsonBody = Record<string, unknown> | ReadonlyArray<unknown>;
 
 type LoginResponse = {
-  token?: string;
-  user?: { id?: string };
-  user_id?: string;
-  userId?: string;
+  user?: ApiUserResponse;
+  token: string;
+};
+
+export type ApiUserResponse = {
+  id: number;
+  name: string;
+  user_handle: string;
+  email: string;
+  avatar_url: string | null;
+  created_at: string;
+};
+
+export type ApiStatsResponse = {
+  friends_count?: number;
+  tree_count?: number;
 };
 
 // HTTP リクエストの共通処理
@@ -101,31 +113,23 @@ export async function getUserStats(userId: string) {
   return request(`/users/${encodeURIComponent(userId)}/stats`);
 }
 
-export async function updateUserSettings(userId: string, payload: Record<string, unknown>) {
-  return request(`/users/${encodeURIComponent(userId)}/settings`, "POST", payload);
-}
-
 export async function getUserSettings(userId: string) {
   return request(`/users/${encodeURIComponent(userId)}/settings`, "GET");
 }
 
-export async function uploadAvatar(file: {
+export async function uploadAvatar(userId: string, file: {
   uri: string;
   name: string;
   type: string;
 }) {
   const formData = new FormData();
-  formData.append("file", {
-    uri: file.uri,
-    name: file.name,
-    type: file.type,
-  } as any);
+  formData.append("file", file as unknown as Blob);
 
   const headers: Record<string, string> = {};
   const token = auth.getToken();
   if (token) headers.Authorization = `Bearer ${token}`;
 
-  const res = await fetch(`${BASE_URL}/leaves`, {
+  const res = await fetch(`${BASE_URL}/users/${encodeURIComponent(userId)}/avatar`, {
     method: "POST",
     headers,
     body: formData,
@@ -136,7 +140,8 @@ export async function uploadAvatar(file: {
     throw new Error(`Avatar upload failed: ${res.status} ${text}`);
   }
 
-  return (await res.json()) as { file_key: string };
+  const response = (await res.json()) as ApiUserResponse;
+  return { file_key: response.avatar_url || "" };
 }
 
 export async function updateUser(userId: string, payload: Record<string, unknown>) {
@@ -147,4 +152,4 @@ export async function deleteUser(userId: string) {
   return request(`/users/${encodeURIComponent(userId)}`, "DELETE");
 }
 
-export default { login, registerUser, getUser, getUserStats, updateUserSettings, getUserSettings, uploadAvatar, updateUser, deleteUser };
+export default { login, registerUser, getUser, getUserStats, getUserSettings, uploadAvatar, updateUser, deleteUser };

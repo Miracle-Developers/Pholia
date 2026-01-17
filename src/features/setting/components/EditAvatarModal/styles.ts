@@ -28,6 +28,18 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#8B6F47",
   },
+  imagePreviewContainer: {
+    marginBottom: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  imagePreview: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    borderWidth: 2,
+    borderColor: "#8B6F47",
+  },
   optionContainer: {
     marginBottom: 20,
   },

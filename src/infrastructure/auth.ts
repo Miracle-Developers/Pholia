@@ -3,6 +3,22 @@ let _userId: string | null = null;
 const TOKEN_KEY = "pholia_token";
 const USER_ID_KEY = "pholia_user_id";
 
+/**
+ * JWTトークンをデコードしてペイロードを取得
+ */
+function decodeToken(token: string): Record<string, any> | null {
+  try {
+    const parts = token.split(".");
+    if (parts.length !== 3) return null;
+    
+    const decoded = atob(parts[1]);
+    return JSON.parse(decoded);
+  } catch (error) {
+    console.warn("Token decode error:", error);
+    return null;
+  }
+}
+
 export function setToken(t: string | null) {
   _token = t;
 
@@ -75,11 +91,25 @@ export async function restoreUserId() {
     const SecureStore = await import("expo-secure-store");
     if (SecureStore && typeof SecureStore.getItemAsync === "function") {
       const id = await SecureStore.getItemAsync(USER_ID_KEY);
-      _userId = id;
-      return id;
+      if (id) {
+        _userId = id;
+        return id;
+      }
     }
   } catch (e) {
     console.warn("SecureStoreでのuserId復元エラー:", e);
+  }
+
+  // トークンがあればトークンから復元
+  const token = _token || (await restoreToken());
+  if (token) {
+    const payload = decodeToken(token);
+    if (payload?.sub || payload?.id) {
+      const userId = String(payload.sub || payload.id);
+      _userId = userId;
+      setUserId(userId);
+      return userId;
+    }
   }
 
   return null;
