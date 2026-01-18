@@ -1,6 +1,7 @@
-const BASE_URL = typeof process !== 'undefined' && process.env?.PHOLIA_API_URL ? process.env.PHOLIA_API_URL : 'https://pholia-back.hanpenneko.workers.dev';
-
 import * as auth from "@/infrastructure/auth";
+import { getApiBaseUrl } from "@/utils/apiBaseUrl";
+
+const BASE_URL = getApiBaseUrl();
 
 type JsonBody = Record<string, unknown> | ReadonlyArray<unknown>;
 
@@ -23,6 +24,20 @@ export type ApiStatsResponse = {
   tree_count?: number;
 };
 
+export type ApiLeafResponse = {
+  id: number;
+  tree_id: number;
+  uploader_id?: number;
+  uploaded_by?: number;
+  file_key?: string;
+  r2_key?: string;
+  r2_url?: string;
+  caption?: string;
+  title?: string;
+  taken_at: string;
+  created_at: string;
+};
+
 // HTTP リクエストの共通処理
 function request<T>(
   path: string,
@@ -42,6 +57,9 @@ async function request<T>(
   body?: JsonBody | BodyInit | null,
   isForm = false,
 ) {
+  if (!BASE_URL) {
+    throw new Error("EXPO_PUBLIC_API_URL is not set");
+  }
   const headers: Record<string, string> = isForm
     ? {}
     : { "Content-Type": "application/json" };
@@ -109,6 +127,11 @@ export async function getUser(id: string) {
   return request(`/users/${encodeURIComponent(id)}`);
 }
 
+export async function getLeaf(id: number | string) {
+  return request<ApiLeafResponse>(`/leaves/${encodeURIComponent(String(id))}`);
+}
+
+
 export async function getUserStats(userId: string) {
   return request(`/users/${encodeURIComponent(userId)}/stats`);
 }
@@ -152,4 +175,14 @@ export async function deleteUser(userId: string) {
   return request(`/users/${encodeURIComponent(userId)}`, "DELETE");
 }
 
-export default { login, registerUser, getUser, getUserStats, getUserSettings, uploadAvatar, updateUser, deleteUser };
+export default {
+  login,
+  registerUser,
+  getUser,
+  getLeaf,
+  getUserStats,
+  getUserSettings,
+  uploadAvatar,
+  updateUser,
+  deleteUser,
+};
