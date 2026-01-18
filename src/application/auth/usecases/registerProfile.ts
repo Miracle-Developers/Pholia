@@ -1,6 +1,6 @@
+import * as registrationTemp from "@/application/auth/state/registrationTemp";
 import * as api from "@/infrastructure/api";
 import * as auth from "@/infrastructure/auth";
-import * as registrationTemp from "@/application/auth/state/registrationTemp";
 
 type RegisterProfileInput = {
   userId?: string;
@@ -22,12 +22,23 @@ export async function registerProfileAndLogin(
 
   const idValue = input.userId?.startsWith("@") ? input.userId.slice(1) : input.userId;
 
-  await api.registerUser({
-    id: idValue,
-    name: input.name,
-    email: registration.email ?? "",
-    password: registration.password ?? "",
-  });
+  try {
+    const registerRes = await api.registerUser({
+      id: idValue,
+      name: input.name,
+      email: registration.email ?? "",
+      password: registration.password ?? "",
+    });
+  } catch (registerErr: any) {
+    console.error("Registration failed", registerErr);
+    // 409エラーを上位に伝播させる
+    if (registerErr?.status === 409 || registerErr?.message?.includes("409")) {
+      const error = new Error("このメールアドレスまたはユーザーIDは既に登録されています");
+      (error as any).status = 409;
+      throw error;
+    }
+    throw registerErr;
+  }
 
   try {
     const loginRes = await api.login({
@@ -36,6 +47,12 @@ export async function registerProfileAndLogin(
     });
     if (loginRes?.token) {
       auth.setToken(loginRes.token);
+
+      const userId = idValue || (loginRes as any)?.user?.id || (loginRes as any)?.user_id;
+      if (userId) {
+        auth.setUserId(userId);
+      }
+
       registrationTemp.clearTemp();
       return { status: "auto-login-success" };
     }
