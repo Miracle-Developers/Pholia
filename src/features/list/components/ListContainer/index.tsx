@@ -6,10 +6,14 @@ import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { BackTitle } from "@/components/BackTitle";
 import { Header } from "@/components/Header";
 import { styles } from "@/features/list/components/ListContainer/styles";
+import { useLoadLeaves } from "@/features/list/hooks/useLoadLeaves";
 import { leafItems } from "@/utils/leafItems";
 
+const leafIds = Array.from({ length: 9 }, (_, index) => index + 1);
+
 export const ListContainer = () => {
-  const [selectedLeafId, setSelectedLeafId] = useState<string | null>(null);
+  const [selectedLeafId, setSelectedLeafId] = useState<number | null>(null);
+  const { leavesById } = useLoadLeaves(leafIds);
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
@@ -35,16 +39,28 @@ export const ListContainer = () => {
 
           <View style={styles.leafGrid}>
             {leafItems.map((leaf) => {
-              const isSelected = leaf.id === selectedLeafId;
+              const isSelected = leaf.leafId === selectedLeafId;
+              const leafData = leavesById[leaf.leafId];
 
               return (
                 <TouchableOpacity
                   key={leaf.id}
                   activeOpacity={0.85}
-                  onPress={() => setSelectedLeafId(leaf.id)}
+                  onPress={() => setSelectedLeafId(leaf.leafId)}
                   style={[styles.leafItem, isSelected && styles.leafItemSelected]}
                 >
-                  <Image source={require("@/../assets/leaf.png")} style={styles.leafImage} />
+                  <View style={styles.leafImageWrapper}>
+                    <Image
+                      source={require("@/../assets/leaf.png")}
+                      style={styles.leafImage}
+                      resizeMode="contain"
+                    />
+                    {leafData?.imageUrl ? (
+                      <View style={styles.leafPhotoWrapper}>
+                        <Image source={{ uri: leafData.imageUrl }} style={styles.leafPhoto} />
+                      </View>
+                    ) : null}
+                  </View>
                 </TouchableOpacity>
               );
             })}

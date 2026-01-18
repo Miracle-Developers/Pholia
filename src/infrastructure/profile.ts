@@ -1,6 +1,7 @@
 import { UserProfile } from "@/application/profile/types";
 import * as api from "@/infrastructure/api";
 import { ApiStatsResponse, ApiUserResponse } from "@/infrastructure/api";
+import { getApiBaseUrl } from "@/utils/apiBaseUrl";
 
 /**
  * ユーザープロフィール情報を取得
@@ -75,7 +76,8 @@ export async function deleteAccount(userId: string): Promise<boolean> {
  */
 export function getAvatarUrl(avatarFileKey: string | null): string | null {
     if (!avatarFileKey) return null;
-    const baseUrl = process.env.EXPO_PUBLIC_API_URL || "https://pholia-back.hanpenneko.workers.dev";
+    const baseUrl = getApiBaseUrl();
+    if (!baseUrl) return null;
     return `${baseUrl}/files/${avatarFileKey}`;
 }
 
@@ -89,4 +91,3 @@ export default {
 };
 
 export type { UserProfile };
-
