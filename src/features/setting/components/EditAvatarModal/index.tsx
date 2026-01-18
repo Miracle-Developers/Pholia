@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ActivityIndicator, Image, Modal, Text, TouchableOpacity, View } from "react-native";
 
 import { EditAvatarModalProps } from "@/application/profile/types";
-import { updateProfile, uploadAvatar } from "@/application/profile/usecases";
+import { updateAvatarProfile } from "@/application/profile/usecases";
 import { styles } from "@/features/setting/components/EditAvatarModal/styles";
 import { useToast } from "@/hooks/useToast";
 
@@ -65,23 +65,16 @@ export const EditAvatarModal = ({ visible, onClose, onSave, userId }: EditAvatar
                     type: mimeType,
                 };
 
-                const response = await uploadAvatar(userId, file);
+                await updateAvatarProfile(userId, file);
 
-                if (response?.file_key) {
-                    await updateProfile(userId, { avatar_url: response.file_key });
-
-                    showToast({ title: "成功", message: "プロフィール画像が更新されました" });
-                    setSelectedImage(null);
-                    setIsUploading(false);
-                    onSave();
-                } else {
-                    showToast({ title: "エラー", message: "画像のアップロードに失敗しました" });
-                    setIsUploading(false);
-                }
+                showToast({ title: "成功", message: "プロフィール画像が更新されました" });
+                setSelectedImage(null);
+                setIsUploading(false);
+                onSave();
             } catch (error: any) {
                 console.error("Avatar upload error:", error);
                 const errorMsg = error?.message || "画像のアップロード中にエラーが発生しました";
-                showToast({ title: "エラー", message: errorMsg});
+                showToast({ title: "エラー", message: errorMsg });
                 setIsUploading(false);
             }
         } else {
