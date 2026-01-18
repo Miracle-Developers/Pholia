@@ -1,15 +1,22 @@
-import { useRouter } from 'expo-router';
-
 import ForestSelectionContainer from '@/features/forestSelection/components/ForestSelectionContainer';
+import { useForestSelection } from '@/features/forestSelection/hooks/useForestSelection';
 
 export default function ForestSelectionPage() {
-  const router = useRouter();
+  const { handleForestConfirm } = useForestSelection();
 
-  const handleConfirm = (forestId: number) => {
-    console.log('Selected forest:', forestId);
-    // TODO: Navigate to tree selection page
-    // router.push('/tree-selection');
+  const handleProfilePress = () => {
+    console.log('Profile pressed');
   };
 
-  return <ForestSelectionContainer onConfirm={handleConfirm} />;
+  const handleSettingsPress = () => {
+    console.log('Settings pressed');
+  };
+
+  return (
+    <ForestSelectionContainer 
+      onConfirm={handleForestConfirm}
+      onPressProfile={handleProfilePress}
+      onPressSettings={handleSettingsPress}
+    />
+  );
 }
