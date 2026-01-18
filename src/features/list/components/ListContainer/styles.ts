@@ -52,6 +52,12 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  leafImageWrapper: {
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   leafItemSelected: {
     transform: [{ scale: 1.05 }],
     shadowColor: "#5D3A1A",
@@ -63,7 +69,19 @@ export const styles = StyleSheet.create({
   leafImage: {
     width: "100%",
     height: "100%",
-    resizeMode: "contain",
+  },
+  leafPhotoWrapper: {
+    position: "absolute",
+    width: "62%",
+    height: "62%",
+    borderRadius: 12,
+    overflow: "hidden",
+    transform: [{ translateY: -2 }],
+  },
+  leafPhoto: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
   confirmButton: {
     marginTop: 24,
