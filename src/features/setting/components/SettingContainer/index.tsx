@@ -1,23 +1,29 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-import { deleteAccount, getAvatarUrl, updateProfile } from "@/application/profile/usecases";
-import { loadProfile } from "@/application/profile/usecases/loadProfile";
 import { CommonModal } from "@/features/setting/components/CommonModal";
 import { EditAvatarModal } from "@/features/setting/components/EditAvatarModal";
 import { EditPasswordModal } from "@/features/setting/components/EditPasswordModal";
 import { styles } from "@/features/setting/components/SettingContainer/styles";
-import { useToast } from "@/hooks/useToast";
-import * as auth from "@/infrastructure/auth";
+import { useProfileSettings } from "@/hooks/useProfileSettings";
 
 export const SettingContainer = () => {
     const router = useRouter();
-    const { showToast } = useToast();
-    const [isLoading, setIsLoading] = useState(true);
-    const [currentUserId, setCurrentUserId] = useState<number | null>(null);
+    const {
+        currentUserId,
+        user,
+        getAvatarUrl,
+        handleNameSave,
+        handleUserIdSave,
+        handleEmailSave,
+        handleAvatarSave,
+        handlePasswordSave,
+        handleLogout,
+        handleDeleteAccount,
+    } = useProfileSettings();
 
     const [editAvatarVisible, setEditAvatarVisible] = useState(false);
     const [editNameVisible, setEditNameVisible] = useState(false);
@@ -25,108 +31,6 @@ export const SettingContainer = () => {
     const [editEmailVisible, setEditEmailVisible] = useState(false);
     const [editPasswordVisible, setEditPasswordVisible] = useState(false);
     const [deleteAccountVisible, setDeleteAccountVisible] = useState(false);
-
-    const [user, setUser] = useState({
-        name: "",
-        userId: "",
-        email: "",
-        avatarFileKey: null as string | null,
-    });
-
-    // ユーザーデータの読み込み
-    useEffect(() => {
-        const loadUserData = async () => {
-            try {
-                setIsLoading(true);
-                const userData = await loadProfile();
-                if (userData) {
-                    setCurrentUserId(userData.id);
-                    setUser({
-                        name: userData.name,
-                        userId: userData.userId,
-                        email: userData.email,
-                        avatarFileKey: userData.avatarFileKey,
-                    });
-                }
-            } catch (error) {
-                console.warn("ユーザーデータの読み込みに失敗:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        loadUserData();
-    }, []);
-
-    const handleNameSave = async (name: string) => {
-        if (!currentUserId) return;
-        try {
-            await updateProfile(String(currentUserId), { name });
-            // 最新データを取得して画面更新
-            const userData = await loadProfile();
-            if (userData) {
-                setUser({
-                    name: userData.name,
-                    userId: userData.userId,
-                    email: userData.email,
-                    avatarFileKey: userData.avatarFileKey,
-                });
-            }
-            setEditNameVisible(false);
-        } catch (error) {
-            showToast({ title: "エラー", message: "ユーザー名の更新に失敗しました" });
-        }
-    };
-
-    const handleUserIdSave = async (userId: string) => {
-        if (!currentUserId) return;
-        try {
-            await updateProfile(String(currentUserId), { user_handle: userId });
-            // 最新データを取得して画面更新
-            const userData = await loadProfile();
-            if (userData) {
-                setUser({
-                    name: userData.name,
-                    userId: userData.userId,
-                    email: userData.email,
-                    avatarFileKey: userData.avatarFileKey,
-                });
-            }
-            setEditUserIdVisible(false);
-        } catch (error) {
-            showToast({ title: "エラー", message: "ユーザーIDの更新に失敗しました" });
-        }
-    };
-
-    const handleEmailSave = async (email: string) => {
-        if (!currentUserId) return;
-        try {
-            await updateProfile(String(currentUserId), { email });
-            // 最新データを取得して画面更新
-            const userData = await loadProfile();
-            if (userData) {
-                setUser({
-                    name: userData.name,
-                    userId: userData.userId,
-                    email: userData.email,
-                    avatarFileKey: userData.avatarFileKey,
-                });
-            }
-            setEditEmailVisible(false);
-        } catch (error) {
-            showToast({ title: "エラー", message: "メールアドレスの更新に失敗しました" });
-        }
-    };
-
-    const handleLogout = async () => {
-        try {
-            await auth.setToken(null);
-            await auth.setUserId(null);
-            router.replace("/");
-        } catch (error) {
-            showToast({ title: "エラー", message: "ログアウトに失敗しました" });
-        }
-    };
 
     return (
         <View style={styles.container}>
@@ -263,20 +167,7 @@ export const SettingContainer = () => {
                 onClose={() => setEditAvatarVisible(false)}
                 userId={String(currentUserId || "")}
                 onSave={async () => {
-                    // 最新データを取得して画面更新
-                    try {
-                        const userData = await loadProfile();
-                        if (userData) {
-                            setUser({
-                                name: userData.name,
-                                userId: userData.userId,
-                                email: userData.email,
-                                avatarFileKey: userData.avatarFileKey,
-                            });
-                        }
-                    } catch (error) {
-                        console.error("Failed to refresh user data:", error);
-                    }
+                    await handleAvatarSave();
                     setEditAvatarVisible(false);
                 }}
             />
@@ -287,7 +178,10 @@ export const SettingContainer = () => {
                 placeholder="新しいユーザー名を入力"
                 initialValue={user.name}
                 onClose={() => setEditNameVisible(false)}
-                onSave={handleNameSave}
+                onSave={async (name) => {
+                    await handleNameSave(name);
+                    setEditNameVisible(false);
+                }}
             />
 
             <CommonModal
@@ -296,7 +190,10 @@ export const SettingContainer = () => {
                 placeholder="新しいユーザーIDを入力（@なし）"
                 initialValue={user.userId}
                 onClose={() => setEditUserIdVisible(false)}
-                onSave={handleUserIdSave}
+                onSave={async (userId) => {
+                    await handleUserIdSave(userId);
+                    setEditUserIdVisible(false);
+                }}
             />
 
             <CommonModal
@@ -305,27 +202,17 @@ export const SettingContainer = () => {
                 placeholder="新しいメールアドレスを入力"
                 initialValue={user.email}
                 onClose={() => setEditEmailVisible(false)}
-                onSave={handleEmailSave}
+                onSave={async (email) => {
+                    await handleEmailSave(email);
+                    setEditEmailVisible(false);
+                }}
             />
 
             <EditPasswordModal
                 visible={editPasswordVisible}
                 onClose={() => setEditPasswordVisible(false)}
                 onSave={async (password) => {
-                    // 最新データを取得して画面更新
-                    try {
-                        const userData = await loadProfile();
-                        if (userData) {
-                            setUser({
-                                name: userData.name,
-                                userId: userData.userId,
-                                email: userData.email,
-                                avatarFileKey: userData.avatarFileKey,
-                            });
-                        }
-                    } catch (error) {
-                        console.error("Failed to refresh user data:", error);
-                    }
+                    await handlePasswordSave();
                     setEditPasswordVisible(false);
                 }}
                 userId={String(currentUserId || "")}
@@ -337,15 +224,8 @@ export const SettingContainer = () => {
                 description="このアクションは取り消すことができません。すべてのデータが削除されます。"
                 onClose={() => setDeleteAccountVisible(false)}
                 onSave={async () => {
-                    try {
-                        if (!currentUserId) return;
-                        await deleteAccount(String(currentUserId));
-                        showToast({ title: "成功", message: "アカウントが削除されました" });
-                        await auth.clearToken();
-                        router.push("/login");
-                    } catch (error) {
-                        showToast({ title: "エラー", message: "アカウント削除に失敗しました" });
-                    }
+                    await handleDeleteAccount();
+                    setDeleteAccountVisible(false);
                 }}
                 isDanger={true}
             />
