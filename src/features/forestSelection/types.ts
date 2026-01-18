@@ -1,7 +1,9 @@
+import type { ImageSourcePropType } from 'react-native';
+
 export type Forest = {
   id: number;
   name: string;
-  image: any; // require() image
+  image: ImageSourcePropType;
 };
 
 export type ForestSelectionProps = {
