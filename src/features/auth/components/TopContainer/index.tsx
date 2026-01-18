@@ -8,7 +8,7 @@ import { StatusBar } from "expo-status-bar";
 import { Image, Text, View } from "react-native";
 
 export const TopContainer = () => {
-  const { goToRegister, goToLogin, goToProfile } = useRouterNavigation();
+  const { goToRegister, goToLogin} = useRouterNavigation();
 
   return (
     <BackgroundContainer>
