@@ -1,9 +1,10 @@
-import { MaterialIcons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
+import { BackTitle } from "@/components/BackTitle";
+import { Header } from "@/components/Header";
 import { styles } from "@/features/list/components/ListContainer/styles";
 import { leafItems } from "@/utils/leafItems";
 
@@ -12,20 +13,15 @@ export const ListContainer = () => {
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
-      <View style={styles.header}>
-        <TouchableOpacity
-          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-        >
-          <MaterialIcons name="arrow-back" size={28} color="#6C4A2C" />
-        </TouchableOpacity>
-        <View style={styles.headerTitleWrapper}>
-          <Text style={styles.headerTitle}>森一覧</Text>
-          <View style={styles.headerUnderline} />
-        </View>
-        <View style={styles.headerSpacer} />
-      </View>
+      <Header
+        name="ぽっぽ"
+        userId="poppo"
+        avatarSource={require("@/../assets/logo.png")}
+        style={styles.topHeader}
+      />
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <BackTitle title="森一覧" style={styles.backTitle} />
         <View style={styles.contentTop}>
           <View style={styles.nameplateWrapper}>
             <ImageBackground

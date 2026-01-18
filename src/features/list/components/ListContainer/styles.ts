@@ -4,44 +4,27 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
+  topHeader: {
+    marginBottom: 8,
+    marginTop: 0,
+  },
+  backTitle: {
     paddingHorizontal: 16,
-    paddingTop: 16,
-  },
-  headerTitleWrapper: {
-    flex: 1,
-    alignItems: "center",
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: "700",
-    color: "#6C4A2C",
-  },
-  headerUnderline: {
-    marginTop: 6,
-    width: 64,
-    height: 3,
-    borderRadius: 2,
-    backgroundColor: "#3B8DFF",
-  },
-  headerSpacer: {
-    width: 28,
+    paddingTop: 6,
   },
   content: {
     flexGrow: 1,
-    paddingHorizontal: 20,
-    paddingTop: 12,
-    paddingBottom: 24,
-    justifyContent: "space-between",
+    paddingTop: 14,
+    paddingBottom: 12,
+    justifyContent: "flex-start",
   },
   contentTop: {
     width: "100%",
     alignItems: "center",
+    paddingHorizontal: 20,
   },
   nameplateWrapper: {
-    marginTop: 20,
+    marginTop: 16,
   },
   nameplate: {
     width: 220,
@@ -57,7 +40,7 @@ export const styles = StyleSheet.create({
   },
   leafGrid: {
     width: "100%",
-    marginTop: 28,
+    marginTop: 24,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
@@ -83,6 +66,6 @@ export const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   confirmButton: {
-    marginTop: 8,
+    marginTop: 24,
   },
 });
