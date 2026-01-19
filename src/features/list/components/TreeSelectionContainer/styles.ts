@@ -4,11 +4,19 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  backTitle: {
+    paddingHorizontal: 16,
+    paddingTop: 29,
+  },
   content: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 120,
+    flexGrow: 1,
+    paddingTop: 14,
     paddingBottom: 60,
+  },
+  contentTop: {
+    width: '100%',
+    alignItems: 'center',
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 36,
@@ -20,6 +28,7 @@ export const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 'auto',
     gap: 12,
+    paddingHorizontal: 20,
   },
   addButton: {
     marginTop: 12,

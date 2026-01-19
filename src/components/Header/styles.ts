@@ -33,9 +33,10 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   avatarImage: {
-    width: 42,
-    height: 42,
-    resizeMode: "contain",
+    width: "100%",
+    height: "100%",
+    borderRadius: 27,
+    resizeMode: "cover",
   },
   nameBlock: {
     marginLeft: 12,

@@ -1,5 +1,5 @@
-import { Image, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Image, TouchableOpacity, View } from 'react-native';
 
 import type { Forest } from '@/features/forestSelection/types';
 import { styles } from './styles';
@@ -9,6 +9,7 @@ type ForestCarouselProps = {
   currentIndex: number;
   onPrevious: () => void;
   onNext: () => void;
+  disabled?: boolean;
 };
 
 export const ForestCarousel = ({
@@ -16,7 +17,16 @@ export const ForestCarousel = ({
   currentIndex,
   onPrevious,
   onNext,
+  disabled = false,
 }: ForestCarouselProps) => {
+  // 森データがない場合は何も表示しない
+  if (!forests || forests.length === 0) {
+    return null;
+  }
+
+  // currentIndexが有効な範囲外の場合の防御
+  const validIndex = currentIndex >= 0 && currentIndex < forests.length ? currentIndex : 0;
+  const currentForest = forests[validIndex];
 
   return (
     <View style={styles.container}>
@@ -26,8 +36,8 @@ export const ForestCarousel = ({
 
       <View style={styles.forestContainer}>
         <Image
-          source={forests[currentIndex].image}
-          style={styles.forestImage}
+          source={currentForest.image}
+          style={[styles.forestImage, disabled && styles.forestImageDisabled]}
           resizeMode="contain"
         />
       </View>

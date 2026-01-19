@@ -38,6 +38,32 @@ export type ApiLeafResponse = {
   created_at: string;
 };
 
+export type ApiForestResponse = {
+  id: number;
+  user_id: number;
+  name: string;
+  sort_order?: number;
+  created_at: string;
+};
+
+export type ApiTreeResponse = {
+  id: number;
+  name: string;
+  growth_type?: string;
+  cover_image_url?: string | null;
+  created_by: number;
+  state?: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ApiUserStructureResponse = {
+  user_id: number;
+  forests?: ApiForestResponse[];
+  trees?: ApiTreeResponse[];
+  leaves?: ApiLeafResponse[];
+};
+
 // HTTP リクエストの共通処理
 function request<T>(
   path: string,
@@ -204,6 +230,50 @@ export async function deleteUser(userId: string) {
   return request(`/users/${encodeURIComponent(userId)}`, "DELETE");
 }
 
+export async function getForests(userId: string) {
+  return request<ApiForestResponse[]>(
+    `/users/${encodeURIComponent(userId)}/forests`
+  );
+}
+
+export async function createForest(userId: string, name: string) {
+  return request<ApiForestResponse>(
+    `/users/${encodeURIComponent(userId)}/forests`,
+    "POST",
+    { name, sort_order: 0 }
+  );
+}
+
+export async function createTree(forestId: number, name: string, description?: string) {
+  const body: {
+    name: string;
+    forest_id: number;
+    description?: string;
+  } = {
+    name,
+    forest_id: forestId,
+  };
+  if (description) body.description = description;
+  
+  return request<ApiTreeResponse>(
+    `/trees`,
+    "POST",
+    body
+  );
+}
+
+export async function getTreesForForest(userId: string, forestId: number) {
+  return request<ApiUserStructureResponse>(
+    `/users/${encodeURIComponent(userId)}/structure?filter=trees&forestId=${forestId}`
+  );
+}
+
+export async function getLeavesForTree(userId: string, treeId: number) {
+  return request<ApiUserStructureResponse>(
+    `/users/${encodeURIComponent(userId)}/structure?filter=leaves&treeId=${treeId}`
+  );
+}
+
 export default {
   login,
   registerUser,
@@ -215,4 +285,9 @@ export default {
   uploadLeaf,
   updateUser,
   deleteUser,
+  getForests,
+  createForest,
+  createTree,
+  getTreesForForest,
+  getLeavesForTree,
 };

@@ -1,7 +1,7 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
 const { width } = Dimensions.get('window');
-const FOREST_WIDTH = width * 0.7;
+const TREE_WIDTH = width * 0.7;
 
 export const styles = StyleSheet.create({
   container: {
@@ -13,29 +13,17 @@ export const styles = StyleSheet.create({
   arrowButton: {
     padding: 10,
   },
-  forestContainer: {
-    width: FOREST_WIDTH,
-    height: FOREST_WIDTH * 0.8,
+  treeContainer: {
+    width: TREE_WIDTH,
+    height: TREE_WIDTH * 0.8,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  forestImage: {
+  treeImage: {
     width: '100%',
     height: '100%',
   },
-  forestImageDisabled: {
+  treeImageDisabled: {
     opacity: 0.5,
-  },
-  forestName: {
-    position: 'absolute',
-    bottom: 10,
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#5D3A1A',
-    textAlign: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 8,
   },
 });

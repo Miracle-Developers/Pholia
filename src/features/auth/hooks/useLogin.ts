@@ -5,7 +5,7 @@ import { loginWithCredentials } from "@/provider/auth/loginProvider";
 import { useCallback } from "react";
 
 export function useLogin() {
-  const { goToHome } = useRouterNavigation();
+  const { goToForestSelection } = useRouterNavigation();
   const { showToast } = useToast();
 
   const handleLogin = useCallback(
@@ -13,7 +13,7 @@ export function useLogin() {
       try {
         const result = await loginWithCredentials(values);
         if (result.status === "success") {
-          goToHome();
+          goToForestSelection();
           showToast({ title: "ログインしました" });
           return;
         }
@@ -28,7 +28,7 @@ export function useLogin() {
         });
       }
     },
-    [goToHome, showToast],
+    [goToForestSelection, showToast],
   );
 
   return { handleLogin };

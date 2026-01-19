@@ -86,4 +86,20 @@ export const styles = StyleSheet.create({
   confirmButton: {
     marginTop: 24,
   },
+  expandedImageContainer: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.9)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  expandedImageBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+  },
+  expandedImage: {
+    width: "90%",
+    height: "90%",
+  },
 });

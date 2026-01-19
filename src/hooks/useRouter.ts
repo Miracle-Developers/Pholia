@@ -6,9 +6,12 @@ export const useRouterNavigation = () => {
   const goToRegister = () => router.push("/register");
   const goToRegisterProfile = () => router.push("/register-profile");
   const goToLogin = () => router.push("/login");
-  const goToHome = () => router.replace("/forest-selection");
+  const goToForestSelection = () => router.replace("/forest-selection");
   const goToList = () => router.replace("/list");
   const goToAddition = () => router.replace("/addition");
+  const goToAddForest = () => router.push("/add-forest");
+  const goToTreeSelection = () => router.push("/tree-selection");
+  const goToAddTree = () => router.push("/add-tree");
   const goToSetting = () => router.push("/setting");
   const goToProfile = () => router.push("/profile");
 
@@ -16,9 +19,12 @@ export const useRouterNavigation = () => {
     goToRegister,
     goToRegisterProfile,
     goToLogin,
-    goToHome,
+    goToForestSelection,
     goToList,
     goToAddition,
+    goToAddForest,
+    goToTreeSelection,
+    goToAddTree,
     goToSetting,
     goToProfile,
   };

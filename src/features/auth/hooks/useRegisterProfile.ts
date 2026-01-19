@@ -5,7 +5,7 @@ import { registerProfile } from "@/provider/auth/registerProfileProvider";
 import { useCallback } from "react";
 
 export function useRegisterProfile() {
-  const { goToLogin, goToRegister, goToHome } = useRouterNavigation();
+  const { goToLogin, goToRegister, goToForestSelection } = useRouterNavigation();
   const { showToast } = useToast();
 
   const handleRegister = useCallback(
@@ -26,7 +26,7 @@ export function useRegisterProfile() {
         }
 
         if (result.status === "auto-login-success") {
-          goToHome();
+          goToForestSelection();
           showToast({ title: "ログインしました" });
           return;
         }
@@ -52,7 +52,7 @@ export function useRegisterProfile() {
         });
       }
     },
-    [goToHome, goToLogin, goToRegister, showToast],
+    [goToForestSelection, goToLogin, goToRegister, showToast],
   );
 
   return { handleRegister };
