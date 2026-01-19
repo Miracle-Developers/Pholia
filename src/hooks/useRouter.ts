@@ -8,6 +8,7 @@ export const useRouterNavigation = () => {
   const goToLogin = () => router.push("/login");
   const goToHome = () => router.replace("/");
   const goToList = () => router.replace("/list");
+  const goToAddition = () => router.replace("/addition");
   const goToSetting = () => router.push("/setting");
   const goToProfile = () => router.push("/profile");
 
@@ -17,6 +18,7 @@ export const useRouterNavigation = () => {
     goToLogin,
     goToHome,
     goToList,
+    goToAddition,
     goToSetting,
     goToProfile,
   };
