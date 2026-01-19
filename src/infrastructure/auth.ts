@@ -1,5 +1,23 @@
 let _token: string | null = null;
+let _userId: string | null = null;
 const TOKEN_KEY = "pholia_token";
+const USER_ID_KEY = "pholia_user_id";
+
+/**
+ * JWTトークンをデコードしてペイロードを取得
+ */
+function decodeToken(token: string): Record<string, any> | null {
+  try {
+    const parts = token.split(".");
+    if (parts.length !== 3) return null;
+    
+    const decoded = atob(parts[1]);
+    return JSON.parse(decoded);
+  } catch (error) {
+    console.warn("Token decode error:", error);
+    return null;
+  }
+}
 
 export function setToken(t: string | null) {
   _token = t;
@@ -9,41 +27,44 @@ export function setToken(t: string | null) {
       const SecureStore = await import("expo-secure-store");
       if (SecureStore && typeof SecureStore.setItemAsync === "function") {
         if (t) {
-          await SecureStore.setItemAsync(TOKEN_KEY, t);
+          await SecureStore.setItemAsync(TOKEN_KEY, String(t));
         } else {
           await SecureStore.deleteItemAsync(TOKEN_KEY);
         }
         return;
       }
     } catch (e) {
-      console.warn(
-        "SecureStoreが利用不可、またはトークン設定中にエラーが発生。代替手段としてAsyncStorageを試みます。",
-        e,
-      );
+      console.warn("SecureStoreでのトークン設定エラー:", e);
     }
-
-    try {
-      const AsyncStorage = await import("@react-native-async-storage/async-storage");
-      if (AsyncStorage && typeof AsyncStorage.setItem === "function") {
-        if (t) {
-          await AsyncStorage.setItem(TOKEN_KEY, t);
-        } else {
-          await AsyncStorage.removeItem(TOKEN_KEY);
-        }
-        return;
-      }
-    } catch (e) {
-      console.warn("AsyncStorageが利用不可、またはトークン設定中にエラーが発生。", e);
-    }
-
-    console.warn(
-      "トークンの永続化に利用可能なストレージがありません。トークンは再起動後に保持されません。",
-    );
   })();
 }
 
 export function getToken() {
   return _token;
+}
+
+export function setUserId(id: string | null) {
+  _userId = id;
+
+  (async () => {
+    try {
+      const SecureStore = await import("expo-secure-store");
+      if (SecureStore && typeof SecureStore.setItemAsync === "function") {
+        if (id) {
+          await SecureStore.setItemAsync(USER_ID_KEY, String(id));
+        } else {
+          await SecureStore.deleteItemAsync(USER_ID_KEY);
+        }
+        return;
+      }
+    } catch (e) {
+      console.warn("SecureStoreでのuserId設定エラー:", e);
+    }
+  })();
+}
+
+export function getUserId() {
+  return _userId;
 }
 
 export async function restoreToken() {
@@ -57,18 +78,38 @@ export async function restoreToken() {
       return t;
     }
   } catch (e) {
-    console.warn("SecureStore token restore error, will try fallback", e);
+    console.warn("SecureStoreでのトークン復元エラー:", e);
   }
 
+  return null;
+}
+
+export async function restoreUserId() {
+  if (_userId) return _userId;
+
   try {
-    const AsyncStorage = await import("@react-native-async-storage/async-storage");
-    if (AsyncStorage && typeof AsyncStorage.getItem === "function") {
-      const t = await AsyncStorage.getItem(TOKEN_KEY);
-      _token = t;
-      return t;
+    const SecureStore = await import("expo-secure-store");
+    if (SecureStore && typeof SecureStore.getItemAsync === "function") {
+      const id = await SecureStore.getItemAsync(USER_ID_KEY);
+      if (id) {
+        _userId = id;
+        return id;
+      }
     }
   } catch (e) {
-    console.warn("AsyncStorage token restore error", e);
+    console.warn("SecureStoreでのuserId復元エラー:", e);
+  }
+
+  // トークンがあればトークンから復元
+  const token = _token || (await restoreToken());
+  if (token) {
+    const payload = decodeToken(token);
+    if (payload?.sub || payload?.id) {
+      const userId = String(payload.sub || payload.id);
+      _userId = userId;
+      setUserId(userId);
+      return userId;
+    }
   }
 
   return null;
@@ -76,6 +117,7 @@ export async function restoreToken() {
 
 export function clearToken() {
   setToken(null);
+  setUserId(null);
 }
 
-export default { setToken, getToken, restoreToken, clearToken };
+export default { setToken, getToken, setUserId, getUserId, restoreToken, restoreUserId, clearToken };
