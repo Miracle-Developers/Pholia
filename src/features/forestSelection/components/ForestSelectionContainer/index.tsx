@@ -1,12 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { Text, View } from 'react-native';
 
-import { BackgroundContainer } from '@/components/Containers/BackgroundContainer';
 import { WoodenButton } from '@/components/Buttons/WoodenButton';
-import { UserHeader } from '@/components/Headers/UserHeader';
+import { BackgroundContainer } from '@/components/Containers/BackgroundContainer';
+import { Header } from '@/components/Header';
 import { ForestCarousel } from '@/features/forestSelection/components/ForestCarousel';
-import { useForestCarousel } from '@/features/forestSelection/hooks/useForestCarousel';
 import { FORESTS } from '@/features/forestSelection/constants/forests';
+import { useForestCarousel } from '@/features/forestSelection/hooks/useForestCarousel';
 import { styles } from './styles';
 
 type ForestSelectionContainerProps = {
@@ -36,11 +36,12 @@ export default function ForestSelectionContainer({
       <View style={styles.container}>
         <StatusBar style="dark" />
         
-        <UserHeader
-          userName={userName}
+        <Header
+          name={userName}
           userId={userId}
+          avatarSource={require('@/../assets/logo.png')}
           onPressProfile={onPressProfile}
-          onPressSettings={onPressSettings}
+          onPressSetting={onPressSettings}
         />
 
         <View style={styles.content}>
