@@ -1,14 +1,15 @@
-import { StatusBar } from "expo-status-bar";
-import { Image, Text, View } from "react-native";
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { BackgroundContainer } from "@/components/Containers/BackgroundContainer";
 import { Logo } from "@/components/Icons/Logo";
 import { LogoName } from "@/components/Icons/LogoName";
 import { styles } from "@/features/auth/components/TopContainer/styles";
 import { useRouterNavigation } from "@/hooks/useRouter";
+import { StatusBar } from "expo-status-bar";
+import { Image, Text, View } from "react-native";
 
 export const TopContainer = () => {
-  const { goToRegister, goToLogin } = useRouterNavigation();
+  const { goToRegister, goToLogin} = useRouterNavigation();
+
   return (
     <BackgroundContainer>
       <View style={styles.container}>
