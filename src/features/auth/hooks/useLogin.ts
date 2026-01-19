@@ -1,11 +1,11 @@
-import { useCallback } from "react";
 import type { LoginFormData } from "@/application/auth/types";
 import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
 import { loginWithCredentials } from "@/provider/auth/loginProvider";
+import { useCallback } from "react";
 
 export function useLogin() {
-  const { goToAddition } = useRouterNavigation();
+  const { goToHome } = useRouterNavigation();
   const { showToast } = useToast();
 
   const handleLogin = useCallback(
@@ -13,7 +13,7 @@ export function useLogin() {
       try {
         const result = await loginWithCredentials(values);
         if (result.status === "success") {
-          goToAddition();
+          goToHome();
           showToast({ title: "ログインしました" });
           return;
         }
@@ -28,7 +28,7 @@ export function useLogin() {
         });
       }
     },
-    [goToAddition, showToast],
+    [goToHome, showToast],
   );
 
   return { handleLogin };
