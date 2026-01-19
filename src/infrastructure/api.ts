@@ -131,6 +131,35 @@ export async function getLeaf(id: number | string) {
   return request<ApiLeafResponse>(`/leaves/${encodeURIComponent(String(id))}`);
 }
 
+export async function uploadLeaf(file: {
+  uri: string;
+  name: string;
+  type: string;
+}) {
+  if (!BASE_URL) {
+    throw new Error("EXPO_PUBLIC_API_URL is not set");
+  }
+  const formData = new FormData();
+  formData.append("file", file as unknown as Blob);
+
+  const headers: Record<string, string> = {};
+  const token = auth.getToken();
+  if (token) headers.Authorization = `Bearer ${token}`;
+
+  const res = await fetch(`${BASE_URL}/leaves`, {
+    method: "POST",
+    headers,
+    body: formData,
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Leaf upload failed: ${res.status} ${text}`);
+  }
+
+  return (await res.json()) as ApiLeafResponse;
+}
+
 
 export async function getUserStats(userId: string) {
   return request(`/users/${encodeURIComponent(userId)}/stats`);
@@ -183,6 +212,7 @@ export default {
   getUserStats,
   getUserSettings,
   uploadAvatar,
+  uploadLeaf,
   updateUser,
   deleteUser,
 };
