@@ -7,7 +7,17 @@ export const useRouterNavigation = () => {
   const goToRegisterProfile = () => router.push("/register-profile");
   const goToLogin = () => router.push("/login");
   const goToHome = () => router.replace("/");
-  const goToForestSelection = () => router.replace("/forest-selection");
+  const goToList = () => router.replace("/list");
+  const goToSetting = () => router.push("/setting");
+  const goToProfile = () => router.push("/profile");
 
-  return { goToRegister, goToRegisterProfile, goToLogin, goToHome, goToForestSelection };
+  return {
+    goToRegister,
+    goToRegisterProfile,
+    goToLogin,
+    goToHome,
+    goToList,
+    goToSetting,
+    goToProfile,
+  };
 };

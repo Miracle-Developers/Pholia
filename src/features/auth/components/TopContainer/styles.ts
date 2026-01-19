@@ -36,7 +36,6 @@ export const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     paddingBottom: 85,
-    paddingHorizontal: 40,
   },
   foxImage: {
     position: "absolute",
