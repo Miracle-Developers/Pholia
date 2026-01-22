@@ -1,12 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { Text, View } from 'react-native';
 
-import { BackgroundContainer } from '@/components/Containers/BackgroundContainer';
 import { WoodenButton } from '@/components/Buttons/WoodenButton';
+import { BackgroundContainer } from '@/components/Containers/BackgroundContainer';
 import { Header } from '@/components/Header';
-import { ForestCarousel } from '@/features/forestSelection/components/ForestCarousel';
-import { useForestCarousel } from '@/features/forestSelection/hooks/useForestCarousel';
-import { FORESTS } from '@/features/forestSelection/constants/forests';
+import { ForestCarousel } from '@/features/selection/components/ForestCarousel';
+import { FORESTS } from '@/features/selection/constants/forests';
+import { useForestCarousel } from '@/features/selection/hooks/useForestCarousel';
 import { styles } from './styles';
 
 type ForestSelectionContainerProps = {
