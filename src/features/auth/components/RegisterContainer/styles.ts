@@ -1,9 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
   },
   content: {
     flex: 1,
@@ -11,7 +10,7 @@ export const styles = StyleSheet.create({
     paddingTop: 100,
   },
   logoContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 50,
   },
   logoImage: {
@@ -24,6 +23,6 @@ export const styles = StyleSheet.create({
     height: 60,
   },
   formWrapper: {
-    width: '100%',
+    width: "100%",
   },
 });

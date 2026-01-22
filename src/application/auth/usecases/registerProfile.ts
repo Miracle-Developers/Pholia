@@ -1,0 +1,65 @@
+import * as registrationTemp from "@/application/auth/state/registrationTemp";
+import * as api from "@/infrastructure/api";
+import * as auth from "@/infrastructure/auth";
+
+type RegisterProfileInput = {
+  userId?: string;
+  name: string;
+};
+
+export type RegisterProfileResult =
+  | { status: "missing-step1" }
+  | { status: "auto-login-success" }
+  | { status: "auto-login-failed" };
+
+export async function registerProfileAndLogin(
+  input: RegisterProfileInput,
+): Promise<RegisterProfileResult> {
+  const registration = registrationTemp.getTemp();
+  if (!registration.email || !registration.password) {
+    return { status: "missing-step1" };
+  }
+
+  const idValue = input.userId?.startsWith("@") ? input.userId.slice(1) : input.userId;
+
+  try {
+    const registerRes = await api.registerUser({
+      id: idValue,
+      name: input.name,
+      email: registration.email ?? "",
+      password: registration.password ?? "",
+    });
+  } catch (registerErr: any) {
+    console.error("Registration failed", registerErr);
+    // 409エラーを上位に伝播させる
+    if (registerErr?.status === 409 || registerErr?.message?.includes("409")) {
+      const error = new Error("このメールアドレスまたはユーザーIDは既に登録されています");
+      (error as any).status = 409;
+      throw error;
+    }
+    throw registerErr;
+  }
+
+  try {
+    const loginRes = await api.login({
+      email: registration.email,
+      password: registration.password,
+    });
+    if (loginRes?.token) {
+      auth.setToken(loginRes.token);
+
+      const userId = idValue || (loginRes as any)?.user?.id || (loginRes as any)?.user_id;
+      if (userId) {
+        auth.setUserId(userId);
+      }
+
+      registrationTemp.clearTemp();
+      return { status: "auto-login-success" };
+    }
+  } catch (loginErr: unknown) {
+    console.warn("Auto-login failed after registration", loginErr);
+  }
+
+  registrationTemp.clearTemp();
+  return { status: "auto-login-failed" };
+}

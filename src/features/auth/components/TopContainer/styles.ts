@@ -3,13 +3,12 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
   },
   topSection: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 60,
+    paddingTop: 80,
   },
   sloganBox: {
     width: 280,
@@ -19,50 +18,46 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   logoImage: {
-    width: 250,
-    height: 250,
+    width: 230,
+    height: 230,
   },
   middleSection: {
-    flex: 0.8,
-    justifyContent: "center",
+    flex: 0.3,
+    justifyContent: "flex-start",
     alignItems: "center",
+    marginTop: -60,
   },
   pholiaImage: {
-    width: 300,
+    width: 200,
     height: 100,
   },
   bottomSection: {
     flex: 1,
     justifyContent: "flex-end",
     alignItems: "center",
-    paddingBottom: 60,
-    paddingHorizontal: 40,
+    paddingBottom: 85,
+  },
+  foxImage: {
+    position: "absolute",
+    left: 20,
+    bottom: 320,
+    width: 55,
+    height: 55,
+    resizeMode: "contain",
+  },
+  bearImage: {
+    position: "absolute",
+    right: 10,
+    bottom: 320,
+    width: 60,
+    height: 60,
+    resizeMode: "contain",
   },
   signUpButton: {
-    width: "100%",
-    backgroundColor: "#E8E8E8",
-    paddingVertical: 18,
-    borderRadius: 30,
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  signUpButtonText: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#333333",
-  },
-  loginButton: {
-    width: "100%",
-    backgroundColor: "#E8E8E8",
-    paddingVertical: 18,
-    borderRadius: 30,
-    alignItems: "center",
     marginBottom: 30,
   },
-  loginButtonText: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#333333",
+  loginButton: {
+    marginBottom: 30,
   },
   termsText: {
     fontSize: 13,

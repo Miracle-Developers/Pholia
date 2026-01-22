@@ -1,21 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
-import { View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { View } from "react-native";
 
-import { KeyboardAvoidingContainer } from '@/components/Containers/KeyboardAvoidingContainer';
-import { Logo } from '@/components/Icons/Logo';
-import { LogoName } from '@/components/Icons/LogoName';
-import { RegisterForm } from '@/features/auth/components/RegisterForm';
-import { styles } from '@/features/auth/components/RegisterContainer/styles';
-import { useRouterNavigation } from '@/hooks/useRouter';
-import type { AuthFormData } from '@/features/auth/types';
+import { KeyboardAvoidingContainer } from "@/components/Containers/KeyboardAvoidingContainer";
+import { Logo } from "@/components/Icons/Logo";
+import { LogoName } from "@/components/Icons/LogoName";
+import { styles } from "@/features/auth/components/RegisterContainer/styles";
+import { RegisterForm } from "@/features/auth/components/RegisterForm";
+import { useRegisterStepOne } from "@/features/auth/hooks/useRegisterStepOne";
+import { useRouterNavigation } from "@/hooks/useRouter";
 
 export default function RegisterContainer() {
-  const { goToRegister2, goToLogin } = useRouterNavigation();
-
-  const handleNext = (values: AuthFormData) => {
-    console.log('Register with:', values.email, values.password);
-    goToRegister2();
-  };
+  const { goToLogin } = useRouterNavigation();
+  const { handleNext } = useRegisterStepOne();
 
   const handleLogin = () => {
     goToLogin();
@@ -32,10 +28,7 @@ export default function RegisterContainer() {
         </View>
 
         <View style={styles.formWrapper}>
-          <RegisterForm
-            onSubmit={handleNext}
-            onPressLogin={handleLogin}
-          />
+          <RegisterForm onSubmit={handleNext} onPressLogin={handleLogin} />
         </View>
       </View>
     </KeyboardAvoidingContainer>

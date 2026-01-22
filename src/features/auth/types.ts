@@ -1,18 +1,8 @@
-export type AuthFormData = {
-  email: string;
-  password: string;
-  confirmPassword?: string;
-};
-
-export type RegisterFormData = AuthFormData & {
-  name?: string;
-  userId?: string;
-};
-
-export type LoginFormData = {
-  email: string;
-  password: string;
-};
+import type {
+  AuthFormData,
+  LoginFormData,
+  RegisterProfileFormData,
+} from "@/application/auth/types";
 
 export type LoginFormProps = {
   defaultValues?: Partial<LoginFormData>;
@@ -29,4 +19,10 @@ export type RegisterFormProps = {
   onPressLogin?: () => void;
   submitLabel?: string;
   loginLabel?: string;
+};
+
+export type RegisterProfileFormProps = {
+  defaultValues?: Partial<RegisterProfileFormData>;
+  onSubmit: (values: RegisterProfileFormData) => void;
+  submitLabel?: string;
 };
