@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Forest } from '@/features/forestSelection/types';
+import type { Forest } from '@/features/selection/types';
 
 export const useForestCarousel = (forests: Forest[], initialForestId: number = 1) => {
   const [selectedForestId, setSelectedForestId] = useState(initialForestId);

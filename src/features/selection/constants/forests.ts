@@ -1,4 +1,4 @@
-import type { Forest } from '@/features/forestSelection/types';
+import type { Forest } from '@/features/selection/types';
 
 export const FORESTS: Forest[] = [
   {
