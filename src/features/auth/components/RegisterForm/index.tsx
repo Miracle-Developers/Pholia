@@ -1,17 +1,17 @@
 import { Controller, useForm } from "react-hook-form";
 import { Text, TouchableOpacity, View } from "react-native";
 
-import { WoodenButton } from "@/components/Buttons/WoodenButton";
-import { AuthFormField } from "@/components/Forms/AuthFormField";
-import { AuthTextInput } from "@/components/Forms/AuthTextInput";
-import { styles } from "@/features/auth/components/RegisterForm/styles";
 import type { AuthFormData } from "@/application/auth/types";
-import type { RegisterFormProps } from "@/features/auth/types";
 import {
   confirmPasswordRule,
   emailOrIdRule,
   passwordRule,
 } from "@/application/auth/validation/authRules";
+import { WoodenButton } from "@/components/Buttons/WoodenButton";
+import { AuthFormField } from "@/components/Forms/AuthFormField";
+import { AuthTextInput } from "@/components/Forms/AuthTextInput";
+import { styles } from "@/features/auth/components/RegisterForm/styles";
+import type { RegisterFormProps } from "@/features/auth/types";
 
 export const RegisterForm = ({
   defaultValues,
@@ -72,6 +72,7 @@ export const RegisterForm = ({
               onChangeText={onChange}
               onBlur={onBlur}
               secureTextEntry
+              showPasswordToggle
               autoCapitalize="none"
               autoComplete="password"
               textContentType="password"
@@ -93,6 +94,7 @@ export const RegisterForm = ({
               onChangeText={onChange}
               onBlur={onBlur}
               secureTextEntry
+              showPasswordToggle
               autoCapitalize="none"
               autoComplete="password"
               textContentType="password"
