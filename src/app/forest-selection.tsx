@@ -1,5 +1,5 @@
-import ForestSelectionContainer from '@/features/forestSelection/components/ForestSelectionContainer';
-import { useForestSelection } from '@/features/forestSelection/hooks/useForestSelection';
+import ForestSelectionContainer from '@/features/selection/components/ForestSelectionContainer';
+import { useForestSelection } from '@/features/selection/hooks/useForestSelection';
 
 export default function ForestSelectionPage() {
   const { handleForestConfirm } = useForestSelection();
