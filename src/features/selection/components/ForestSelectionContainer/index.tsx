@@ -6,25 +6,23 @@ import { BackgroundContainer } from '@/components/Containers/BackgroundContainer
 import { Header } from '@/components/Header';
 import { ForestCarousel } from '@/features/selection/components/ForestCarousel';
 import { useForestCarousel } from '@/features/selection/hooks/useForestCarousel';
+import { useHeaderProfile } from '@/hooks/useHeaderProfile';
 import { FORESTS } from '@/features/selection/constants/forests';
 import { styles } from './styles';
 
 type ForestSelectionContainerProps = {
-  userName?: string;
-  userId?: string;
   onConfirm: (forestId: number) => void;
   onPressProfile: () => void;
   onPressSettings: () => void;
 };
 
 export default function ForestSelectionContainer({
-  userName = 'ぽっぽ',
-  userId = 'poppo',
   onConfirm,
   onPressProfile,
   onPressSettings,
 }: ForestSelectionContainerProps) {
-  const { selectedForestId, currentIndex, handlePrevious, handleNext } = 
+  const { name, userId, avatarSource } = useHeaderProfile();
+  const { selectedForestId, currentIndex, handlePrevious, handleNext } =
     useForestCarousel(FORESTS, 1);
 
   const handleConfirm = () => {
@@ -35,25 +33,25 @@ export default function ForestSelectionContainer({
     <BackgroundContainer>
       <View style={styles.container}>
         <StatusBar style="dark" />
-        
+
         <Header
-          name={userName}
+          name={name}
           userId={userId}
-          avatarSource={require('@/../assets/logo.png')}
+          avatarSource={avatarSource}
           onPressProfile={onPressProfile}
           onPressSetting={onPressSettings}
         />
 
         <View style={styles.content}>
-          <Text style={styles.title}>{userName}の森</Text>
-          
+          <Text style={styles.title}>{name}の森</Text>
+
           <ForestCarousel
             forests={FORESTS}
             currentIndex={currentIndex}
             onPrevious={handlePrevious}
             onNext={handleNext}
           />
-          
+
           <View style={styles.buttonContainer}>
             <WoodenButton
               title="決定"

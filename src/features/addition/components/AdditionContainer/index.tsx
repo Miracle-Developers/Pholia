@@ -1,6 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { Image, ImageBackground, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 import { BackTitle } from "@/components/BackTitle";
@@ -8,12 +8,14 @@ import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { KeyboardAvoidingContainer } from "@/components/Containers/KeyboardAvoidingContainer";
 import { Header } from "@/components/Header";
 import { useLeafUpload } from "@/features/addition/hooks/useLeafUpload";
+import { useHeaderProfile } from "@/hooks/useHeaderProfile";
 import { useRouterNavigation } from "@/hooks/useRouter";
 
 import { styles } from "./styles";
 
 export const AdditionContainer = () => {
   const router = useRouter();
+  const { name, userId, avatarSource } = useHeaderProfile();
   const { goToProfile, goToSetting } = useRouterNavigation();
   const { selectedPhoto, isUploading, selectPhoto, upload } = useLeafUpload();
 
@@ -25,9 +27,9 @@ export const AdditionContainer = () => {
     <KeyboardAvoidingContainer style={styles.container}>
       <StatusBar style="dark" />
       <Header
-        name="ぽっぽ"
-        userId="poppo"
-        avatarSource={require("@/../assets/logo.png")}
+        name={name}
+        userId={userId}
+        avatarSource={avatarSource}
         onPressProfile={goToProfile}
         onPressSetting={goToSetting}
         style={styles.topHeader}
