@@ -7,9 +7,9 @@ export type LeafFile = {
   type: string;
 };
 
-export async function uploadLeaf(file: LeafFile): Promise<ApiLeafResponse> {
+export async function uploadLeaf(file: LeafFile, treeId?: number): Promise<ApiLeafResponse> {
   try {
-    return await api.uploadLeaf(file);
+    return await api.uploadLeaf(file, treeId);
   } catch (error) {
     throw error;
   }

@@ -38,6 +38,8 @@ export type ApiLeafResponse = {
   created_at: string;
 };
 
+export type ApiStructureResponse = unknown;
+
 // HTTP リクエストの共通処理
 function request<T>(
   path: string,
@@ -131,16 +133,22 @@ export async function getLeaf(id: number | string) {
   return request<ApiLeafResponse>(`/leaves/${encodeURIComponent(String(id))}`);
 }
 
-export async function uploadLeaf(file: {
-  uri: string;
-  name: string;
-  type: string;
-}) {
+export async function uploadLeaf(
+  file: {
+    uri: string;
+    name: string;
+    type: string;
+  },
+  treeId?: number,
+) {
   if (!BASE_URL) {
     throw new Error("EXPO_PUBLIC_API_URL is not set");
   }
   const formData = new FormData();
   formData.append("file", file as unknown as Blob);
+  if (typeof treeId === "number") {
+    formData.append("tree_id", String(treeId));
+  }
 
   const headers: Record<string, string> = {};
   const token = auth.getToken();
@@ -157,7 +165,14 @@ export async function uploadLeaf(file: {
     throw new Error(`Leaf upload failed: ${res.status} ${text}`);
   }
 
-  return (await res.json()) as ApiLeafResponse;
+  const contentType = res.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    const text = await res.text();
+    if (text) {
+      return JSON.parse(text) as ApiLeafResponse;
+    }
+  }
+  return {} as ApiLeafResponse;
 }
 
 
@@ -167,6 +182,10 @@ export async function getUserStats(userId: string) {
 
 export async function getUserSettings(userId: string) {
   return request(`/users/${encodeURIComponent(userId)}/settings`, "GET");
+}
+
+export async function getUserStructure(userId: string) {
+  return request<ApiStructureResponse>(`/users/${encodeURIComponent(userId)}/structure`, "GET");
 }
 
 export async function uploadAvatar(userId: string, file: {
@@ -211,6 +230,7 @@ export default {
   getLeaf,
   getUserStats,
   getUserSettings,
+  getUserStructure,
   uploadAvatar,
   uploadLeaf,
   updateUser,
