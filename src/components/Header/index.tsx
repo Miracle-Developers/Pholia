@@ -24,7 +24,7 @@ export const Header = ({
     <View style={[styles.container, style]}>
       <View style={styles.leftSection}>
         <View style={styles.avatarRing}>
-          <Image source={avatarSource} style={styles.avatarImage} />
+          <Image source={avatarSource} style={styles.avatarImage} resizeMode="cover" />
         </View>
         <View style={styles.nameBlock}>
           <Text style={styles.nameText}>{name}</Text>

@@ -31,11 +31,12 @@ export const styles = StyleSheet.create({
     backgroundColor: "#F7F1E6",
     justifyContent: "center",
     alignItems: "center",
+    overflow: "hidden",
   },
   avatarImage: {
-    width: 42,
-    height: 42,
-    resizeMode: "contain",
+    width: 60,
+    height: 60,
+    borderRadius: 30,
   },
   nameBlock: {
     marginLeft: 12,

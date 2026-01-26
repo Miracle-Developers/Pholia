@@ -1,7 +1,8 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
 import { Image, ImageBackground, Modal, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { Image, ImageBackground, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 import { BackTitle } from "@/components/BackTitle";
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
@@ -9,6 +10,7 @@ import { KeyboardAvoidingContainer } from "@/components/Containers/KeyboardAvoid
 import { Header } from "@/components/Header";
 import { useLeafUpload } from "@/features/addition/hooks/useLeafUpload";
 import { useTreeSelection } from "@/features/addition/hooks/useTreeSelection";
+import { useHeaderProfile } from "@/hooks/useHeaderProfile";
 import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
 
@@ -16,6 +18,7 @@ import { styles } from "./styles";
 
 export const AdditionContainer = () => {
   const router = useRouter();
+  const { name, userId, avatarSource } = useHeaderProfile();
   const { goToProfile, goToSetting } = useRouterNavigation();
   const { selectedPhoto, isUploading, selectPhoto, upload } = useLeafUpload();
   const { showToast } = useToast();
@@ -42,9 +45,9 @@ export const AdditionContainer = () => {
     <KeyboardAvoidingContainer style={styles.container}>
       <StatusBar style="dark" />
       <Header
-        name="ぽっぽ"
-        userId="poppo"
-        avatarSource={require("@/../assets/logo.png")}
+        name={name}
+        userId={userId}
+        avatarSource={avatarSource}
         onPressProfile={goToProfile}
         onPressSetting={goToSetting}
         style={styles.topHeader}
