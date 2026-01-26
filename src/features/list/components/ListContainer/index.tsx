@@ -2,25 +2,27 @@ import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { BackTitle } from "@/components/BackTitle";
+import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { Header } from "@/components/Header";
 import { styles } from "@/features/list/components/ListContainer/styles";
 import { useLoadLeaves } from "@/features/list/hooks/useLoadLeaves";
+import { useHeaderProfile } from "@/hooks/useHeaderProfile";
 import { leafItems } from "@/utils/leafItems";
 
 const leafIds = Array.from({ length: 9 }, (_, index) => index + 1);
 
 export const ListContainer = () => {
+  const { name, userId, avatarSource } = useHeaderProfile();
   const [selectedLeafId, setSelectedLeafId] = useState<number | null>(null);
   const { leavesById } = useLoadLeaves(leafIds);
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
       <Header
-        name="ぽっぽ"
-        userId="poppo"
-        avatarSource={require("@/../assets/logo.png")}
+        name={name}
+        userId={userId}
+        avatarSource={avatarSource}
         style={styles.topHeader}
       />
 
@@ -67,7 +69,7 @@ export const ListContainer = () => {
           </View>
         </View>
 
-        <WoodenButton title="決定" onPress={() => {}} style={styles.confirmButton} />
+        <WoodenButton title="決定" onPress={() => { }} style={styles.confirmButton} />
       </ScrollView>
     </View>
   );
