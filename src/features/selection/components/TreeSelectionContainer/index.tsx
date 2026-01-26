@@ -1,34 +1,34 @@
 import { StatusBar } from 'expo-status-bar';
 import { Text, View } from 'react-native';
 
-import { WoodenButton } from '@/components/Buttons/WoodenButton';
 import { BackgroundContainer } from '@/components/Containers/BackgroundContainer';
+import { WoodenButton } from '@/components/Buttons/WoodenButton';
 import { Header } from '@/components/Header';
-import { ForestCarousel } from '@/features/selection/components/ForestCarousel';
-import { useForestCarousel } from '@/features/selection/hooks/useForestCarousel';
-import { FORESTS } from '@/features/selection/constants/forests';
+import { TreeCarousel } from '@/features/selection/components/TreeCarousel';
+import { useTreeCarousel } from '@/features/selection/hooks/useTreeCarousel';
+import { TREES } from '@/features/selection/constants/trees';
 import { styles } from './styles';
 
-type ForestSelectionContainerProps = {
+type TreeSelectionContainerProps = {
   userName?: string;
   userId?: string;
-  onConfirm: (forestId: number) => void;
+  onConfirm: (treeId: number) => void;
   onPressProfile: () => void;
   onPressSettings: () => void;
 };
 
-export default function ForestSelectionContainer({
+export default function TreeSelectionContainer({
   userName = 'ぽっぽ',
   userId = 'poppo',
   onConfirm,
   onPressProfile,
   onPressSettings,
-}: ForestSelectionContainerProps) {
-  const { selectedForestId, currentIndex, handlePrevious, handleNext } = 
-    useForestCarousel(FORESTS, 1);
+}: TreeSelectionContainerProps) {
+  const { selectedTreeId, currentIndex, handlePrevious, handleNext } = 
+    useTreeCarousel(TREES, 1);
 
   const handleConfirm = () => {
-    onConfirm(selectedForestId);
+    onConfirm(selectedTreeId);
   };
 
   return (
@@ -45,10 +45,10 @@ export default function ForestSelectionContainer({
         />
 
         <View style={styles.content}>
-          <Text style={styles.title}>{userName}の森</Text>
+          <Text style={styles.title}>{userName}の木</Text>
           
-          <ForestCarousel
-            forests={FORESTS}
+          <TreeCarousel
+            trees={TREES}
             currentIndex={currentIndex}
             onPrevious={handlePrevious}
             onNext={handleNext}

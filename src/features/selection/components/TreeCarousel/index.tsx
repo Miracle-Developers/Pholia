@@ -1,22 +1,22 @@
 import { Image, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import type { Forest } from '@/features/selection/types';
+import type { Tree } from '@/features/selection/types';
 import { styles } from './styles';
 
-type ForestCarouselProps = {
-  forests: Forest[];
+type TreeCarouselProps = {
+  trees: Tree[];
   currentIndex: number;
   onPrevious: () => void;
   onNext: () => void;
 };
 
-export const ForestCarousel = ({
-  forests,
+export const TreeCarousel = ({
+  trees,
   currentIndex,
   onPrevious,
   onNext,
-}: ForestCarouselProps) => {
+}: TreeCarouselProps) => {
 
   return (
     <View style={styles.container}>
@@ -24,10 +24,10 @@ export const ForestCarousel = ({
         <Ionicons name="chevron-back" size={40} color="#5D3A1A" />
       </TouchableOpacity>
 
-      <View style={styles.forestContainer}>
+      <View style={styles.treeContainer}>
         <Image
-          source={forests[currentIndex].image}
-          style={styles.forestImage}
+          source={trees[currentIndex].image}
+          style={styles.treeImage}
           resizeMode="contain"
         />
       </View>
