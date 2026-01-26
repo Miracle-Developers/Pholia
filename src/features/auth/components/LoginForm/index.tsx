@@ -1,13 +1,13 @@
 import { Controller, useForm } from "react-hook-form";
 import { Text, TouchableOpacity, View } from "react-native";
 
+import type { LoginFormData } from "@/application/auth/types";
+import { emailOrIdRule, passwordRule } from "@/application/auth/validation/authRules";
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { AuthFormField } from "@/components/Forms/AuthFormField";
 import { AuthTextInput } from "@/components/Forms/AuthTextInput";
 import { styles } from "@/features/auth/components/LoginForm/styles";
-import type { LoginFormData } from "@/application/auth/types";
 import type { LoginFormProps } from "@/features/auth/types";
-import { emailOrIdRule, passwordRule } from "@/application/auth/validation/authRules";
 
 export const LoginForm = ({
   defaultValues,
@@ -67,6 +67,7 @@ export const LoginForm = ({
               onChangeText={onChange}
               onBlur={onBlur}
               secureTextEntry
+              showPasswordToggle
               autoCapitalize="none"
               autoComplete="password"
               textContentType="password"

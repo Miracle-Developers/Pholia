@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { Text, View } from 'react-native';
 
-import { BackgroundContainer } from '@/components/Containers/BackgroundContainer';
 import { WoodenButton } from '@/components/Buttons/WoodenButton';
+import { BackgroundContainer } from '@/components/Containers/BackgroundContainer';
 import { Header } from '@/components/Header';
 import { ForestCarousel } from '@/features/selection/components/ForestCarousel';
 import { useForestCarousel } from '@/features/selection/hooks/useForestCarousel';
