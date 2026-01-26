@@ -1,15 +1,17 @@
 import TreeSelectionContainer from '@/features/selection/components/TreeSelectionContainer';
 import { useTreeSelection } from '@/features/selection/hooks/useTreeSelection';
+import { useRouter } from 'expo-router';
 
 export default function TreeSelectionPage() {
   const { handleTreeConfirm } = useTreeSelection();
+  const router = useRouter();
 
   const handleProfilePress = () => {
-    console.log('Profile pressed');
+    router.push('/profile');
   };
 
   const handleSettingsPress = () => {
-    console.log('Settings pressed');
+    router.push('/setting');
   };
 
   return (
