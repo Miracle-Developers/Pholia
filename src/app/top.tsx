@@ -1,5 +1,7 @@
 import { TopContainer } from "@/features/auth/components/TopContainer";
 
-export default function TopPage() {
+const TopPage = () => {
   return <TopContainer />;
-}
+};
+
+export default TopPage;

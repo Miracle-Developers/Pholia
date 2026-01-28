@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 export const useRouterNavigation = () => {
   const router = useRouter();
 
+  const goBack = () => router.back();
   const goToRegister = () => router.push("/register");
   const goToRegisterProfile = () => router.push("/register-profile");
   const goToLogin = () => router.push("/login");
@@ -13,6 +14,7 @@ export const useRouterNavigation = () => {
   const goToProfile = () => router.push("/profile");
 
   return {
+    goBack,
     goToRegister,
     goToRegisterProfile,
     goToLogin,

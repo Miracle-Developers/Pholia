@@ -5,7 +5,7 @@ import { formatUserProfile } from "./formatUserProfile";
 
 export { UserProfileData };
 
-export async function loadProfile(): Promise<UserProfileData | null> {
+export const loadProfile = async (): Promise<UserProfileData | null> => {
     // トークンを先に復元
     await auth.restoreToken();
     
@@ -27,4 +27,4 @@ export async function loadProfile(): Promise<UserProfileData | null> {
     const stats = await profile.getUserStats(userId);
 
     return formatUserProfile(userData, stats);
-}
+};

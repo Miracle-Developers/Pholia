@@ -1,6 +1,5 @@
 import { useRouterNavigation } from "@/hooks/useRouter";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
@@ -9,15 +8,14 @@ import { styles } from "@/features/profile/components/ProfileContainer/styles";
 import { useLoadProfile } from "@/features/profile/hooks/useLoadProfile";
 
 export const ProfileContainer = () => {
-    const router = useRouter();
-    const { goToSetting } = useRouterNavigation();
+    const { goBack, goToSetting } = useRouterNavigation();
     const { isLoading, user } = useLoadProfile();
 
     return (
         <View style={styles.container}>
             <StatusBar style="dark" />
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => router.back()} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+                <TouchableOpacity onPress={goBack} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
                     <MaterialIcons name="arrow-back" size={28} color="#333" />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>プロフィール</Text>

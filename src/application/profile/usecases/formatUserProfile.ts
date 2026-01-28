@@ -2,10 +2,10 @@ import { ApiStatsResponse, ApiUserResponse } from "@/infrastructure/api";
 import { extractFileKeyFromUrl } from "@/utils/fileKeyExtractor";
 import { UserProfileData } from "../types";
 
-export function formatUserProfile(
+export const formatUserProfile = (
     apiData: ApiUserResponse,
     stats: ApiStatsResponse = {}
-): UserProfileData {
+): UserProfileData => {
     return {
         id: apiData.id,
         name: apiData.name || "ユーザー",
@@ -18,4 +18,4 @@ export function formatUserProfile(
         forestCount: stats.friends_count || 0,
         treeCount: stats.tree_count || 0,
     };
-}
+};

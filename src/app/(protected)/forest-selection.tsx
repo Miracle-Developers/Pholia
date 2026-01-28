@@ -1,7 +1,7 @@
 import ForestSelectionContainer from '@/features/selection/components/ForestSelectionContainer';
 import { useForestSelection } from '@/features/selection/hooks/useForestSelection';
 
-export default function ForestSelectionPage() {
+const ForestSelectionPage = () => {
   const { handleForestConfirm } = useForestSelection();
 
   const handleProfilePress = () => {
@@ -19,4 +19,6 @@ export default function ForestSelectionPage() {
       onPressSettings={handleSettingsPress}
     />
   );
-}
+};
+
+export default ForestSelectionPage;

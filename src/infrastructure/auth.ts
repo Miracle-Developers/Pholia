@@ -6,7 +6,7 @@ const USER_ID_KEY = "pholia_user_id";
 /**
  * JWTトークンをデコードしてペイロードを取得
  */
-function decodeToken(token: string): Record<string, any> | null {
+const decodeToken = (token: string): Record<string, any> | null => {
   try {
     const parts = token.split(".");
     if (parts.length !== 3) return null;
@@ -17,9 +17,9 @@ function decodeToken(token: string): Record<string, any> | null {
     console.warn("Token decode error:", error);
     return null;
   }
-}
+};
 
-export function setToken(t: string | null) {
+export const setToken = (t: string | null) => {
   _token = t;
 
   (async () => {
@@ -37,13 +37,11 @@ export function setToken(t: string | null) {
       console.warn("SecureStoreでのトークン設定エラー:", e);
     }
   })();
-}
+};
 
-export function getToken() {
-  return _token;
-}
+export const getToken = () => _token;
 
-export function setUserId(id: string | null) {
+export const setUserId = (id: string | null) => {
   _userId = id;
 
   (async () => {
@@ -61,13 +59,11 @@ export function setUserId(id: string | null) {
       console.warn("SecureStoreでのuserId設定エラー:", e);
     }
   })();
-}
+};
 
-export function getUserId() {
-  return _userId;
-}
+export const getUserId = () => _userId;
 
-export async function restoreToken() {
+export const restoreToken = async () => {
   if (_token) return _token;
 
   try {
@@ -82,9 +78,9 @@ export async function restoreToken() {
   }
 
   return null;
-}
+};
 
-export async function restoreUserId() {
+export const restoreUserId = async () => {
   if (_userId) return _userId;
 
   try {
@@ -113,11 +109,11 @@ export async function restoreUserId() {
   }
 
   return null;
-}
+};
 
-export function clearToken() {
+export const clearToken = () => {
   setToken(null);
   setUserId(null);
-}
+};
 
 export default { setToken, getToken, setUserId, getUserId, restoreToken, restoreUserId, clearToken };

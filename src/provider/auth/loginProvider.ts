@@ -11,7 +11,7 @@ type LoginInput = {
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export function normalizeLoginPayload(input: LoginInput): LoginPayload {
+export const normalizeLoginPayload = (input: LoginInput): LoginPayload => {
   const payload: LoginPayload = { password: input.password };
   if (emailPattern.test(input.email)) {
     payload.email = input.email;
@@ -19,9 +19,9 @@ export function normalizeLoginPayload(input: LoginInput): LoginPayload {
     payload.id = input.email?.startsWith("@") ? input.email.slice(1) : input.email;
   }
   return payload;
-}
+};
 
-export async function loginWithCredentials(input: LoginInput): Promise<LoginResult> {
+export const loginWithCredentials = async (input: LoginInput): Promise<LoginResult> => {
   const payload = normalizeLoginPayload(input);
   return loginAndStoreToken(payload);
-}
+};

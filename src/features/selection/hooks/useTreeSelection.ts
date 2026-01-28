@@ -1,15 +1,15 @@
-import { useRouter } from 'expo-router';
+import { useRouterNavigation } from "@/hooks/useRouter";
 
-export function useTreeSelection() {
-  const router = useRouter();
+export const useTreeSelection = () => {
+  const { goToList } = useRouterNavigation();
 
   const handleTreeConfirm = (treeId: number) => {
     console.log(`Selected tree ID: ${treeId}`);
     // Có thể navigate đến trang tiếp theo hoặc lưu trữ selection
-    router.push('/list'); // hoặc trang khác tùy theo flow của app
+    goToList();
   };
 
   return {
     handleTreeConfirm,
   };
-}
+};

@@ -1,5 +1,7 @@
 import { ProfileContainer } from "@/features/profile/components/ProfileContainer";
 
-export default function ProfileScreen() {
+const ProfilePage = () => {
     return <ProfileContainer />;
-}
+};
+
+export default ProfilePage;

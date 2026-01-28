@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Tree, TreeCarouselState } from '@/features/selection/types';
 
-export function useTreeCarousel(trees: Tree[], initialTreeId = 1) {
+export const useTreeCarousel = (trees: Tree[], initialTreeId = 1) => {
   const [state, setState] = useState<TreeCarouselState>(() => {
     const initialIndex = trees.findIndex(tree => tree.id === initialTreeId);
     return {
@@ -34,4 +34,4 @@ export function useTreeCarousel(trees: Tree[], initialTreeId = 1) {
     handleNext,
     handlePrevious,
   };
-}
+};

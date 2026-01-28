@@ -16,11 +16,11 @@ type ForestSelectionContainerProps = {
   onPressSettings: () => void;
 };
 
-export default function ForestSelectionContainer({
+const ForestSelectionContainer = ({
   onConfirm,
   onPressProfile,
   onPressSettings,
-}: ForestSelectionContainerProps) {
+}: ForestSelectionContainerProps) => {
   const { name, userId, avatarSource } = useHeaderProfile();
   const { selectedForestId, currentIndex, handlePrevious, handleNext } =
     useForestCarousel(FORESTS, 1);
@@ -62,4 +62,6 @@ export default function ForestSelectionContainer({
       </View>
     </BackgroundContainer>
   );
-}
+};
+
+export default ForestSelectionContainer;

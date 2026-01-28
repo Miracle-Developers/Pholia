@@ -1,7 +1,10 @@
 import { updateProfile } from "./updateProfile";
 import { AvatarFile, uploadAvatar } from "./uploadAvatar";
 
-export async function updateAvatarProfile(userId: string, file: AvatarFile): Promise<{ file_key: string }> {
+export const updateAvatarProfile = async (
+    userId: string,
+    file: AvatarFile,
+): Promise<{ file_key: string }> => {
     try {
         // アバター画像をアップロード
         const response = await uploadAvatar(userId, file);
@@ -17,4 +20,4 @@ export async function updateAvatarProfile(userId: string, file: AvatarFile): Pro
     } catch (error) {
         throw error;
     }
-}
+};

@@ -5,9 +5,9 @@ type RegisterStepOneInput = {
   password: string;
 };
 
-export function saveRegistrationStepOne(input: RegisterStepOneInput) {
+export const saveRegistrationStepOne = (input: RegisterStepOneInput) => {
   registrationTemp.setStepOne({
     email: input.email,
     password: input.password,
   });
-}
+};

@@ -9,7 +9,7 @@ import { RegisterForm } from "@/features/auth/components/RegisterForm";
 import { useRegisterStepOne } from "@/features/auth/hooks/useRegisterStepOne";
 import { useRouterNavigation } from "@/hooks/useRouter";
 
-export default function RegisterContainer() {
+const RegisterContainer = () => {
   const { goToLogin } = useRouterNavigation();
   const { handleNext } = useRegisterStepOne();
 
@@ -33,4 +33,6 @@ export default function RegisterContainer() {
       </View>
     </KeyboardAvoidingContainer>
   );
-}
+};
+
+export default RegisterContainer;

@@ -8,6 +8,8 @@ type RegisterProfileInput = {
   name: string;
 };
 
-export async function registerProfile(input: RegisterProfileInput): Promise<RegisterProfileResult> {
+export const registerProfile = async (
+  input: RegisterProfileInput,
+): Promise<RegisterProfileResult> => {
   return registerProfileAndLogin(input);
-}
+};

@@ -9,7 +9,7 @@ import { styles } from "@/features/auth/components/RegisterProfileContainer/styl
 import { RegisterProfileForm } from "@/features/auth/components/RegisterProfileForm";
 import { useRegisterProfile } from "@/features/auth/hooks/useRegisterProfile";
 
-export default function RegisterProfileContainer() {
+const RegisterProfileContainer = () => {
   const { handleRegister } = useRegisterProfile();
 
   return (
@@ -30,4 +30,6 @@ export default function RegisterProfileContainer() {
       </KeyboardAvoidingContainer>
     </BackgroundContainer>
   );
-}
+};
+
+export default RegisterProfileContainer;

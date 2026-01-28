@@ -12,9 +12,9 @@ export type RegisterProfileResult =
   | { status: "auto-login-success" }
   | { status: "auto-login-failed" };
 
-export async function registerProfileAndLogin(
+export const registerProfileAndLogin = async (
   input: RegisterProfileInput,
-): Promise<RegisterProfileResult> {
+): Promise<RegisterProfileResult> => {
   const registration = registrationTemp.getTemp();
   if (!registration.email || !registration.password) {
     return { status: "missing-step1" };
@@ -62,4 +62,4 @@ export async function registerProfileAndLogin(
 
   registrationTemp.clearTemp();
   return { status: "auto-login-failed" };
-}
+};

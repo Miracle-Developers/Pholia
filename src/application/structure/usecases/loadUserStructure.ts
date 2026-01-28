@@ -77,7 +77,7 @@ const collectTrees = (data: unknown): TreeOption[] => {
   return trees;
 };
 
-export async function loadUserStructure(): Promise<TreeOption[]> {
+export const loadUserStructure = async (): Promise<TreeOption[]> => {
   await auth.restoreToken();
 
   let userId = auth.getUserId();
@@ -88,4 +88,4 @@ export async function loadUserStructure(): Promise<TreeOption[]> {
 
   const structure = await api.getUserStructure(userId);
   return collectTrees(structure);
-}
+};

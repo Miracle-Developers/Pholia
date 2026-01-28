@@ -5,6 +5,6 @@ type RegisterStepOneInput = {
   password: string;
 };
 
-export function registerStepOne(input: RegisterStepOneInput) {
+export const registerStepOne = (input: RegisterStepOneInput) => {
   saveRegistrationStepOne(input);
-}
+};

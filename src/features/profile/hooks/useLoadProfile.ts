@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 export { UserProfileData };
 
-export function useLoadProfile() {
+export const useLoadProfile = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState<UserProfileData>({
         id: 0,
@@ -35,4 +35,4 @@ export function useLoadProfile() {
     }, []);
 
     return { isLoading, user };
-}
+};

@@ -5,16 +5,14 @@ type Temp = {
 
 let temp: Temp = {};
 
-export function setStepOne(data: Temp) {
+export const setStepOne = (data: Temp) => {
   temp = { ...temp, ...data };
-}
+};
 
-export function getTemp() {
-  return temp;
-}
+export const getTemp = () => temp;
 
-export function clearTemp() {
+export const clearTemp = () => {
   temp = {};
-}
+};
 
 export default { setStepOne, getTemp, clearTemp };

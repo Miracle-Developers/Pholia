@@ -1,5 +1,7 @@
 import { SettingContainer } from "@/features/setting/components/SettingContainer";
 
-export default function SettingScreen() {
+const SettingPage = () => {
     return <SettingContainer />;
-}
+};
+
+export default SettingPage;

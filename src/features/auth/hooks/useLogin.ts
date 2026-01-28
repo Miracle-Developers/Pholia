@@ -4,7 +4,7 @@ import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
 import { loginWithCredentials } from "@/provider/auth/loginProvider";
 
-export function useLogin() {
+export const useLogin = () => {
   const { goToAddition } = useRouterNavigation();
   const { showToast } = useToast();
 
@@ -32,4 +32,4 @@ export function useLogin() {
   );
 
   return { handleLogin };
-}
+};

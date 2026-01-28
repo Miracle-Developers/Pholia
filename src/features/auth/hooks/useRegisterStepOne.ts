@@ -4,7 +4,7 @@ import type { AuthFormData } from "@/application/auth/types";
 import { useRouterNavigation } from "@/hooks/useRouter";
 import { registerStepOne } from "@/provider/auth/registerStepOneProvider";
 
-export function useRegisterStepOne() {
+export const useRegisterStepOne = () => {
   const { goToRegisterProfile } = useRouterNavigation();
 
   const handleNext = useCallback(
@@ -16,4 +16,4 @@ export function useRegisterStepOne() {
   );
 
   return { handleNext };
-}
+};
