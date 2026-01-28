@@ -10,7 +10,7 @@ import { LoginForm } from "@/features/auth/components/LoginForm";
 import { useLogin } from "@/features/auth/hooks/useLogin";
 import { useRouterNavigation } from "@/hooks/useRouter";
 
-export default function LoginContainer() {
+const LoginContainer = () => {
   const { goToRegister } = useRouterNavigation();
   const { handleLogin } = useLogin();
 
@@ -42,4 +42,6 @@ export default function LoginContainer() {
       </KeyboardAvoidingContainer>
     </BackgroundContainer>
   );
-}
+};
+
+export default LoginContainer;

@@ -1,8 +1,8 @@
-import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 
 import { deleteAccount, getAvatarUrl, updateProfile } from "@/application/profile/usecases";
 import { loadProfile } from "@/application/profile/usecases/loadProfile";
+import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
 import * as auth from "@/infrastructure/auth";
 
@@ -14,7 +14,7 @@ interface UserProfile {
 }
 
 export const useProfileSettings = () => {
-    const router = useRouter();
+    const { goToHome, goToLogin } = useRouterNavigation();
     const { showToast } = useToast();
     const [isLoading, setIsLoading] = useState(true);
     const [currentUserId, setCurrentUserId] = useState<number | null>(null);
@@ -127,7 +127,7 @@ export const useProfileSettings = () => {
         try {
             await auth.setToken(null);
             await auth.setUserId(null);
-            router.replace("/");
+            goToHome();
         } catch (error) {
             showToast({ title: "エラー", message: "ログアウトに失敗しました" });
         }
@@ -139,7 +139,7 @@ export const useProfileSettings = () => {
             await deleteAccount(String(currentUserId));
             showToast({ title: "成功", message: "アカウントが削除されました" });
             await auth.clearToken();
-            router.push("/login");
+            goToLogin();
         } catch (error) {
             showToast({ title: "エラー", message: "アカウント削除に失敗しました" });
         }

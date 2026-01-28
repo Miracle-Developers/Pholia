@@ -13,7 +13,7 @@ const getFileName = (asset: ImagePicker.ImagePickerAsset) => {
   return `leaf-${Date.now()}.jpg`;
 };
 
-export function useLeafUpload() {
+export const useLeafUpload = () => {
   const { showToast } = useToast();
   const [selectedPhoto, setSelectedPhoto] = useState<ImagePicker.ImagePickerAsset | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -97,4 +97,4 @@ export function useLeafUpload() {
     selectPhoto,
     upload,
   };
-}
+};

@@ -3,7 +3,7 @@ import { Slot } from "expo-router";
 import { BackgroundContainer } from "@/components/Containers/BackgroundContainer";
 import { ToastProvider } from "@/components/Toast/ToastProvider";
 
-export default function RootLayout() {
+const RootLayout = () => {
   return (
     <ToastProvider>
       <BackgroundContainer>
@@ -11,4 +11,6 @@ export default function RootLayout() {
       </BackgroundContainer>
     </ToastProvider>
   );
-}
+};
+
+export default RootLayout;

@@ -1,5 +1,5 @@
 import * as auth from "@/infrastructure/auth";
 
-export async function restoreSessionToken() {
+export const restoreSessionToken = async () => {
   return auth.restoreToken();
-}
+};

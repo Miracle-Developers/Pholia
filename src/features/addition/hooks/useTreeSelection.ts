@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { loadUserStructure, type TreeOption } from "@/application/structure/usecases";
 
-export function useTreeSelection() {
+export const useTreeSelection = () => {
   const [trees, setTrees] = useState<TreeOption[]>([]);
   const [selectedTreeId, setSelectedTreeId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -48,4 +48,4 @@ export function useTreeSelection() {
     selectTree,
     reload: load,
   };
-}
+};

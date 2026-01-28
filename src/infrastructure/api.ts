@@ -41,24 +41,17 @@ export type ApiLeafResponse = {
 export type ApiStructureResponse = unknown;
 
 // HTTP リクエストの共通処理
-function request<T>(
-  path: string,
-  method?: string,
-  body?: JsonBody | null,
-  isForm?: false,
-): Promise<T>;
-function request<T>(
-  path: string,
-  method: string,
-  body: BodyInit | null | undefined,
-  isForm: true,
-): Promise<T>;
-async function request<T>(
-  path: string,
+type RequestFn = {
+  <T>(path: string, method?: string, body?: JsonBody | null, isForm?: false): Promise<T>;
+  <T>(path: string, method: string, body: BodyInit | null | undefined, isForm: true): Promise<T>;
+};
+
+const request: RequestFn = async (
+  path,
   method = "GET",
-  body?: JsonBody | BodyInit | null,
+  body,
   isForm = false,
-) {
+) => {
   if (!BASE_URL) {
     throw new Error("EXPO_PUBLIC_API_URL is not set");
   }
@@ -87,28 +80,28 @@ async function request<T>(
     throw error;
   }
 
-  const contentType = res.headers.get('content-type') || '';
+  const contentType = res.headers.get("content-type") || "";
   if (contentType.includes("application/json")) {
     return (await res.json()) as T;
   }
   return (await res.text()) as T;
-}
+};
 
-export async function login(payload: {
+export const login = async (payload: {
   email?: string;
   id?: string;
   password: string;
-}) {
+}) => {
   return request<LoginResponse>("/auth/login", "POST", payload);
-}
+};
 
-export async function registerUser(payload: {
+export const registerUser = async (payload: {
   user_handle?: string;
   id?: string;
   name: string;
   email: string;
   password: string;
-}) {
+}) => {
   const body: {
     name: string;
     email: string;
@@ -123,24 +116,21 @@ export async function registerUser(payload: {
   if (payload.user_handle) body.user_handle = payload.user_handle;
   if (payload.id) body.id = payload.id;
   return request("/users", "POST", body);
-}
+};
 
-export async function getUser(id: string) {
-  return request(`/users/${encodeURIComponent(id)}`);
-}
+export const getUser = async (id: string) => request(`/users/${encodeURIComponent(id)}`);
 
-export async function getLeaf(id: number | string) {
-  return request<ApiLeafResponse>(`/leaves/${encodeURIComponent(String(id))}`);
-}
+export const getLeaf = async (id: number | string) =>
+  request<ApiLeafResponse>(`/leaves/${encodeURIComponent(String(id))}`);
 
-export async function uploadLeaf(
+export const uploadLeaf = async (
   file: {
     uri: string;
     name: string;
     type: string;
   },
   treeId?: number,
-) {
+) => {
   if (!BASE_URL) {
     throw new Error("EXPO_PUBLIC_API_URL is not set");
   }
@@ -173,26 +163,23 @@ export async function uploadLeaf(
     }
   }
   return {} as ApiLeafResponse;
-}
+};
 
 
-export async function getUserStats(userId: string) {
-  return request(`/users/${encodeURIComponent(userId)}/stats`);
-}
+export const getUserStats = async (userId: string) =>
+  request(`/users/${encodeURIComponent(userId)}/stats`);
 
-export async function getUserSettings(userId: string) {
-  return request(`/users/${encodeURIComponent(userId)}/settings`, "GET");
-}
+export const getUserSettings = async (userId: string) =>
+  request(`/users/${encodeURIComponent(userId)}/settings`, "GET");
 
-export async function getUserStructure(userId: string) {
-  return request<ApiStructureResponse>(`/users/${encodeURIComponent(userId)}/structure`, "GET");
-}
+export const getUserStructure = async (userId: string) =>
+  request<ApiStructureResponse>(`/users/${encodeURIComponent(userId)}/structure`, "GET");
 
-export async function uploadAvatar(userId: string, file: {
+export const uploadAvatar = async (userId: string, file: {
   uri: string;
   name: string;
   type: string;
-}) {
+}) => {
   const formData = new FormData();
   formData.append("file", file as unknown as Blob);
 
@@ -213,15 +200,13 @@ export async function uploadAvatar(userId: string, file: {
 
   const response = (await res.json()) as ApiUserResponse;
   return { file_key: response.avatar_url || "" };
-}
+};
 
-export async function updateUser(userId: string, payload: Record<string, unknown>) {
-  return request(`/users/${encodeURIComponent(userId)}`, "PATCH", payload);
-}
+export const updateUser = async (userId: string, payload: Record<string, unknown>) =>
+  request(`/users/${encodeURIComponent(userId)}`, "PATCH", payload);
 
-export async function deleteUser(userId: string) {
-  return request(`/users/${encodeURIComponent(userId)}`, "DELETE");
-}
+export const deleteUser = async (userId: string) =>
+  request(`/users/${encodeURIComponent(userId)}`, "DELETE");
 
 export default {
   login,

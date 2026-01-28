@@ -1,6 +1,6 @@
 import * as profile from "@/infrastructure/profile";
 
-export async function updateProfile(
+export const updateProfile = async (
     userId: string,
     data: {
         name?: string;
@@ -8,24 +8,24 @@ export async function updateProfile(
         email?: string;
         avatar_url?: string | null;
     }
-): Promise<void> {
+): Promise<void> => {
     await profile.updateUser(userId, data);
-}
+};
 
-export async function updatePassword(
+export const updatePassword = async (
     userId: string,
     _currentPassword: string,
     newPassword: string
-): Promise<void> {
+): Promise<void> => {
     // バックエンドはBearerトークンで認証し、currentPasswordは不要
     await profile.updateUser(userId, { password: newPassword });
-}
+};
 
-export async function deleteAccount(userId: string): Promise<void> {
+export const deleteAccount = async (userId: string): Promise<void> => {
     await profile.deleteAccount(userId);
-}
+};
 
-export function getAvatarUrl(fileKey: string | null): string | null {
+export const getAvatarUrl = (fileKey: string | null): string | null => {
     if (!fileKey) return null;
     return profile.getAvatarUrl(fileKey);
-}
+};

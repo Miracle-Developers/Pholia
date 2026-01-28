@@ -11,7 +11,7 @@ export type LoginResult =
   | { status: "success"; token: string; userId?: string }
   | { status: "missing-token"; response: unknown };
 
-export async function loginAndStoreToken(payload: LoginPayload): Promise<LoginResult> {
+export const loginAndStoreToken = async (payload: LoginPayload): Promise<LoginResult> => {
   const res = await api.login(payload);
   if (res?.token) {
     auth.setToken(res.token);
@@ -28,4 +28,4 @@ export async function loginAndStoreToken(payload: LoginPayload): Promise<LoginRe
   }
 
   return { status: "missing-token", response: res };
-}
+};

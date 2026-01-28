@@ -4,7 +4,7 @@ import { useToast } from "@/hooks/useToast";
 import { registerProfile } from "@/provider/auth/registerProfileProvider";
 import { useCallback } from "react";
 
-export function useRegisterProfile() {
+export const useRegisterProfile = () => {
   const { goToLogin, goToRegister, goToHome } = useRouterNavigation();
   const { showToast } = useToast();
 
@@ -56,4 +56,4 @@ export function useRegisterProfile() {
   );
 
   return { handleRegister };
-}
+};

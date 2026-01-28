@@ -1,5 +1,7 @@
 import RegisterContainer from "@/features/auth/components/RegisterContainer";
 
-export default function RegisterPage() {
+const RegisterPage = () => {
   return <RegisterContainer />;
-}
+};
+
+export default RegisterPage;

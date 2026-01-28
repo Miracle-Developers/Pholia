@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { loadLeaves } from "@/application/leaves/usecases";
 import type { LeafData } from "@/application/leaves/types";
 
-export function useLoadLeaves(leafIds: number[]) {
+export const useLoadLeaves = (leafIds: number[]) => {
   const [isLoading, setIsLoading] = useState(true);
   const [leavesById, setLeavesById] = useState<Record<number, LeafData>>({});
 
@@ -43,4 +43,4 @@ export function useLoadLeaves(leafIds: number[]) {
   }, [leafIds]);
 
   return { isLoading, leavesById };
-}
+};

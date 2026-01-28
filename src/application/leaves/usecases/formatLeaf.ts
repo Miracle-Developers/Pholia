@@ -24,7 +24,7 @@ const resolveFileUrl = (fileKey: string, directUrl?: string | null) => {
   return `${FILE_BASE_URL}/files/${fileKey}`;
 };
 
-export function formatLeaf(apiLeaf: ApiLeafResponse): LeafData {
+export const formatLeaf = (apiLeaf: ApiLeafResponse): LeafData => {
   return {
     id: apiLeaf.id,
     treeId: apiLeaf.tree_id,
@@ -35,4 +35,4 @@ export function formatLeaf(apiLeaf: ApiLeafResponse): LeafData {
     createdAt: apiLeaf.created_at,
     imageUrl: resolveFileUrl(apiLeaf.file_key || apiLeaf.r2_key || "", apiLeaf.r2_url),
   };
-}
+};

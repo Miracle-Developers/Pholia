@@ -1,5 +1,7 @@
 import LoginContainer from "@/features/auth/components/LoginContainer";
 
-export default function LoginPage() {
+const LoginPage = () => {
   return <LoginContainer />;
-}
+};
+
+export default LoginPage;

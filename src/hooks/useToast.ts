@@ -18,9 +18,9 @@ const noopShowToast = () => {
   console.warn("ToastProvider is not mounted");
 };
 
-export function useToast(): ToastContextValue {
+export const useToast = (): ToastContextValue => {
   const ctx = useContext(ToastContext);
   return ctx ?? { showToast: noopShowToast };
-}
+};
 
 export { ToastContext };

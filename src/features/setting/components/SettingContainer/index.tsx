@@ -1,5 +1,4 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -8,10 +7,11 @@ import { CommonModal } from "@/features/setting/components/CommonModal";
 import { EditAvatarModal } from "@/features/setting/components/EditAvatarModal";
 import { EditPasswordModal } from "@/features/setting/components/EditPasswordModal";
 import { styles } from "@/features/setting/components/SettingContainer/styles";
+import { useRouterNavigation } from "@/hooks/useRouter";
 import { useProfileSettings } from "@/hooks/useProfileSettings";
 
 export const SettingContainer = () => {
-    const router = useRouter();
+    const { goBack } = useRouterNavigation();
     const {
         currentUserId,
         user,
@@ -36,7 +36,7 @@ export const SettingContainer = () => {
         <View style={styles.container}>
             <StatusBar style="dark" />
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => router.back()} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+                <TouchableOpacity onPress={goBack} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
                     <MaterialIcons name="arrow-back" size={28} color="#333" />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>設定</Text>

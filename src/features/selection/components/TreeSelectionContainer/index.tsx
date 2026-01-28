@@ -17,13 +17,13 @@ type TreeSelectionContainerProps = {
   onPressSettings: () => void;
 };
 
-export default function TreeSelectionContainer({
+const TreeSelectionContainer = ({
   userName = 'ぽっぽ',
   userId = 'poppo',
   onConfirm,
   onPressProfile,
   onPressSettings,
-}: TreeSelectionContainerProps) {
+}: TreeSelectionContainerProps) => {
   const { selectedTreeId, currentIndex, handlePrevious, handleNext } = 
     useTreeCarousel(TREES, 1);
 
@@ -64,4 +64,6 @@ export default function TreeSelectionContainer({
       </View>
     </BackgroundContainer>
   );
-}
+};
+
+export default TreeSelectionContainer;

@@ -11,7 +11,7 @@ type Props = {
   children: ReactNode;
 };
 
-export function ToastProvider({ children }: Props) {
+export const ToastProvider = ({ children }: Props) => {
   const insets = useSafeAreaInsets();
   const [toast, setToast] = useState<ToastState | null>(null);
   const opacity = useRef(new Animated.Value(0)).current;
@@ -110,7 +110,7 @@ export function ToastProvider({ children }: Props) {
       </View>
     </ToastContext.Provider>
   );
-}
+};
 
 const styles = StyleSheet.create({
   root: {
