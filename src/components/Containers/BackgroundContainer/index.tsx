@@ -31,3 +31,19 @@ export const BackgroundContainer = ({
     {children}
   </ImageBackground>
 );
+
+export const ScreenBackgroundContainer = ({
+  children,
+  style,
+  imageStyle,
+  resizeMode = "cover",
+}: Props) => (
+  <ImageBackground
+    source={require("../../../../assets/Screen_Background.png")}
+    style={[styles.background, style]}
+    imageStyle={imageStyle}
+    resizeMode={resizeMode}
+  >
+    {children}
+  </ImageBackground>
+);
