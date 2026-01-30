@@ -40,6 +40,21 @@ export type ApiLeafResponse = {
 
 export type ApiStructureResponse = unknown;
 
+export type ApiTreeResponse = {
+  id: number;
+  name: string;
+  forest_id?: number;
+  created_at?: string;
+};
+
+export type ApiForestResponse = {
+  id: number;
+  name: string;
+  user_id?: number;
+  sort_order?: number;
+  created_at?: string;
+};
+
 // HTTP リクエストの共通処理
 const request = async <T>(
   path: string,
@@ -77,7 +92,9 @@ const request = async <T>(
 
   const contentType = res.headers.get("content-type") || "";
   if (contentType.includes("application/json")) {
-    return (await res.json()) as T;
+    const text = await res.text();
+    if (!text) return {} as T;
+    return JSON.parse(text) as T;
   }
   return (await res.text()) as T;
 };
@@ -195,6 +212,30 @@ export const uploadAvatar = async (
   return { file_key: response.avatar_url || "" };
 };
 
+export const createForest = async (
+  userId: string,
+  payload: { name: string; sort_order?: number },
+) => {
+  return request<ApiForestResponse>(
+    `/users/${encodeURIComponent(userId)}/forests`,
+    "POST",
+    payload,
+  );
+};
+
+export const createTree = async (
+  forestId: number,
+  payload: {
+    name: string;
+  },
+) => {
+  return request<ApiTreeResponse>(
+    `/forests/${encodeURIComponent(String(forestId))}/trees`,
+    "POST",
+    payload,
+  );
+};
+
 export const updateUser = async (userId: string, payload: Record<string, unknown>) =>
   request(`/users/${encodeURIComponent(userId)}`, "PATCH", payload);
 
@@ -209,6 +250,8 @@ export default {
   getUserStats,
   getUserSettings,
   getUserStructure,
+  createForest,
+  createTree,
   uploadAvatar,
   uploadLeaf,
   updateUser,
