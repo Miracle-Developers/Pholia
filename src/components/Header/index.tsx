@@ -38,10 +38,7 @@ export const Header = ({
           disabled={!onPressProfile}
           activeOpacity={0.85}
         >
-          <Image
-            source={require("@/../assets/profile.png")}
-            style={styles.actionIcon}
-          />
+          <Image source={require("@/../assets/profile.png")} style={styles.actionIcon} />
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.actionButton, styles.actionButtonSpacing]}
@@ -49,10 +46,7 @@ export const Header = ({
           disabled={!onPressSetting}
           activeOpacity={0.85}
         >
-          <Image
-            source={require("@/../assets/setting.png")}
-            style={styles.actionIcon}
-          />
+          <Image source={require("@/../assets/setting.png")} style={styles.actionIcon} />
         </TouchableOpacity>
       </View>
     </View>

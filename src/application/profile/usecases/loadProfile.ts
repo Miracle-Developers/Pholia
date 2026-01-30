@@ -6,25 +6,25 @@ import { formatUserProfile } from "./formatUserProfile";
 export { UserProfileData };
 
 export const loadProfile = async (): Promise<UserProfileData | null> => {
-    // トークンを先に復元
-    await auth.restoreToken();
-    
-    let userId = auth.getUserId();
-    if (!userId) {
-        userId = await auth.restoreUserId();
-    }
+  // トークンを先に復元
+  await auth.restoreToken();
 
-    if (!userId) {
-        console.warn("ユーザーIDが見つかりません");
-        return null;
-    }
+  let userId = auth.getUserId();
+  if (!userId) {
+    userId = await auth.restoreUserId();
+  }
 
-    const userData = await profile.loadUserProfile(userId);
-    if (!userData) {
-        return null;
-    }
+  if (!userId) {
+    console.warn("ユーザーIDが見つかりません");
+    return null;
+  }
 
-    const stats = await profile.getUserStats(userId);
+  const userData = await profile.loadUserProfile(userId);
+  if (!userData) {
+    return null;
+  }
 
-    return formatUserProfile(userData, stats);
+  const stats = await profile.getUserStats(userId);
+
+  return formatUserProfile(userData, stats);
 };

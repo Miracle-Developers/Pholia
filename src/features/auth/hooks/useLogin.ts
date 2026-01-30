@@ -20,11 +20,12 @@ export const useLogin = () => {
 
         console.warn("Login response missing token", result.response);
         showToast({ title: "ログインに失敗しました" });
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error("Login failed", err);
+        const message = err instanceof Error ? err.message : String(err);
         showToast({
           title: "ログインに失敗しました",
-          message: err?.message || String(err),
+          message,
         });
       }
     },

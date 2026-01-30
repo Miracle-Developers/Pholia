@@ -1,19 +1,19 @@
-import ForestSelectionContainer from '@/features/selection/components/ForestSelectionContainer';
-import { useForestSelection } from '@/features/selection/hooks/useForestSelection';
+import ForestSelectionContainer from "@/features/selection/components/ForestSelectionContainer";
+import { useForestSelection } from "@/features/selection/hooks/useForestSelection";
 
 const ForestSelectionPage = () => {
   const { handleForestConfirm } = useForestSelection();
 
   const handleProfilePress = () => {
-    console.log('Profile pressed');
+    console.log("Profile pressed");
   };
 
   const handleSettingsPress = () => {
-    console.log('Settings pressed');
+    console.log("Settings pressed");
   };
 
   return (
-    <ForestSelectionContainer 
+    <ForestSelectionContainer
       onConfirm={handleForestConfirm}
       onPressProfile={handleProfilePress}
       onPressSettings={handleSettingsPress}

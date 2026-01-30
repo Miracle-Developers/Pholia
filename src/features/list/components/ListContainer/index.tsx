@@ -19,12 +19,7 @@ export const ListContainer = () => {
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
-      <Header
-        name={name}
-        userId={userId}
-        avatarSource={avatarSource}
-        style={styles.topHeader}
-      />
+      <Header name={name} userId={userId} avatarSource={avatarSource} style={styles.topHeader} />
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <BackTitle title="森一覧" style={styles.backTitle} />
@@ -69,7 +64,7 @@ export const ListContainer = () => {
           </View>
         </View>
 
-        <WoodenButton title="決定" onPress={() => { }} style={styles.confirmButton} />
+        <WoodenButton title="決定" onPress={() => {}} style={styles.confirmButton} />
       </ScrollView>
     </View>
   );

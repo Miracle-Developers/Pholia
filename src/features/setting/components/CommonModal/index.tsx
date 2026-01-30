@@ -44,12 +44,7 @@ export const CommonModal = ({
   };
 
   return (
-    <Modal
-      visible={visible}
-      transparent
-      animationType="fade"
-      onRequestClose={handleClose}
-    >
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={handleClose}>
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           {isDanger && (
@@ -63,7 +58,15 @@ export const CommonModal = ({
           </View>
 
           {description && (
-            <Text style={{ fontSize: 14, color: "#666", textAlign: "center", marginBottom: 20, lineHeight: 20 }}>
+            <Text
+              style={{
+                fontSize: 14,
+                color: "#666",
+                textAlign: "center",
+                marginBottom: 20,
+                lineHeight: 20,
+              }}
+            >
               {description}
             </Text>
           )}
@@ -91,10 +94,7 @@ export const CommonModal = ({
           )}
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.cancelButton}
-              onPress={handleClose}
-            >
+            <TouchableOpacity style={styles.cancelButton} onPress={handleClose}>
               <Text style={styles.cancelButtonText}>キャンセル</Text>
             </TouchableOpacity>
             <TouchableOpacity

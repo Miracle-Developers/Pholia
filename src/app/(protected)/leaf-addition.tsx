@@ -1,7 +1,7 @@
 import { AdditionContainer } from "@/features/addition/components/LeafAdditionContainer";
 
 const AdditionPage = () => {
-    return <AdditionContainer />;
+  return <AdditionContainer />;
 };
 
 export default AdditionPage;

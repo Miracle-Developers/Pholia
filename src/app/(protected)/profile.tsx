@@ -1,7 +1,7 @@
 import { ProfileContainer } from "@/features/profile/components/ProfileContainer";
 
 const ProfilePage = () => {
-    return <ProfileContainer />;
+  return <ProfileContainer />;
 };
 
 export default ProfilePage;

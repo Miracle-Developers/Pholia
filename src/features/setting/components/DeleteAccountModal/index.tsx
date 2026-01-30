@@ -11,12 +11,7 @@ export type DeleteAccountModalProps = {
 
 export const DeleteAccountModal = ({ visible, onClose, onConfirm }: DeleteAccountModalProps) => {
   return (
-    <Modal
-      visible={visible}
-      transparent
-      animationType="fade"
-      onRequestClose={onClose}
-    >
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <View style={styles.iconContainer}>
@@ -31,16 +26,10 @@ export const DeleteAccountModal = ({ visible, onClose, onConfirm }: DeleteAccoun
           </Text>
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.cancelButton}
-              onPress={onClose}
-            >
+            <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
               <Text style={styles.cancelButtonText}>キャンセル</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.deleteButton}
-              onPress={onConfirm}
-            >
+            <TouchableOpacity style={styles.deleteButton} onPress={onConfirm}>
               <Text style={styles.deleteButtonText}>削除</Text>
             </TouchableOpacity>
           </View>

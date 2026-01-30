@@ -1,8 +1,8 @@
-import { Image, TouchableOpacity, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
+import { Image, TouchableOpacity, View } from "react-native";
 
-import type { Tree } from '@/features/selection/types';
-import { styles } from './styles';
+import type { Tree } from "@/features/selection/types";
+import { styles } from "./styles";
 
 type TreeCarouselProps = {
   trees: Tree[];
@@ -11,13 +11,7 @@ type TreeCarouselProps = {
   onNext: () => void;
 };
 
-export const TreeCarousel = ({
-  trees,
-  currentIndex,
-  onPrevious,
-  onNext,
-}: TreeCarouselProps) => {
-
+export const TreeCarousel = ({ trees, currentIndex, onPrevious, onNext }: TreeCarouselProps) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPrevious} style={styles.arrowButton}>
@@ -25,11 +19,7 @@ export const TreeCarousel = ({
       </TouchableOpacity>
 
       <View style={styles.treeContainer}>
-        <Image
-          source={trees[currentIndex].image}
-          style={styles.treeImage}
-          resizeMode="contain"
-        />
+        <Image source={trees[currentIndex].image} style={styles.treeImage} resizeMode="contain" />
       </View>
 
       <TouchableOpacity onPress={onNext} style={styles.arrowButton}>

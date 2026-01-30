@@ -1,7 +1,7 @@
 import { SettingContainer } from "@/features/setting/components/SettingContainer";
 
 const SettingPage = () => {
-    return <SettingContainer />;
+  return <SettingContainer />;
 };
 
 export default SettingPage;

@@ -1,5 +1,5 @@
-import * as api from "@/infrastructure/api";
 import type { ApiLeafResponse } from "@/infrastructure/api";
+import * as api from "@/infrastructure/api";
 
 export const getLeaf = async (id: number): Promise<ApiLeafResponse | null> => {
   try {
