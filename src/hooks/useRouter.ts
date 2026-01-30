@@ -9,7 +9,9 @@ export const useRouterNavigation = () => {
   const goToLogin = () => router.push("/login");
   const goToHome = () => router.replace("/");
   const goToList = () => router.replace("/list");
-  const goToAddition = () => router.replace("/addition");
+  const goToLeafAddition = () => router.replace("/leaf-addition");
+  const goToTreeAddition = () => router.replace("/tree-addition");
+  const goToForestAddition = () => router.replace("/forest-addition");
   const goToSetting = () => router.push("/setting");
   const goToProfile = () => router.push("/profile");
 
@@ -20,7 +22,9 @@ export const useRouterNavigation = () => {
     goToLogin,
     goToHome,
     goToList,
-    goToAddition,
+    goToLeafAddition,
+    goToTreeAddition,
+    goToForestAddition,
     goToSetting,
     goToProfile,
   };
