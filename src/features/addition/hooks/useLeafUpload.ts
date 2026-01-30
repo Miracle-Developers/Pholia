@@ -9,7 +9,7 @@ const getFileName = (asset: ImagePicker.ImagePickerAsset) => {
   if (asset.fileName) return asset.fileName;
   const uriParts = asset.uri.split("/");
   const name = uriParts[uriParts.length - 1];
-  if (name && name.includes(".")) return name;
+  if (name?.includes(".")) return name;
   return `leaf-${Date.now()}.jpg`;
 };
 

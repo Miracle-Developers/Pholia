@@ -1,13 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import { Text, View } from 'react-native';
-
-import { BackgroundContainer } from '@/components/Containers/BackgroundContainer';
-import { WoodenButton } from '@/components/Buttons/WoodenButton';
-import { Header } from '@/components/Header';
-import { TreeCarousel } from '@/features/selection/components/TreeCarousel';
-import { useTreeCarousel } from '@/features/selection/hooks/useTreeCarousel';
-import { TREES } from '@/features/selection/constants/trees';
-import { styles } from './styles';
+import { StatusBar } from "expo-status-bar";
+import { Text, View } from "react-native";
+import { WoodenButton } from "@/components/Buttons/WoodenButton";
+import { BackgroundContainer } from "@/components/Containers/BackgroundContainer";
+import { Header } from "@/components/Header";
+import { TreeCarousel } from "@/features/selection/components/TreeCarousel";
+import { TREES } from "@/features/selection/constants/trees";
+import { useTreeCarousel } from "@/features/selection/hooks/useTreeCarousel";
+import { styles } from "./styles";
 
 type TreeSelectionContainerProps = {
   userName?: string;
@@ -18,14 +17,13 @@ type TreeSelectionContainerProps = {
 };
 
 const TreeSelectionContainer = ({
-  userName = 'ぽっぽ',
-  userId = 'poppo',
+  userName = "ぽっぽ",
+  userId = "poppo",
   onConfirm,
   onPressProfile,
   onPressSettings,
 }: TreeSelectionContainerProps) => {
-  const { selectedTreeId, currentIndex, handlePrevious, handleNext } = 
-    useTreeCarousel(TREES, 1);
+  const { selectedTreeId, currentIndex, handlePrevious, handleNext } = useTreeCarousel(TREES, 1);
 
   const handleConfirm = () => {
     onConfirm(selectedTreeId);
@@ -35,30 +33,27 @@ const TreeSelectionContainer = ({
     <BackgroundContainer>
       <View style={styles.container}>
         <StatusBar style="dark" />
-        
+
         <Header
           name={userName}
           userId={userId}
-          avatarSource={require('@/../assets/logo.png')}
+          avatarSource={require("@/../assets/logo.png")}
           onPressProfile={onPressProfile}
           onPressSetting={onPressSettings}
         />
 
         <View style={styles.content}>
           <Text style={styles.title}>{userName}の木</Text>
-          
+
           <TreeCarousel
             trees={TREES}
             currentIndex={currentIndex}
             onPrevious={handlePrevious}
             onNext={handleNext}
           />
-          
+
           <View style={styles.buttonContainer}>
-            <WoodenButton
-              title="決定"
-              onPress={handleConfirm}
-            />
+            <WoodenButton title="決定" onPress={handleConfirm} />
           </View>
         </View>
       </View>

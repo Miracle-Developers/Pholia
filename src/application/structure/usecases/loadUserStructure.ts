@@ -1,5 +1,5 @@
-import * as auth from "@/infrastructure/auth";
 import * as api from "@/infrastructure/api";
+import * as auth from "@/infrastructure/auth";
 
 export type TreeOption = {
   id: number;
@@ -7,25 +7,41 @@ export type TreeOption = {
   label: string;
 };
 
-type ApiTreeLike = {
-  id?: number;
-  tree_id?: number;
-  name?: string;
-  tree_name?: string;
-  forest_name?: string;
-  forest?: { name?: string };
-  trees?: unknown;
-};
-
 type ApiStructureLike = {
   forests?: unknown;
   trees?: unknown;
 };
 
-const toTreeOption = (item: ApiTreeLike, forestName?: string): TreeOption | null => {
-  const id = item.tree_id ?? item.id;
-  const name = item.tree_name ?? item.name;
-  const resolvedForest = forestName ?? item.forest_name ?? item.forest?.name;
+const toRecord = (value: unknown): Record<string, unknown> | null => {
+  if (!value || typeof value !== "object") return null;
+  return value as Record<string, unknown>;
+};
+
+const toTreeOption = (item: Record<string, unknown>, forestName?: string): TreeOption | null => {
+  const id =
+    typeof item.tree_id === "number"
+      ? item.tree_id
+      : typeof item.id === "number"
+        ? item.id
+        : undefined;
+  const name =
+    typeof item.tree_name === "string"
+      ? item.tree_name
+      : typeof item.name === "string"
+        ? item.name
+        : undefined;
+
+  let resolvedForest = forestName;
+  if (!resolvedForest) {
+    resolvedForest =
+      typeof item.forest_name === "string"
+        ? item.forest_name
+        : (() => {
+            const forest = toRecord(item.forest);
+            return forest && typeof forest.name === "string" ? forest.name : undefined;
+          })();
+  }
+
   if (typeof id !== "number" || !name) return null;
   const label = resolvedForest ? `${resolvedForest} / ${name}` : name;
   return { id, name, label };
@@ -34,28 +50,38 @@ const toTreeOption = (item: ApiTreeLike, forestName?: string): TreeOption | null
 const collectTrees = (data: unknown): TreeOption[] => {
   const trees: TreeOption[] = [];
 
-  const addTree = (item: ApiTreeLike, forestName?: string) => {
-    const option = toTreeOption(item, forestName);
+  const addTree = (item: unknown, forestName?: string) => {
+    const record = toRecord(item);
+    if (!record) return;
+    const option = toTreeOption(record, forestName);
     if (option) trees.push(option);
   };
 
-  const parseForest = (forest: any) => {
-    const forestName = forest?.name ?? forest?.forest_name;
-    const forestTrees = forest?.trees ?? forest?.tree_list;
+  const parseForest = (forest: unknown) => {
+    const record = toRecord(forest);
+    if (!record) return;
+    const forestName =
+      typeof record.name === "string"
+        ? record.name
+        : typeof record.forest_name === "string"
+          ? record.forest_name
+          : undefined;
+    const forestTrees = record.trees ?? record.tree_list;
     if (Array.isArray(forestTrees)) {
-      forestTrees.forEach((tree: any) => {
+      forestTrees.forEach((tree: unknown) => {
         addTree(tree, forestName);
       });
     }
   };
 
   if (Array.isArray(data)) {
-    data.forEach((item: any) => {
-      if (item?.trees || item?.tree_list) {
-        parseForest(item);
-      } else {
-        addTree(item);
+    data.forEach((item: unknown) => {
+      const record = toRecord(item);
+      if (record && (record.trees || record.tree_list)) {
+        parseForest(record);
+        return;
       }
+      addTree(item);
     });
     return trees;
   }
@@ -63,12 +89,12 @@ const collectTrees = (data: unknown): TreeOption[] => {
   if (data && typeof data === "object") {
     const structure = data as ApiStructureLike;
     if (Array.isArray(structure.forests)) {
-      structure.forests.forEach((forest: any) => {
+      structure.forests.forEach((forest: unknown) => {
         parseForest(forest);
       });
     }
     if (Array.isArray(structure.trees)) {
-      structure.trees.forEach((tree: any) => {
+      structure.trees.forEach((tree: unknown) => {
         addTree(tree);
       });
     }

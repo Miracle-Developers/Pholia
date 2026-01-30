@@ -1,5 +1,5 @@
-import * as api from "@/infrastructure/api";
 import type { ApiLeafResponse } from "@/infrastructure/api";
+import * as api from "@/infrastructure/api";
 
 export type LeafFile = {
   uri: string;
@@ -8,9 +8,5 @@ export type LeafFile = {
 };
 
 export const uploadLeaf = async (file: LeafFile, treeId?: number): Promise<ApiLeafResponse> => {
-  try {
-    return await api.uploadLeaf(file, treeId);
-  } catch (error) {
-    throw error;
-  }
+  return api.uploadLeaf(file, treeId);
 };

@@ -23,7 +23,7 @@ export const loginAndStoreToken = async (payload: LoginPayload): Promise<LoginRe
     return {
       status: "success",
       token: res.token,
-      userId: res?.user?.id ? String(res.user.id) : undefined
+      userId: res?.user?.id ? String(res.user.id) : undefined,
     };
   }
 

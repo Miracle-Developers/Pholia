@@ -1,7 +1,7 @@
 import { ListContainer } from "@/features/list/components/ListContainer";
 
 const ListPage = () => {
-    return <ListContainer />;
+  return <ListContainer />;
 };
 
 export default ListPage;

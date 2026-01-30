@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-
-import { loadLeaves } from "@/application/leaves/usecases";
 import type { LeafData } from "@/application/leaves/types";
+import { loadLeaves } from "@/application/leaves/usecases";
 
 export const useLoadLeaves = (leafIds: number[]) => {
   const [isLoading, setIsLoading] = useState(true);

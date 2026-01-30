@@ -6,11 +6,11 @@ const USER_ID_KEY = "pholia_user_id";
 /**
  * JWTトークンをデコードしてペイロードを取得
  */
-const decodeToken = (token: string): Record<string, any> | null => {
+const decodeToken = (token: string): Record<string, unknown> | null => {
   try {
     const parts = token.split(".");
     if (parts.length !== 3) return null;
-    
+
     const decoded = atob(parts[1]);
     return JSON.parse(decoded);
   } catch (error) {
@@ -100,8 +100,16 @@ export const restoreUserId = async () => {
   const token = _token || (await restoreToken());
   if (token) {
     const payload = decodeToken(token);
-    if (payload?.sub || payload?.id) {
-      const userId = String(payload.sub || payload.id);
+    const payloadSub = payload?.sub;
+    const payloadId = payload?.id;
+    const rawUserId =
+      typeof payloadSub === "string" || typeof payloadSub === "number"
+        ? payloadSub
+        : typeof payloadId === "string" || typeof payloadId === "number"
+          ? payloadId
+          : null;
+    if (rawUserId !== null) {
+      const userId = String(rawUserId);
       _userId = userId;
       setUserId(userId);
       return userId;
@@ -116,4 +124,12 @@ export const clearToken = () => {
   setUserId(null);
 };
 
-export default { setToken, getToken, setUserId, getUserId, restoreToken, restoreUserId, clearToken };
+export default {
+  setToken,
+  getToken,
+  setUserId,
+  getUserId,
+  restoreToken,
+  restoreUserId,
+  clearToken,
+};

@@ -1,7 +1,6 @@
 import type { LeafData } from "@/application/leaves/types";
-import * as leaves from "@/infrastructure/leaves";
-
 import { formatLeaf } from "@/application/leaves/usecases/formatLeaf";
+import * as leaves from "@/infrastructure/leaves";
 
 export const loadLeaves = async (leafIds: number[]): Promise<LeafData[]> => {
   const ids = Array.from(new Set(leafIds)).filter((id) => Number.isFinite(id));

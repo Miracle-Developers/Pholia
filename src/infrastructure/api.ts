@@ -41,23 +41,16 @@ export type ApiLeafResponse = {
 export type ApiStructureResponse = unknown;
 
 // HTTP リクエストの共通処理
-type RequestFn = {
-  <T>(path: string, method?: string, body?: JsonBody | null, isForm?: false): Promise<T>;
-  <T>(path: string, method: string, body: BodyInit | null | undefined, isForm: true): Promise<T>;
-};
-
-const request: RequestFn = async (
-  path,
+const request = async <T>(
+  path: string,
   method = "GET",
-  body,
+  body?: JsonBody | BodyInit | null,
   isForm = false,
-) => {
+): Promise<T> => {
   if (!BASE_URL) {
     throw new Error("EXPO_PUBLIC_API_URL is not set");
   }
-  const headers: Record<string, string> = isForm
-    ? {}
-    : { "Content-Type": "application/json" };
+  const headers: Record<string, string> = isForm ? {} : { "Content-Type": "application/json" };
   const token = auth.getToken();
   if (token) headers.Authorization = `Bearer ${token}`;
 
@@ -75,8 +68,10 @@ const request: RequestFn = async (
 
   if (!res.ok) {
     const text = await res.text();
-    const error = new Error(`API ${method} ${path} failed: ${res.status} ${text}`);
-    (error as any).status = res.status;
+    const error = new Error(`API ${method} ${path} failed: ${res.status} ${text}`) as Error & {
+      status?: number;
+    };
+    error.status = res.status;
     throw error;
   }
 
@@ -87,11 +82,7 @@ const request: RequestFn = async (
   return (await res.text()) as T;
 };
 
-export const login = async (payload: {
-  email?: string;
-  id?: string;
-  password: string;
-}) => {
+export const login = async (payload: { email?: string; id?: string; password: string }) => {
   return request<LoginResponse>("/auth/login", "POST", payload);
 };
 
@@ -165,7 +156,6 @@ export const uploadLeaf = async (
   return {} as ApiLeafResponse;
 };
 
-
 export const getUserStats = async (userId: string) =>
   request(`/users/${encodeURIComponent(userId)}/stats`);
 
@@ -175,11 +165,14 @@ export const getUserSettings = async (userId: string) =>
 export const getUserStructure = async (userId: string) =>
   request<ApiStructureResponse>(`/users/${encodeURIComponent(userId)}/structure`, "GET");
 
-export const uploadAvatar = async (userId: string, file: {
-  uri: string;
-  name: string;
-  type: string;
-}) => {
+export const uploadAvatar = async (
+  userId: string,
+  file: {
+    uri: string;
+    name: string;
+    type: string;
+  },
+) => {
   const formData = new FormData();
   formData.append("file", file as unknown as Blob);
 

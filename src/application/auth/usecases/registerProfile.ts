@@ -23,18 +23,28 @@ export const registerProfileAndLogin = async (
   const idValue = input.userId?.startsWith("@") ? input.userId.slice(1) : input.userId;
 
   try {
-    const registerRes = await api.registerUser({
+    await api.registerUser({
       id: idValue,
       name: input.name,
       email: registration.email ?? "",
       password: registration.password ?? "",
     });
-  } catch (registerErr: any) {
+  } catch (registerErr: unknown) {
     console.error("Registration failed", registerErr);
+    const errRecord =
+      registerErr && typeof registerErr === "object"
+        ? (registerErr as Record<string, unknown>)
+        : null;
+    const status = errRecord && typeof errRecord.status === "number" ? errRecord.status : undefined;
+    const message = errRecord && typeof errRecord.message === "string" ? errRecord.message : "";
     // 409エラーを上位に伝播させる
-    if (registerErr?.status === 409 || registerErr?.message?.includes("409")) {
-      const error = new Error("このメールアドレスまたはユーザーIDは既に登録されています");
-      (error as any).status = 409;
+    if (status === 409 || message.includes("409")) {
+      const error = new Error(
+        "このメールアドレスまたはユーザーIDは既に登録されています",
+      ) as Error & {
+        status?: number;
+      };
+      error.status = 409;
       throw error;
     }
     throw registerErr;
@@ -48,9 +58,13 @@ export const registerProfileAndLogin = async (
     if (loginRes?.token) {
       auth.setToken(loginRes.token);
 
-      const userId = idValue || (loginRes as any)?.user?.id || (loginRes as any)?.user_id;
-      if (userId) {
-        auth.setUserId(userId);
+      const loginRecord =
+        loginRes && typeof loginRes === "object"
+          ? (loginRes as { user?: { id?: string | number }; user_id?: string | number })
+          : {};
+      const resolvedUserId = idValue ?? loginRecord.user?.id ?? loginRecord.user_id;
+      if (resolvedUserId !== undefined && resolvedUserId !== null) {
+        auth.setUserId(String(resolvedUserId));
       }
 
       registrationTemp.clearTemp();

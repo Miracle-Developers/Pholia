@@ -1,5 +1,5 @@
-import type { TreeOption } from "@/application/structure/usecases";
 import { Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import type { TreeOption } from "@/application/structure/usecases";
 
 import { styles } from "./styles";
 
@@ -10,7 +10,12 @@ type TreePickerModalProps = {
   onSelectTree: (treeId: number) => void;
 };
 
-export const TreePickerModal = ({ visible, trees, onClose, onSelectTree }: TreePickerModalProps) => {
+export const TreePickerModal = ({
+  visible,
+  trees,
+  onClose,
+  onSelectTree,
+}: TreePickerModalProps) => {
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
       <View style={styles.modalOverlay}>

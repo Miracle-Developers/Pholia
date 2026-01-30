@@ -1,16 +1,23 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
-import { Image, ImageBackground, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  ImageBackground,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import { BackTitle } from "@/components/BackTitle";
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { ScreenBackgroundContainer } from "@/components/Containers/BackgroundContainer";
 import { KeyboardAvoidingContainer } from "@/components/Containers/KeyboardAvoidingContainer";
 import { Header } from "@/components/Header";
+import { styles } from "@/features/addition/components/TreeAdditionContainer/styles";
 import { useHeaderProfile } from "@/hooks/useHeaderProfile";
 import { useRouterNavigation } from "@/hooks/useRouter";
-
-import { styles } from "@/features/addition/components/TreeAdditionContainer/styles";
 
 export const TreeAdditionContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();

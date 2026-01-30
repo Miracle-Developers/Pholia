@@ -1,8 +1,8 @@
-import { Image, TouchableOpacity, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
+import { Image, TouchableOpacity, View } from "react-native";
 
-import type { Forest } from '@/features/selection/types';
-import { styles } from './styles';
+import type { Forest } from "@/features/selection/types";
+import { styles } from "./styles";
 
 type ForestCarouselProps = {
   forests: Forest[];
@@ -17,7 +17,6 @@ export const ForestCarousel = ({
   onPrevious,
   onNext,
 }: ForestCarouselProps) => {
-
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPrevious} style={styles.arrowButton}>

@@ -1,6 +1,6 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import type { StyleProp, ViewStyle } from "react-native";
 import { Text, TouchableOpacity, View } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
 
 import { styles } from "./styles";
 

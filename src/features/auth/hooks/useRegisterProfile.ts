@@ -1,8 +1,8 @@
+import { useCallback } from "react";
 import type { RegisterProfileFormData } from "@/application/auth/types";
 import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
 import { registerProfile } from "@/provider/auth/registerProfileProvider";
-import { useCallback } from "react";
 
 export const useRegisterProfile = () => {
   const { goToLogin, goToRegister, goToHome } = useRouterNavigation();
@@ -36,16 +36,21 @@ export const useRegisterProfile = () => {
           title: "登録に失敗しました",
           message: "自動ログインできませんでした。ログインしてください。",
         });
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error("Register failed", err);
-        
-        let errorMessage = err?.message || String(err);
-        
+
+        const errRecord = err && typeof err === "object" ? (err as Record<string, unknown>) : null;
+        const status =
+          errRecord && typeof errRecord.status === "number" ? errRecord.status : undefined;
+        const message =
+          errRecord && typeof errRecord.message === "string" ? errRecord.message : String(err);
+
         // 409エラー（すでに存在するユーザー）
-        if (err?.status === 409 || err?.message?.includes("409")) {
-          errorMessage = "このメールアドレスまたはユーザーIDは既に登録されています";
-        }
-        
+        const errorMessage =
+          status === 409 || message.includes("409")
+            ? "このメールアドレスまたはユーザーIDは既に登録されています"
+            : message;
+
         showToast({
           title: "登録に失敗しました",
           message: errorMessage,
