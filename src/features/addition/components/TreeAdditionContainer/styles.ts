@@ -100,6 +100,10 @@ export const styles = StyleSheet.create({
     paddingVertical: 2,
     backgroundColor: "transparent",
   },
+  memberInput: {
+    marginHorizontal: 0,
+    paddingVertical: 4,
+  },
   actionButton: {
     width: 28,
     height: 28,
@@ -107,6 +111,34 @@ export const styles = StyleSheet.create({
     backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
+  },
+  memberList: {
+    width: "100%",
+    marginTop: 16,
+    padding: 14,
+    borderRadius: 14,
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    borderWidth: 1,
+    borderColor: "#E3CBA5",
+  },
+  memberListTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#6C4A2C",
+    marginBottom: 8,
+  },
+  memberListEmpty: {
+    fontSize: 14,
+    color: "#B5906E",
+  },
+  memberListItem: {
+    paddingVertical: 6,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E3CBA5",
+  },
+  memberListText: {
+    fontSize: 14,
+    color: "#7A4B2A",
   },
   submitButton: {
     marginTop: 26,
