@@ -47,6 +47,14 @@ export type ApiTreeResponse = {
   created_at?: string;
 };
 
+export type ApiTreeMemberResponse = {
+  id?: number;
+  tree_id?: number;
+  user_id?: number;
+  role?: string;
+  created_at?: string;
+};
+
 export type ApiForestResponse = {
   id: number;
   name: string;
@@ -223,16 +231,25 @@ export const createForest = async (
   );
 };
 
-export const createTree = async (
-  forestId: number,
-  payload: {
-    name: string;
-  },
+export const createTree = async (payload: { forest_id: number; name: string }) => {
+  return request<ApiTreeResponse>("/trees", "POST", payload);
+};
+
+export const addTreeMember = async (
+  treeId: number,
+  payload: { user_id: number; role: string },
 ) => {
-  return request<ApiTreeResponse>(
-    `/forests/${encodeURIComponent(String(forestId))}/trees`,
+  return request<ApiTreeMemberResponse>(
+    `/trees/${encodeURIComponent(String(treeId))}/members`,
     "POST",
     payload,
+  );
+};
+
+export const getTreeMembers = async (treeId: number) => {
+  return request<ApiTreeMemberResponse[]>(
+    `/trees/${encodeURIComponent(String(treeId))}/members`,
+    "GET",
   );
 };
 
@@ -252,6 +269,8 @@ export default {
   getUserStructure,
   createForest,
   createTree,
+  addTreeMember,
+  getTreeMembers,
   uploadAvatar,
   uploadLeaf,
   updateUser,

@@ -6,5 +6,5 @@ export type CreateTreeInput = {
 };
 
 export const createTree = async ({ forestId, name }: CreateTreeInput) => {
-  return api.createTree(forestId, { name });
+  return api.createTree({ forest_id: forestId, name });
 };

@@ -11,6 +11,7 @@ export const useRouterNavigation = () => {
   const goToList = () => router.replace("/list");
   const goToLeafAddition = () => router.replace("/leaf-addition");
   const goToTreeAddition = () => router.replace("/tree-addition");
+  const goToTreeSelection = () => router.replace("/tree-selection");
   const goToForestAddition = () => router.replace("/forest-addition");
   const goToSetting = () => router.push("/setting");
   const goToProfile = () => router.push("/profile");
@@ -24,6 +25,7 @@ export const useRouterNavigation = () => {
     goToList,
     goToLeafAddition,
     goToTreeAddition,
+    goToTreeSelection,
     goToForestAddition,
     goToSetting,
     goToProfile,
