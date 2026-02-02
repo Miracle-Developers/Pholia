@@ -20,7 +20,7 @@ export type ForestCarouselState = {
 };
 
 export type TreeCarouselState = {
-  selectedTreeId: number;
+  selectedTreeId: number | null;
   currentIndex: number;
 };
 
