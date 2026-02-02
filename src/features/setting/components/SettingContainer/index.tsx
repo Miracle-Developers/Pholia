@@ -3,6 +3,9 @@ import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
+import { BackTitle } from "@/components/BackTitle";
+import { ScreenBackgroundContainer } from "@/components/Containers/BackgroundContainer";
+import { Header } from "@/components/Header";
 import { CommonModal } from "@/features/setting/components/CommonModal";
 import { EditAvatarModal } from "@/features/setting/components/EditAvatarModal";
 import { EditPasswordModal } from "@/features/setting/components/EditPasswordModal";
@@ -11,7 +14,7 @@ import { useProfileSettings } from "@/hooks/useProfileSettings";
 import { useRouterNavigation } from "@/hooks/useRouter";
 
 export const SettingContainer = () => {
-  const { goBack } = useRouterNavigation();
+  const { goBack, goToProfile, goToSetting } = useRouterNavigation();
   const {
     currentUserId,
     user,
@@ -33,40 +36,46 @@ export const SettingContainer = () => {
   const [deleteAccountVisible, setDeleteAccountVisible] = useState(false);
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="dark" />
-      <View style={styles.header}>
-        <TouchableOpacity onPress={goBack} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-          <MaterialIcons name="arrow-back" size={28} color="#333" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>設定</Text>
-        <View style={styles.headerSpacer} />
-      </View>
+    <ScreenBackgroundContainer>
+      <View style={styles.container}>
+        <StatusBar style="dark" />
+        <Header
+          name={user.name}
+          userId={user.userId}
+          avatarSource={
+            user.avatarFileKey
+              ? { uri: getAvatarUrl(user.avatarFileKey) || "" }
+              : require("@/../assets/logo.png")
+          }
+          onPressProfile={goToProfile}
+          onPressSetting={goToSetting}
+        />
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <TouchableOpacity style={styles.avatarSection} onPress={() => setEditAvatarVisible(true)}>
-          <View style={styles.avatarContainer}>
-            {user.avatarFileKey ? (
-              <Image
-                source={{
-                  uri: getAvatarUrl(user.avatarFileKey) || "",
-                }}
-                style={styles.avatarImage}
-                resizeMode="contain"
-              />
-            ) : (
-              <Image
-                source={require("@/../assets/logo.png")}
-                style={styles.avatarImage}
-                resizeMode="contain"
-              />
-            )}
-            <View style={styles.editBadge}>
-              <MaterialIcons name="edit" size={16} color="white" />
+        <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+          <BackTitle title="ホーム" onPress={goBack} style={styles.backTitle} />
+          <TouchableOpacity style={styles.avatarSection} onPress={() => setEditAvatarVisible(true)}>
+            <View style={styles.avatarContainer}>
+              {user.avatarFileKey ? (
+                <Image
+                  source={{
+                    uri: getAvatarUrl(user.avatarFileKey) || "",
+                  }}
+                  style={styles.avatarImage}
+                  resizeMode="contain"
+                />
+              ) : (
+                <Image
+                  source={require("@/../assets/logo.png")}
+                  style={styles.avatarImage}
+                  resizeMode="contain"
+                />
+              )}
+              <View style={styles.editBadge}>
+                <MaterialIcons name="edit" size={16} color="white" />
+              </View>
             </View>
-          </View>
-          <Text style={styles.avatarEditText}>画像を変更</Text>
-        </TouchableOpacity>
+            <Text style={styles.avatarEditText}>画像を変更</Text>
+          </TouchableOpacity>
 
         <View style={styles.settingSection}>
           <View style={styles.sectionTitle}>
@@ -142,7 +151,8 @@ export const SettingContainer = () => {
             <MaterialIcons name="chevron-right" size={24} color="#E74C3C" />
           </TouchableOpacity>
         </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
 
       <EditAvatarModal
         visible={editAvatarVisible}
@@ -211,6 +221,7 @@ export const SettingContainer = () => {
         }}
         isDanger={true}
       />
+    </ScreenBackgroundContainer>
     </View>
   );
 };
