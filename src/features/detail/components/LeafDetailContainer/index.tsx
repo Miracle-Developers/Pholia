@@ -4,7 +4,7 @@ import { useState } from "react";
 import {
   Image,
   ImageBackground,
-            source={require("@/../assets/wooden_border.png")}
+  Modal,
   ScrollView,
   Text,
   TextInput,

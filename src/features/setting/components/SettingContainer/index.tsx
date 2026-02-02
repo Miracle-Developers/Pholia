@@ -152,9 +152,8 @@ export const SettingContainer = () => {
           </TouchableOpacity>
         </View>
         </ScrollView>
-      </View>
 
-      <EditAvatarModal
+        <EditAvatarModal
         visible={editAvatarVisible}
         onClose={() => setEditAvatarVisible(false)}
         userId={String(currentUserId || "")}
@@ -221,7 +220,7 @@ export const SettingContainer = () => {
         }}
         isDanger={true}
       />
+      </View>
     </ScreenBackgroundContainer>
-    </View>
   );
 };
