@@ -10,15 +10,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-
+import { addTreeMember } from "@/application/trees/usecases/addTreeMember";
+import { createTree } from "@/application/trees/usecases/createTree";
+import { loadTreeMembers, type TreeMember } from "@/application/trees/usecases/loadTreeMembers";
 import { BackTitle } from "@/components/BackTitle";
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { ScreenBackgroundContainer } from "@/components/Containers/BackgroundContainer";
 import { KeyboardAvoidingContainer } from "@/components/Containers/KeyboardAvoidingContainer";
 import { Header } from "@/components/Header";
-import { addTreeMember } from "@/application/trees/usecases/addTreeMember";
-import { createTree } from "@/application/trees/usecases/createTree";
-import { loadTreeMembers, TreeMember } from "@/application/trees/usecases/loadTreeMembers";
 import { ForestPickerModal } from "@/features/addition/components/ForestPickerModal";
 import { styles } from "@/features/addition/components/TreeAdditionContainer/styles";
 import { useForestSelection } from "@/features/addition/hooks/useForestSelection";
@@ -180,7 +179,11 @@ export const TreeAdditionContainer = () => {
                   keyboardType="number-pad"
                 />
               </View>
-              <TouchableOpacity style={styles.actionButton} activeOpacity={0.85} onPress={handleAddMember}>
+              <TouchableOpacity
+                style={styles.actionButton}
+                activeOpacity={0.85}
+                onPress={handleAddMember}
+              >
                 <MaterialIcons name="person-add" size={18} color="#7A4B2A" />
               </TouchableOpacity>
             </View>
@@ -193,7 +196,10 @@ export const TreeAdditionContainer = () => {
                 <Text style={styles.memberListEmpty}>まだメンバーがいません</Text>
               ) : (
                 members.map((member, index) => (
-                  <View key={`${member.userId ?? "unknown"}-${index}`} style={styles.memberListItem}>
+                  <View
+                    key={`${member.userId ?? "unknown"}-${index}`}
+                    style={styles.memberListItem}
+                  >
                     <Text style={styles.memberListText}>ID: {member.userId ?? "-"}</Text>
                     <Text style={styles.memberListText}>役割: {member.role ?? "-"}</Text>
                   </View>

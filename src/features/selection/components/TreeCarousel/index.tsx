@@ -12,17 +12,29 @@ type TreeCarouselProps = {
 };
 
 export const TreeCarousel = ({ trees, currentIndex, onPrevious, onNext }: TreeCarouselProps) => {
+  const hasTrees = trees.length > 0;
+  const tree = hasTrees ? trees[currentIndex] : null;
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onPrevious} style={styles.arrowButton}>
+      <TouchableOpacity onPress={onPrevious} style={styles.arrowButton} disabled={!hasTrees}>
         <Ionicons name="chevron-back" size={40} color="#5D3A1A" />
       </TouchableOpacity>
 
-      <View style={styles.treeContainer}>
-        <Image source={trees[currentIndex].image} style={styles.treeImage} resizeMode="contain" />
-      </View>
+      <TouchableOpacity
+        onPress={onNext}
+        style={styles.treeContainer}
+        activeOpacity={0.85}
+        disabled={!hasTrees}
+      >
+        <Image
+          source={tree?.image ?? require("@/../assets/tree1.png")}
+          style={styles.treeImage}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
 
-      <TouchableOpacity onPress={onNext} style={styles.arrowButton}>
+      <TouchableOpacity onPress={onNext} style={styles.arrowButton} disabled={!hasTrees}>
         <Ionicons name="chevron-forward" size={40} color="#5D3A1A" />
       </TouchableOpacity>
     </View>

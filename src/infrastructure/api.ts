@@ -139,6 +139,9 @@ export const getUser = async (id: string) => request(`/users/${encodeURIComponen
 export const getLeaf = async (id: number | string) =>
   request<ApiLeafResponse>(`/leaves/${encodeURIComponent(String(id))}`);
 
+export const getTree = async (id: number | string) =>
+  request<ApiTreeResponse>(`/trees/${encodeURIComponent(String(id))}`);
+
 export const uploadLeaf = async (
   file: {
     uri: string;
@@ -235,10 +238,7 @@ export const createTree = async (payload: { forest_id: number; name: string }) =
   return request<ApiTreeResponse>("/trees", "POST", payload);
 };
 
-export const addTreeMember = async (
-  treeId: number,
-  payload: { user_id: number; role: string },
-) => {
+export const addTreeMember = async (treeId: number, payload: { user_id: number; role: string }) => {
   return request<ApiTreeMemberResponse>(
     `/trees/${encodeURIComponent(String(treeId))}/members`,
     "POST",
@@ -264,6 +264,7 @@ export default {
   registerUser,
   getUser,
   getLeaf,
+  getTree,
   getUserStats,
   getUserSettings,
   getUserStructure,
