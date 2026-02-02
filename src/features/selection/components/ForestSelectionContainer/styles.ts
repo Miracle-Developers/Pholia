@@ -17,6 +17,12 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
   },
+  emptyText: {
+    marginTop: 12,
+    textAlign: "center",
+    color: "#B5906E",
+    fontSize: 14,
+  },
   buttonContainer: {
     marginTop: "auto",
   },

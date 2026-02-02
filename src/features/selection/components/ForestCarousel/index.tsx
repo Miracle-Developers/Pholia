@@ -17,21 +17,29 @@ export const ForestCarousel = ({
   onPrevious,
   onNext,
 }: ForestCarouselProps) => {
+  const hasForests = forests.length > 0;
+  const forest = hasForests ? forests[currentIndex] : null;
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onPrevious} style={styles.arrowButton}>
+      <TouchableOpacity onPress={onPrevious} style={styles.arrowButton} disabled={!hasForests}>
         <Ionicons name="chevron-back" size={40} color="#5D3A1A" />
       </TouchableOpacity>
 
-      <View style={styles.forestContainer}>
+      <TouchableOpacity
+        onPress={onNext}
+        style={styles.forestContainer}
+        activeOpacity={0.85}
+        disabled={!hasForests}
+      >
         <Image
-          source={forests[currentIndex].image}
+          source={forest?.image ?? require("@/../assets/forest1.png")}
           style={styles.forestImage}
           resizeMode="contain"
         />
-      </View>
+      </TouchableOpacity>
 
-      <TouchableOpacity onPress={onNext} style={styles.arrowButton}>
+      <TouchableOpacity onPress={onNext} style={styles.arrowButton} disabled={!hasForests}>
         <Ionicons name="chevron-forward" size={40} color="#5D3A1A" />
       </TouchableOpacity>
     </View>

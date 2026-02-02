@@ -71,6 +71,6 @@ export const loadUserForests = async (): Promise<ForestOption[]> => {
   }
   if (!userId) return [];
 
-  const structure = await api.getUserStructure(userId);
-  return collectForests(structure);
+  const forests = await api.getUserForests(userId);
+  return collectForests(forests);
 };
