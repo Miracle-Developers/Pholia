@@ -15,7 +15,7 @@ export type Tree = {
 };
 
 export type ForestCarouselState = {
-  selectedForestId: number;
+  selectedForestId: number | null;
   currentIndex: number;
 };
 

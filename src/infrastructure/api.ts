@@ -58,6 +58,7 @@ export type ApiTreeMemberResponse = {
 export type ApiForestResponse = {
   id: number;
   name: string;
+  description?: string;
   user_id?: number;
   sort_order?: number;
   created_at?: string;
@@ -142,6 +143,9 @@ export const getLeaf = async (id: number | string) =>
 export const getTree = async (id: number | string) =>
   request<ApiTreeResponse>(`/trees/${encodeURIComponent(String(id))}`);
 
+export const getForest = async (id: number | string) =>
+  request<ApiForestResponse>(`/forests/${encodeURIComponent(String(id))}`);
+
 export const uploadLeaf = async (
   file: {
     uri: string;
@@ -192,6 +196,9 @@ export const getUserSettings = async (userId: string) =>
 
 export const getUserStructure = async (userId: string) =>
   request<ApiStructureResponse>(`/users/${encodeURIComponent(userId)}/structure`, "GET");
+
+export const getUserForests = async (userId: string) =>
+  request(`/users/${encodeURIComponent(userId)}/forests`, "GET");
 
 export const uploadAvatar = async (
   userId: string,
@@ -265,9 +272,11 @@ export default {
   getUser,
   getLeaf,
   getTree,
+  getForest,
   getUserStats,
   getUserSettings,
   getUserStructure,
+  getUserForests,
   createForest,
   createTree,
   addTreeMember,
