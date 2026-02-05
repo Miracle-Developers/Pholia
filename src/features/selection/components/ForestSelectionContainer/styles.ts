@@ -1,3 +1,4 @@
+import { FONT_FAMILY } from "@/config/fontConfig";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -15,14 +16,14 @@ export const styles = StyleSheet.create({
     color: "#5D3A1A",
     textAlign: "center",
     marginBottom: 20,
-    fontFamily: 'KiwiMaru_500Medium',
+    fontFamily: FONT_FAMILY.medium,
   },
   emptyText: {
     marginTop: 12,
     textAlign: "center",
     color: "#B5906E",
     fontSize: 14,
-    fontFamily: 'KiwiMaru_400Regular',
+    fontFamily: FONT_FAMILY.regular,
   },
   buttonContainer: {
     marginTop: "auto",

@@ -1,3 +1,4 @@
+import { FONT_FAMILY } from "@/config/fontConfig";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -27,7 +28,7 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     color: "#8B6F47",
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
   inputContainer: {
     marginBottom: 20,
@@ -37,7 +38,7 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#8B6F47",
     marginBottom: 8,
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
   passwordInput: {
     flexDirection: "row",
@@ -54,7 +55,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 10,
     fontSize: 14,
     color: "#8B6F47",
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
   eyeIcon: {
     padding: 4,
@@ -75,7 +76,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     color: "#FFFFFF",
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
   saveButton: {
     flex: 1,
@@ -88,6 +89,6 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     color: "white",
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
 });

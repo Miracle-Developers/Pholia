@@ -1,3 +1,4 @@
+import { FONT_FAMILY } from "@/config/fontConfig";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -33,7 +34,7 @@ export const styles = StyleSheet.create({
     fontWeight: "700",
     color: "#6C4A2C",
     letterSpacing: 3,
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
   treeWrapper: {
     marginTop: 16,
@@ -92,7 +93,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: "#B5906E",
     letterSpacing: 0.5,
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
   fieldInput: {
     flex: 1,
@@ -101,7 +102,7 @@ export const styles = StyleSheet.create({
     color: "#7A4B2A",
     paddingVertical: 2,
     backgroundColor: "transparent",
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
   memberInput: {
     marginHorizontal: 0,

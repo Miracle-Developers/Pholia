@@ -1,3 +1,4 @@
+import { FONT_FAMILY } from "@/config/fontConfig";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -14,7 +15,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#D0D0D0",
     paddingRight: 44,
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
   toggle: {
     position: "absolute",
@@ -28,6 +29,6 @@ export const styles = StyleSheet.create({
   toggleText: {
     color: "#007AFF",
     fontSize: 14,
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
 });

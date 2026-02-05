@@ -1,3 +1,4 @@
+import { FONT_FAMILY } from "@/config/fontConfig";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -29,7 +30,7 @@ export const styles = StyleSheet.create({
     color: "#E74C3C",
     marginBottom: 12,
     textAlign: "center",
-    fontFamily: "KiwiMaru_500Medium",
+    fontFamily: FONT_FAMILY.medium,
   },
   modalDescription: {
     fontSize: 14,
@@ -37,7 +38,7 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 24,
     lineHeight: 20,
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -55,7 +56,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     color: "#FFFFFF",
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
   deleteButton: {
     flex: 1,
@@ -68,6 +69,6 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     color: "white",
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
 });

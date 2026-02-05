@@ -1,3 +1,4 @@
+import { FONT_FAMILY } from "@/config/fontConfig";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -48,14 +49,14 @@ export const styles = StyleSheet.create({
         color: "#8B6F47",
         marginBottom: 2,
         textAlign: "center",
-        fontFamily: "KiwiMaru_500Medium",
+        fontFamily: FONT_FAMILY.medium,
     },
     userId: {
         fontSize: 16,
         color: "#8B6F47",
         marginBottom: 16,
         textAlign: "center",
-        fontFamily: "KiwiMaru_300Light",
+        fontFamily: FONT_FAMILY.light,
     },
     divider: {
         borderTopWidth: 2,
@@ -73,7 +74,7 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         color: "#8B6F47",
         marginLeft: 12,
-        fontFamily: "KiwiMaru_500Medium",
+        fontFamily: FONT_FAMILY.medium,
     },
     bioSection: {
         marginTop: 16,
@@ -82,7 +83,7 @@ export const styles = StyleSheet.create({
         fontSize: 13,
         color: "#8B6F47",
         marginBottom: 8,
-        fontFamily: "KiwiMaru_300Light",
+        fontFamily: FONT_FAMILY.light,
     },
     bioBox: {
         backgroundColor: "#FFFEF7",
@@ -97,7 +98,7 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         color: "#8B6F47",
         lineHeight: 20,
-        fontFamily: "KiwiMaru_300Light",
+        fontFamily: FONT_FAMILY.light,
     },
     statsContainer: {
         flexDirection: "row",
@@ -136,12 +137,12 @@ export const styles = StyleSheet.create({
         fontSize: 15,
         color: "#8B6F47",
         textAlign: "center",
-        fontFamily: "KiwiMaru_500Medium",
+        fontFamily: FONT_FAMILY.medium,
     },
     statValue: {
         fontSize: 36,
         fontWeight: "700",
         color: "#5D4E37",
-        fontFamily: "KiwiMaru_400Regular",
+        fontFamily: FONT_FAMILY.regular,
     },
 });
