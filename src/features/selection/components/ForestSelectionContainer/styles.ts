@@ -12,16 +12,17 @@ export const styles = StyleSheet.create({
   },
   title: {
     fontSize: 36,
-    fontWeight: "700",
     color: "#5D3A1A",
     textAlign: "center",
     marginBottom: 20,
+    fontFamily: 'KiwiMaru_500Medium',
   },
   emptyText: {
     marginTop: 12,
     textAlign: "center",
     color: "#B5906E",
     fontSize: 14,
+    fontFamily: 'KiwiMaru_400Regular',
   },
   buttonContainer: {
     marginTop: "auto",

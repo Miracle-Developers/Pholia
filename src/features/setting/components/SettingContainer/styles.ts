@@ -20,6 +20,7 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     color: "#333",
+    fontFamily: "KiwiMaru_400Regular",
   },
   headerSpacer: {
     width: 28,
@@ -70,6 +71,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: "white",
     fontWeight: "700",
+    fontFamily: "KiwiMaru_400Regular",
   },
   settingSection: {
     backgroundColor: "#F5F8E8",
@@ -87,6 +89,7 @@ export const styles = StyleSheet.create({
     color: "#8B6F47",
     textTransform: "uppercase",
     letterSpacing: 0.5,
+    fontFamily: "KiwiMaru_400Regular",
   },
   settingItem: {
     flexDirection: "row",
@@ -111,12 +114,14 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     color: "#8B6F47",
+    fontFamily: "KiwiMaru_500Medium",
   },
   settingValue: {
     fontSize: 13,
     color: "#8B6F47",
     marginTop: 4,
     fontWeight: "500",
+    fontFamily: "KiwiMaru_300Light",
   },
   settingItemLogout: {
     marginBottom: 12,

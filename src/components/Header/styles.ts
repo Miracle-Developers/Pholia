@@ -43,14 +43,15 @@ export const styles = StyleSheet.create({
   },
   nameText: {
     fontSize: 22,
-    fontWeight: "700",
     color: "#5B3A1E",
+    fontFamily: "KiwiMaru_500Medium",
   },
   userIdText: {
     marginTop: 4,
     fontSize: 15,
     fontWeight: "600",
     color: "#6B4A2C",
+    fontFamily: "KiwiMaru_300Light",
   },
   actions: {
     flexDirection: "row",
