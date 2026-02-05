@@ -33,6 +33,7 @@ export const styles = StyleSheet.create({
     fontWeight: "700",
     color: "#6C4A2C",
     letterSpacing: 3,
+    fontFamily: "KiwiMaru_400Regular",
   },
   treeWrapper: {
     marginTop: 16,
@@ -91,6 +92,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: "#B5906E",
     letterSpacing: 0.5,
+    fontFamily: "KiwiMaru_400Regular",
   },
   fieldInput: {
     flex: 1,
@@ -99,6 +101,7 @@ export const styles = StyleSheet.create({
     color: "#7A4B2A",
     paddingVertical: 2,
     backgroundColor: "transparent",
+    fontFamily: "KiwiMaru_400Regular",
   },
   memberInput: {
     marginHorizontal: 0,

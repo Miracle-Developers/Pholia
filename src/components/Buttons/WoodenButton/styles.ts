@@ -14,8 +14,9 @@ export const styles = StyleSheet.create({
   buttonText: {
     color: "#5D3A1A",
     fontSize: 30,
-    fontWeight: "700",
     zIndex: 1,
+    marginBottom: 10,
+    fontFamily: "KiwiMaru_500Medium",
   },
   buttonBackground: {
     position: "absolute",

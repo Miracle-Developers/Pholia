@@ -30,6 +30,7 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#8B6F47",
     textAlign: "center",
+    fontFamily: "KiwiMaru_400Regular",
   },
   inputContainer: {
     marginBottom: 20,
@@ -44,12 +45,14 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: "#8B6F47",
     backgroundColor: "#FFFEF7",
+    fontFamily: "KiwiMaru_400Regular",
   },
   charCount: {
     fontSize: 12,
     color: "#8B6F47",
     marginTop: 6,
     textAlign: "right",
+    fontFamily: "KiwiMaru_400Regular",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -67,6 +70,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     color: "#FFFFFF",
+    fontFamily: "KiwiMaru_400Regular",
   },
   saveButton: {
     flex: 1,
@@ -79,6 +83,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     color: "white",
+    fontFamily: "KiwiMaru_400Regular",
   },
   dangerButton: {
     backgroundColor: "#E74C3C",

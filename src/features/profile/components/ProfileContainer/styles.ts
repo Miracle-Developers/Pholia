@@ -45,16 +45,17 @@ export const styles = StyleSheet.create({
     },
     userName: {
         fontSize: 24,
-        fontWeight: "700",
         color: "#8B6F47",
         marginBottom: 2,
         textAlign: "center",
+        fontFamily: "KiwiMaru_500Medium",
     },
     userId: {
         fontSize: 16,
         color: "#8B6F47",
         marginBottom: 16,
         textAlign: "center",
+        fontFamily: "KiwiMaru_300Light",
     },
     divider: {
         borderTopWidth: 2,
@@ -72,16 +73,16 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         color: "#8B6F47",
         marginLeft: 12,
-        fontWeight: "500",
+        fontFamily: "KiwiMaru_500Medium",
     },
     bioSection: {
         marginTop: 16,
     },
     bioLabel: {
         fontSize: 13,
-        fontWeight: "600",
         color: "#8B6F47",
         marginBottom: 8,
+        fontFamily: "KiwiMaru_300Light",
     },
     bioBox: {
         backgroundColor: "#FFFEF7",
@@ -96,6 +97,7 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         color: "#8B6F47",
         lineHeight: 20,
+        fontFamily: "KiwiMaru_300Light",
     },
     statsContainer: {
         flexDirection: "row",
@@ -133,12 +135,13 @@ export const styles = StyleSheet.create({
     statLabel: {
         fontSize: 15,
         color: "#8B6F47",
-        fontWeight: "600",
         textAlign: "center",
+        fontFamily: "KiwiMaru_500Medium",
     },
     statValue: {
         fontSize: 36,
         fontWeight: "700",
         color: "#5D4E37",
+        fontFamily: "KiwiMaru_400Regular",
     },
 });

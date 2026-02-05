@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "700",
     color: "#6C4A2C",
+    fontFamily: "KiwiMaru_400Regular",
   },
   underline: {
     marginTop: 6,

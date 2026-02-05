@@ -64,5 +64,6 @@ export const styles = StyleSheet.create({
     color: "#666666",
     textAlign: "center",
     lineHeight: 20,
+    fontFamily: "KiwiMaru_300Light",
   },
 });
