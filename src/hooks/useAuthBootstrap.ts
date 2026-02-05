@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
-import { restoreSessionToken } from "@/provider/auth/sessionProvider";
+import * as auth from "@/infrastructure/auth";
 
 export const useAuthBootstrap = () => {
   useEffect(() => {
-    void restoreSessionToken();
+    void auth.restoreToken();
   }, []);
 };

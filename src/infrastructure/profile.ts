@@ -1,7 +1,7 @@
 import type { UserProfile } from "@/application/profile/types";
 import type { ApiStatsResponse, ApiUserResponse } from "@/infrastructure/api";
 import * as api from "@/infrastructure/api";
-import { getApiBaseUrl } from "@/utils/apiBaseUrl";
+import { getApiBaseUrl } from "@/lib/apiBaseUrl";
 
 /**
  * ユーザープロフィール情報を取得

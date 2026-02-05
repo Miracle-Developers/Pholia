@@ -1,5 +1,5 @@
 import * as auth from "@/infrastructure/auth";
-import { getApiBaseUrl } from "@/utils/apiBaseUrl";
+import { getApiBaseUrl } from "@/lib/apiBaseUrl";
 
 const BASE_URL = getApiBaseUrl();
 
