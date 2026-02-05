@@ -12,16 +12,18 @@ export const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    fontWeight: "600",
     color: "#333333",
+    fontFamily: "KiwiMaru_300Light",
   },
   hint: {
     fontSize: 12,
     color: "#999999",
+    fontFamily: "KiwiMaru_300Light",
   },
   errorText: {
     marginTop: 6,
     fontSize: 12,
     color: "#D9534F",
+    fontFamily: "KiwiMaru_300Light",
   },
 });

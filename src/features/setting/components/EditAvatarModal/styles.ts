@@ -27,6 +27,7 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     color: "#8B6F47",
+    fontFamily: "KiwiMaru_400Regular",
   },
   imagePreviewContainer: {
     marginBottom: 20,
@@ -59,6 +60,7 @@ export const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#8B6F47",
     marginTop: 8,
+    fontFamily: "KiwiMaru_400Regular",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -75,6 +77,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     color: "#FFFFFF",
+    fontFamily: "KiwiMaru_400Regular",
   },
   saveButton: {
     flex: 1,
@@ -87,5 +90,6 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     color: "white",
+    fontFamily: "KiwiMaru_400Regular",
   },
 });

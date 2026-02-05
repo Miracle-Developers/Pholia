@@ -12,6 +12,6 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: "#333333",
     textAlign: "center",
-    fontWeight: "600",
+    fontFamily: "KiwiMaru_400Regular",
   },
 });
