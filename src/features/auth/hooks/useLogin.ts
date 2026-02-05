@@ -1,8 +1,9 @@
 import { useCallback } from "react";
 import type { LoginFormData } from "@/application/auth/types";
+import { loginAndStoreToken } from "@/application/auth/usecases/login";
 import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
-import { loginWithCredentials } from "@/provider/auth/loginProvider";
+import { normalizeLoginPayload } from "@/utils/auth";
 
 export const useLogin = () => {
   const { goToForestSelection } = useRouterNavigation();
@@ -11,7 +12,8 @@ export const useLogin = () => {
   const handleLogin = useCallback(
     async (values: LoginFormData) => {
       try {
-        const result = await loginWithCredentials(values);
+        const payload = normalizeLoginPayload(values);
+        const result = await loginAndStoreToken(payload);
         if (result.status === "success") {
           goToForestSelection();
           showToast({ title: "ログインしました" });

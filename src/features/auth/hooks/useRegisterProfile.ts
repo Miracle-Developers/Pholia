@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import type { RegisterProfileFormData } from "@/application/auth/types";
+import { registerProfileAndLogin } from "@/application/auth/usecases/registerProfile";
 import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
-import { registerProfile } from "@/provider/auth/registerProfileProvider";
 
 export const useRegisterProfile = () => {
   const { goToLogin, goToRegister, goToHome } = useRouterNavigation();
@@ -11,7 +11,7 @@ export const useRegisterProfile = () => {
   const handleRegister = useCallback(
     async (values: RegisterProfileFormData) => {
       try {
-        const result = await registerProfile({
+        const result = await registerProfileAndLogin({
           userId: values.userId,
           name: values.name,
         });

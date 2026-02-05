@@ -1,6 +1,6 @@
 import type { LeafData } from "@/application/leaves/types";
 import type { ApiLeafResponse } from "@/infrastructure/api";
-import { getApiBaseUrl } from "@/utils/apiBaseUrl";
+import { getApiBaseUrl } from "@/lib/apiBaseUrl";
 
 const FILE_BASE_URL = getApiBaseUrl();
 

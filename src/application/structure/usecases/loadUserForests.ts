@@ -1,5 +1,6 @@
 import * as api from "@/infrastructure/api";
 import * as auth from "@/infrastructure/auth";
+import { toRecord } from "@/utils/record";
 
 export type ForestOption = {
   id: number;
@@ -8,11 +9,6 @@ export type ForestOption = {
 
 type ApiStructureLike = {
   forests?: unknown;
-};
-
-const toRecord = (value: unknown): Record<string, unknown> | null => {
-  if (!value || typeof value !== "object") return null;
-  return value as Record<string, unknown>;
 };
 
 const toForestOption = (item: Record<string, unknown>): ForestOption | null => {

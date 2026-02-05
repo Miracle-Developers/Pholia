@@ -1,6 +1,7 @@
 import * as registrationTemp from "@/application/auth/state/registrationTemp";
 import * as api from "@/infrastructure/api";
 import * as auth from "@/infrastructure/auth";
+import { normalizeUserId } from "@/utils/auth";
 
 type RegisterProfileInput = {
   userId?: string;
@@ -20,7 +21,7 @@ export const registerProfileAndLogin = async (
     return { status: "missing-step1" };
   }
 
-  const idValue = input.userId?.startsWith("@") ? input.userId.slice(1) : input.userId;
+  const idValue = normalizeUserId(input.userId);
 
   try {
     await api.registerUser({
