@@ -1,3 +1,4 @@
+import { FONT_FAMILY } from "@/config/fontConfig";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -16,7 +17,7 @@ export const styles = StyleSheet.create({
     fontSize: 30,
     zIndex: 1,
     marginBottom: 10,
-    fontFamily: "KiwiMaru_500Medium",
+    fontFamily: FONT_FAMILY.medium,
   },
   buttonBackground: {
     position: "absolute",

@@ -1,3 +1,4 @@
+import { FONT_FAMILY } from "@/config/fontConfig";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -44,14 +45,14 @@ export const styles = StyleSheet.create({
   nameText: {
     fontSize: 22,
     color: "#5B3A1E",
-    fontFamily: "KiwiMaru_500Medium",
+    fontFamily: FONT_FAMILY.medium,
   },
   userIdText: {
     marginTop: 4,
     fontSize: 15,
     fontWeight: "600",
     color: "#6B4A2C",
-    fontFamily: "KiwiMaru_300Light",
+    fontFamily: FONT_FAMILY.light,
   },
   actions: {
     flexDirection: "row",
@@ -89,13 +90,13 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     color: "#8B6B4F",
     fontWeight: "700",
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
   titleText: {
     fontSize: 20,
     fontWeight: "700",
     color: "#8B6B4F",
     marginLeft: 12,
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
 });

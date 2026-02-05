@@ -1,3 +1,4 @@
+import { FONT_FAMILY } from "@/config/fontConfig";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -37,7 +38,7 @@ export const styles = StyleSheet.create({
     fontWeight: "700",
     color: "#6C4A2C",
     letterSpacing: 1,
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
   leafGrid: {
     width: "100%",

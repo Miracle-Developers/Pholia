@@ -1,3 +1,4 @@
+import { FONT_FAMILY } from "@/config/fontConfig";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -13,6 +14,6 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     color: "#333",
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
 });

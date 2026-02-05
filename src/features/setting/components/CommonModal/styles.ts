@@ -1,3 +1,4 @@
+import { FONT_FAMILY } from "@/config/fontConfig";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -30,7 +31,7 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#8B6F47",
     textAlign: "center",
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
   inputContainer: {
     marginBottom: 20,
@@ -45,14 +46,14 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: "#8B6F47",
     backgroundColor: "#FFFEF7",
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
   charCount: {
     fontSize: 12,
     color: "#8B6F47",
     marginTop: 6,
     textAlign: "right",
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -70,7 +71,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     color: "#FFFFFF",
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
   saveButton: {
     flex: 1,
@@ -83,7 +84,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     color: "white",
-    fontFamily: "KiwiMaru_400Regular",
+    fontFamily: FONT_FAMILY.regular,
   },
   dangerButton: {
     backgroundColor: "#E74C3C",
