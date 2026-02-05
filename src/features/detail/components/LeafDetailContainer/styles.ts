@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { FONT_FAMILY } from "@/config/fontConfig";
 
 export const styles = StyleSheet.create({
   container: {
@@ -12,6 +13,7 @@ export const styles = StyleSheet.create({
   },
   backTitle: {
     paddingTop: 8,
+    fontFamily: FONT_FAMILY.medium,
   },
   photoCard: {
     marginTop: 18,
@@ -118,6 +120,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: "#7A4B2A",
     fontWeight: "600",
+    fontFamily: FONT_FAMILY.medium,
   },
   dashLine: {
     flex: 1,
@@ -153,6 +156,7 @@ export const styles = StyleSheet.create({
     fontSize: 15,
     color: "#7A4B2A",
     lineHeight: 20,
+    fontFamily: FONT_FAMILY.regular,
   },
   memoInput: {
     fontSize: 15,
@@ -160,6 +164,7 @@ export const styles = StyleSheet.create({
     lineHeight: 20,
     minHeight: 60,
     paddingRight: 34,
+    fontFamily: FONT_FAMILY.regular,
   },
   memoIconButton: {
     position: "absolute",
