@@ -4,6 +4,10 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  topHeader: {
+    marginBottom: 8,
+    marginTop: 0,
+  },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
