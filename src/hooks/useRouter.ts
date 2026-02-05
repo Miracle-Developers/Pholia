@@ -10,6 +10,7 @@ export const useRouterNavigation = () => {
   const goToHome = () => router.replace("/");
   const goToList = () => router.replace("/list");
   const goToLeafAddition = () => router.replace("/leaf-addition");
+  const goToLeafDetail = () => router.push("/leaf-detail");
   const goToTreeAddition = () => router.replace("/tree-addition");
   const goToTreeSelection = () => router.replace("/tree-selection");
   const goToForestSelection = () => router.replace("/forest-selection");
@@ -25,6 +26,7 @@ export const useRouterNavigation = () => {
     goToHome,
     goToList,
     goToLeafAddition,
+    goToLeafDetail,
     goToTreeAddition,
     goToTreeSelection,
     goToForestSelection,
