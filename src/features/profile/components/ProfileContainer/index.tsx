@@ -1,30 +1,22 @@
-import { MaterialIcons } from "@expo/vector-icons";
-import { StatusBar } from "expo-status-bar";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { getAvatarUrl } from "@/application/profile/usecases";
+import { Header } from "@/components/Header";
 import { styles } from "@/features/profile/components/ProfileContainer/styles";
 import { useLoadProfile } from "@/features/profile/hooks/useLoadProfile";
+import { useHeaderProfile } from "@/hooks/useHeaderProfile";
 import { useRouterNavigation } from "@/hooks/useRouter";
+import { MaterialIcons } from "@expo/vector-icons";
+import { StatusBar } from "expo-status-bar";
+import { Image, ScrollView, Text, View } from "react-native";
 
 export const ProfileContainer = () => {
   const { goBack, goToSetting } = useRouterNavigation();
   const { user } = useLoadProfile();
+  const { name, userId, avatarSource } = useHeaderProfile();
 
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
-      <View style={styles.header}>
-        <TouchableOpacity onPress={goBack} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-          <MaterialIcons name="arrow-back" size={28} color="#333" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>プロフィール</Text>
-        <TouchableOpacity
-          onPress={goToSetting}
-          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-        >
-          <MaterialIcons name="settings" size={28} color="#333" />
-        </TouchableOpacity>
-      </View>
+      <Header name={name} userId={userId} avatarSource={avatarSource} style={styles.topHeader} showBackButton={true} onPressBack={goBack} hideActions={true} />
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.avatarSection}>

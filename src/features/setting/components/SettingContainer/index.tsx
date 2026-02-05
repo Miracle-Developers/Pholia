@@ -3,10 +3,12 @@ import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
+import { Header } from "@/components/Header";
 import { CommonModal } from "@/features/setting/components/CommonModal";
 import { EditAvatarModal } from "@/features/setting/components/EditAvatarModal";
 import { EditPasswordModal } from "@/features/setting/components/EditPasswordModal";
 import { styles } from "@/features/setting/components/SettingContainer/styles";
+import { useHeaderProfile } from "@/hooks/useHeaderProfile";
 import { useProfileSettings } from "@/hooks/useProfileSettings";
 import { useRouterNavigation } from "@/hooks/useRouter";
 
@@ -31,17 +33,12 @@ export const SettingContainer = () => {
   const [editEmailVisible, setEditEmailVisible] = useState(false);
   const [editPasswordVisible, setEditPasswordVisible] = useState(false);
   const [deleteAccountVisible, setDeleteAccountVisible] = useState(false);
+  const { name, userId, avatarSource } = useHeaderProfile();
 
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
-      <View style={styles.header}>
-        <TouchableOpacity onPress={goBack} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-          <MaterialIcons name="arrow-back" size={28} color="#333" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>設定</Text>
-        <View style={styles.headerSpacer} />
-      </View>
+      <Header name={name} userId={userId} avatarSource={avatarSource} style={styles.topHeader} showBackButton={true} onPressBack={goBack} hideActions={true} />
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <TouchableOpacity style={styles.avatarSection} onPress={() => setEditAvatarVisible(true)}>
