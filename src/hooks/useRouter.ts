@@ -10,9 +10,15 @@ export const useRouterNavigation = () => {
   const goToHome = () => router.replace("/");
   const goToList = () => router.replace("/list");
   const goToLeafAddition = () => router.replace("/leaf-addition");
-  const goToLeafDetail = () => router.push("/leaf-detail");
+  const goToLeafDetail = (leafId?: number) =>
+    leafId !== undefined && leafId !== null
+      ? router.push(`/leaf-detail?leafId=${encodeURIComponent(String(leafId))}`)
+      : router.push("/leaf-detail");
   const goToTreeAddition = () => router.replace("/tree-addition");
-  const goToTreeSelection = () => router.replace("/tree-selection");
+  const goToTreeSelection = (forestId?: number) =>
+    forestId !== undefined && forestId !== null
+      ? router.replace(`/tree-selection?forestId=${encodeURIComponent(String(forestId))}`)
+      : router.replace("/tree-selection");
   const goToForestSelection = () => router.replace("/forest-selection");
   const goToForestAddition = () => router.replace("/forest-addition");
   const goToSetting = () => router.push("/setting");

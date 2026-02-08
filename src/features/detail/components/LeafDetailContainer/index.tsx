@@ -1,6 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Image,
   ImageBackground,
@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useLocalSearchParams } from "expo-router";
 
 import { BackTitle } from "@/components/BackTitle";
 import { Header } from "@/components/Header";
@@ -20,14 +21,32 @@ import { styles } from "@/features/detail/components/LeafDetailContainer/styles"
 import { useHeaderProfile } from "@/hooks/useHeaderProfile";
 import { useLoadLeaves } from "@/features/list/hooks/useLoadLeaves";
 
+const formatDate = (value?: string) => {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}/${month}/${day}`;
+};
+
 export const LeafDetailContainer = () => {
   const { goBack, goToProfile, goToSetting } = useRouterNavigation();
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [memo, setMemo] = useState("");
   const { name, userId, avatarSource } = useHeaderProfile();
-  const leafId = 1;
-  const { leavesById } = useLoadLeaves([leafId]);
-  const leafData = leavesById[leafId];
+  const params = useLocalSearchParams<{ leafId?: string }>();
+  const leafIds = useMemo(() => Array.from({ length: 9 }, (_, index) => index + 1), []);
+  const { leavesById } = useLoadLeaves(leafIds);
+  const selectedLeafId =
+    typeof params.leafId === "string" && params.leafId.trim() !== ""
+      ? Number(params.leafId)
+      : null;
+  const leafData =
+    selectedLeafId && Number.isFinite(selectedLeafId)
+      ? Object.values(leavesById).find((leaf) => leaf.id === selectedLeafId)
+      : null;
 
   return (
     <ScreenBackgroundContainer>
@@ -77,7 +96,7 @@ export const LeafDetailContainer = () => {
               <View style={styles.iconBadge}>
                 <Image source={require("@/../assets/leaf_icon.png")} style={styles.iconImage} />
               </View>
-              <Text style={styles.detailText}></Text>
+              <Text style={styles.detailText}>{leafData?.treeName ?? "未設定"}</Text>
               <View style={styles.dashLine} />
             </View>
 
@@ -85,7 +104,9 @@ export const LeafDetailContainer = () => {
               <View style={styles.iconBadge}>
                 <MaterialIcons name="calendar-today" size={18} color="#A46B3D" />
               </View>
-              <Text style={styles.detailText}></Text>
+              <Text style={styles.detailText}>
+                {formatDate(leafData?.takenAt || leafData?.createdAt) || "未設定"}
+              </Text>
               <View style={styles.dashLine} />
             </View>
 
@@ -93,7 +114,7 @@ export const LeafDetailContainer = () => {
               <View style={styles.iconBadge}>
                 <MaterialIcons name="place" size={18} color="#A46B3D" />
               </View>
-              <Text style={styles.detailText}></Text>
+              <Text style={styles.detailText}>{leafData?.locationText || "未設定"}</Text>
               <View style={styles.dashLine} />
             </View>
 

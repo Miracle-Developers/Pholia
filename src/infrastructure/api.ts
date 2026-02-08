@@ -36,6 +36,7 @@ export type ApiLeafResponse = {
   title?: string;
   taken_at: string;
   created_at: string;
+  location_text?: string;
 };
 
 export type ApiStructureResponse = unknown;
@@ -194,8 +195,22 @@ export const getUserStats = async (userId: string) =>
 export const getUserSettings = async (userId: string) =>
   request(`/users/${encodeURIComponent(userId)}/settings`, "GET");
 
-export const getUserStructure = async (userId: string) =>
-  request<ApiStructureResponse>(`/users/${encodeURIComponent(userId)}/structure`, "GET");
+export const getUserStructure = async (
+  userId: string,
+  params?: Record<string, string | number | undefined>,
+) => {
+  const searchParams = new URLSearchParams();
+  if (params) {
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        searchParams.set(key, String(value));
+      }
+    });
+  }
+  const query = searchParams.toString();
+  const path = `/users/${encodeURIComponent(userId)}/structure${query ? `?${query}` : ""}`;
+  return request<ApiStructureResponse>(path, "GET");
+};
 
 export const getUserForests = async (userId: string) =>
   request(`/users/${encodeURIComponent(userId)}/forests`, "GET");
