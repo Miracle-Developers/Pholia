@@ -1,10 +1,12 @@
 import * as api from "@/infrastructure/api";
 import * as auth from "@/infrastructure/auth";
+import { toNumber } from "@/utils/number";
 import { toRecord } from "@/utils/record";
 
 export type ForestOption = {
   id: number;
   name: string;
+  imageUrl?: string;
 };
 
 type ApiStructureLike = {
@@ -12,21 +14,22 @@ type ApiStructureLike = {
 };
 
 const toForestOption = (item: Record<string, unknown>): ForestOption | null => {
-  const id =
-    typeof item.forest_id === "number"
-      ? item.forest_id
-      : typeof item.id === "number"
-        ? item.id
-        : undefined;
+  const id = toNumber(item.forest_id ?? item.id);
   const name =
     typeof item.forest_name === "string"
       ? item.forest_name
       : typeof item.name === "string"
         ? item.name
         : undefined;
+  const imageUrl =
+    typeof item.image_url === "string"
+      ? item.image_url
+      : typeof item.imageUrl === "string"
+        ? item.imageUrl
+        : undefined;
 
   if (typeof id !== "number" || !name) return null;
-  return { id, name };
+  return { id, name, imageUrl };
 };
 
 const collectForests = (data: unknown): ForestOption[] => {
@@ -67,6 +70,6 @@ export const loadUserForests = async (): Promise<ForestOption[]> => {
   }
   if (!userId) return [];
 
-  const forests = await api.getUserForests(userId);
+  const forests = await api.getUserStructure(userId);
   return collectForests(forests);
 };

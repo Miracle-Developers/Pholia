@@ -1,7 +1,7 @@
 import { Redirect } from "expo-router";
 
 const Index = () => {
-  return <Redirect href="/leaf-detail" />;
+  return <Redirect href="/top" />;
 };
 
 export default Index;

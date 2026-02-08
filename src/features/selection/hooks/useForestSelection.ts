@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
+import { setSelectedForestId } from "@/application/selection/state/selectedForest";
 import { loadUserForests } from "@/application/structure/usecases";
 import { useForestCarousel } from "@/features/selection/hooks/useForestCarousel";
 import type { Forest } from "@/features/selection/types";
@@ -28,7 +29,7 @@ export const useForestSelection = () => {
       const mapped = data.map((forest, index) => ({
         id: forest.id,
         name: forest.name,
-        image: forestImages[index % forestImages.length],
+        image: forest.imageUrl ? { uri: forest.imageUrl } : forestImages[index % forestImages.length],
       }));
       setForests(mapped);
     } catch (error) {
@@ -51,7 +52,8 @@ export const useForestSelection = () => {
       showToast({ title: "森を選択してください", message: "森を選んでください。" });
       return;
     }
-    goToTreeSelection();
+    setSelectedForestId(selectedForestId);
+    goToTreeSelection(selectedForestId);
   }, [goToTreeSelection, selectedForestId, showToast]);
 
   return {

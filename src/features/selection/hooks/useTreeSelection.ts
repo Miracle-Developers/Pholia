@@ -1,15 +1,22 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { loadUserStructure } from "@/application/structure/usecases/loadUserStructure";
+import { getSelectedForestId, setSelectedForestId } from "@/application/selection/state/selectedForest";
+import { setSelectedTree } from "@/application/selection/state/selectedTree";
+import { loadUserTrees } from "@/application/structure/usecases/loadUserTrees";
 import { loadTree } from "@/application/trees/usecases/loadTree";
 import { useTreeCarousel } from "@/features/selection/hooks/useTreeCarousel";
 import type { Tree } from "@/features/selection/types";
 import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
+import { useLocalSearchParams } from "expo-router";
 
 export const useTreeSelection = () => {
+  if (typeof __DEV__ !== "undefined" && __DEV__) {
+    console.log("useTreeSelection mount");
+  }
   const { goToList } = useRouterNavigation();
   const { showToast } = useToast();
+  const params = useLocalSearchParams<{ forestId?: string }>();
   const [trees, setTrees] = useState<Tree[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const loadedTreeIds = useRef<Set<number>>(new Set());
@@ -24,13 +31,30 @@ export const useTreeSelection = () => {
   );
 
   const loadTrees = useCallback(async () => {
+    if (typeof __DEV__ !== "undefined" && __DEV__) {
+      console.log("useTreeSelection loadTrees start", {
+        forestIdParam: params.forestId ?? null,
+      });
+    }
     setIsLoading(true);
     try {
-      const data = await loadUserStructure();
+      const routeForestId =
+        typeof params.forestId === "string" && params.forestId.trim() !== ""
+          ? Number(params.forestId)
+          : undefined;
+      const selectedForestId = routeForestId ?? getSelectedForestId();
+      if (routeForestId && Number.isFinite(routeForestId)) {
+        setSelectedForestId(routeForestId);
+      }
+      if (!selectedForestId || !Number.isFinite(selectedForestId)) {
+        setTrees([]);
+        return;
+      }
+      const data = await loadUserTrees(selectedForestId);
       const mapped = data.map((tree, index) => ({
         id: tree.id,
         name: tree.name,
-        image: treeImages[index % treeImages.length],
+        image: tree.imageUrl ? { uri: tree.imageUrl } : treeImages[index % treeImages.length],
       }));
       setTrees(mapped);
     } catch (error) {
@@ -40,7 +64,7 @@ export const useTreeSelection = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [showToast, treeImages]);
+  }, [params.forestId, showToast, treeImages]);
 
   useEffect(() => {
     loadTrees();
@@ -81,11 +105,13 @@ export const useTreeSelection = () => {
       if (!loadedTreeIds.current.has(selectedTreeId)) {
         await fetchTreeDetail(selectedTreeId);
       }
+      const selected = trees.find((tree) => tree.id === selectedTreeId);
+      setSelectedTree({ id: selectedTreeId, name: selected?.name });
       goToList();
     } catch {
       return;
     }
-  }, [fetchTreeDetail, goToList, selectedTreeId, showToast]);
+  }, [fetchTreeDetail, goToList, selectedTreeId, showToast, trees]);
 
   return {
     trees,

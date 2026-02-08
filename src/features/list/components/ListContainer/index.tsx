@@ -5,17 +5,22 @@ import { Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from
 import { BackTitle } from "@/components/BackTitle";
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { Header } from "@/components/Header";
+import { getSelectedTree } from "@/application/selection/state/selectedTree";
 import { styles } from "@/features/list/components/ListContainer/styles";
 import { useLoadLeaves } from "@/features/list/hooks/useLoadLeaves";
 import { useHeaderProfile } from "@/hooks/useHeaderProfile";
+import { useRouterNavigation } from "@/hooks/useRouter";
 import { leafItems } from "@/utils/leafItems";
 
 const leafIds = Array.from({ length: 9 }, (_, index) => index + 1);
 
 export const ListContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
+  const { goToLeafDetail } = useRouterNavigation();
   const [selectedLeafId, setSelectedLeafId] = useState<number | null>(null);
   const { leavesById } = useLoadLeaves(leafIds);
+  const selectedTree = getSelectedTree();
+  const selectedLeaf = selectedLeafId ? leavesById[selectedLeafId] : null;
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
@@ -30,7 +35,9 @@ export const ListContainer = () => {
               style={styles.nameplate}
               resizeMode="stretch"
             >
-              <Text style={styles.nameplateText}>○○の木</Text>
+              <Text style={styles.nameplateText}>
+                {selectedTree?.name ? `${selectedTree.name}の木` : "○○の木"}
+              </Text>
             </ImageBackground>
           </View>
 
@@ -64,7 +71,12 @@ export const ListContainer = () => {
           </View>
         </View>
 
-        <WoodenButton title="決定" onPress={() => {}} style={styles.confirmButton} />
+        <WoodenButton
+          title="決定"
+          onPress={() => goToLeafDetail(selectedLeaf?.id)}
+          style={styles.confirmButton}
+          disabled={!selectedLeaf}
+        />
       </ScrollView>
     </View>
   );
