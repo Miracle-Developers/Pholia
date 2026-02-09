@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    flexGrow: 1,
+    flex: 1,
     paddingHorizontal: 18,
     paddingTop: 6,
     paddingBottom: 24,
@@ -36,8 +36,8 @@ export const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY.regular,
   },
   treeVisualWrapper: {
-    width: "100%",
-    maxWidth: 320,
+    width: "90%",
+    maxWidth: 300,
     aspectRatio: 1,
     marginTop: 10,
     alignItems: "center",
@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
   },
   detailCard: {
     marginTop: 2,
-    width: "100%",
+    width: "90%",
     maxWidth: 340,
     alignSelf: "center",
     backgroundColor: "rgba(255, 255, 255, 0.7)",

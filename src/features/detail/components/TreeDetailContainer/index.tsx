@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { useMemo } from "react";
-import { Image, ImageBackground, ScrollView, Text, View } from "react-native";
+import { Image, ImageBackground, Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 
 import { BackTitle } from "@/components/BackTitle";
@@ -69,7 +69,7 @@ export const TreeDetailContainer = () => {
           onPressSetting={goToSetting}
         />
 
-        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <View style={styles.content}>
           <BackTitle title="木一覧" style={styles.backTitle} onPress={goToTreeSelection} />
 
           <View style={styles.nameplateWrapper}>
@@ -129,7 +129,7 @@ export const TreeDetailContainer = () => {
           </View>
 
           <WoodenButton title="葉一覧へ" onPress={goToList} style={styles.leafListButton} />
-        </ScrollView>
+        </View>
       </View>
     </ScreenBackgroundContainer>
   );
