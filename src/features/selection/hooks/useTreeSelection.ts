@@ -111,7 +111,7 @@ export const useTreeSelection = () => {
         await fetchTreeDetail(selectedTreeId);
       }
       const selected = trees.find((tree) => tree.id === selectedTreeId);
-      setSelectedTree({ id: selectedTreeId, name: selected?.name });
+      setSelectedTree({ id: selectedTreeId, name: selected?.name, image: selected?.image });
       goToTreeDetail(selectedTreeId);
     } catch {
       return;

@@ -9,6 +9,7 @@ export type TreeDetailData = {
   id: number;
   name?: string;
   forestId?: number;
+  imageUrl?: string;
   createdAt?: string;
   forestName?: string;
   members?: TreeMember[];
@@ -65,6 +66,7 @@ export const useLoadTreeDetail = (treeId?: number | null) => {
           id: tree.id,
           name: tree.name,
           forestId,
+          imageUrl: tree.cover_image_url,
           createdAt: tree.created_at,
           forestName,
           members,

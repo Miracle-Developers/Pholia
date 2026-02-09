@@ -42,6 +42,11 @@ export const TreeDetailContainer = () => {
   const treeName = treeDetail?.name ?? selectedTree?.name ?? "○○";
   const forestName = treeDetail?.forestName ?? "未設定";
   const createdAt = formatDate(treeDetail?.createdAt) || "未設定";
+  const treeImageSource = treeDetail?.imageUrl
+    ? { uri: treeDetail.imageUrl }
+    : selectedTree?.image
+      ? selectedTree.image
+      : require("@/../assets/tree1.png");
 
   const memberTags = (treeDetail?.members ?? [])
     .map((member) => {
@@ -79,7 +84,7 @@ export const TreeDetailContainer = () => {
 
           <View style={styles.treeVisualWrapper}>
             <Image
-              source={require("@/../assets/tree1.png")}
+              source={treeImageSource}
               style={styles.treeVisual}
               resizeMode="contain"
             />

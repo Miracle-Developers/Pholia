@@ -45,6 +45,7 @@ export type ApiTreeResponse = {
   id: number;
   name: string;
   forest_id?: number;
+  cover_image_url?: string;
   created_at?: string;
   forests?: Array<{
     id: number;
