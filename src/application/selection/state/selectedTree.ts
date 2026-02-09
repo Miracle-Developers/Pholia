@@ -1,6 +1,9 @@
+import type { ImageSourcePropType } from "react-native";
+
 type SelectedTree = {
   id: number;
   name?: string;
+  image?: ImageSourcePropType;
 };
 
 let selectedTree: SelectedTree | null = null;

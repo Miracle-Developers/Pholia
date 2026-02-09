@@ -45,15 +45,21 @@ export type ApiTreeResponse = {
   id: number;
   name: string;
   forest_id?: number;
+  cover_image_url?: string;
   created_at?: string;
+  forests?: Array<{
+    id: number;
+    sort_order?: number;
+  }>;
 };
 
 export type ApiTreeMemberResponse = {
   id?: number;
   tree_id?: number;
   user_id?: number;
+  user_handle?: string;
+  name?: string;
   role?: string;
-  created_at?: string;
 };
 
 export type ApiForestResponse = {

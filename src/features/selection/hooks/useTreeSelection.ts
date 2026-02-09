@@ -14,7 +14,7 @@ export const useTreeSelection = () => {
   if (typeof __DEV__ !== "undefined" && __DEV__) {
     console.log("useTreeSelection mount");
   }
-  const { goToList } = useRouterNavigation();
+  const { goToTreeDetail } = useRouterNavigation();
   const { showToast } = useToast();
   const params = useLocalSearchParams<{ forestId?: string }>();
   const [trees, setTrees] = useState<Tree[]>([]);
@@ -38,9 +38,14 @@ export const useTreeSelection = () => {
     }
     setIsLoading(true);
     try {
+      const forestIdParam = Array.isArray(params.forestId) ? params.forestId[0] : params.forestId;
+      const parsedForestId =
+        typeof forestIdParam === "string" && forestIdParam.trim() !== ""
+          ? Number(forestIdParam)
+          : undefined;
       const routeForestId =
-        typeof params.forestId === "string" && params.forestId.trim() !== ""
-          ? Number(params.forestId)
+        typeof parsedForestId === "number" && Number.isFinite(parsedForestId)
+          ? parsedForestId
           : undefined;
       const selectedForestId = routeForestId ?? getSelectedForestId();
       if (routeForestId && Number.isFinite(routeForestId)) {
@@ -106,12 +111,12 @@ export const useTreeSelection = () => {
         await fetchTreeDetail(selectedTreeId);
       }
       const selected = trees.find((tree) => tree.id === selectedTreeId);
-      setSelectedTree({ id: selectedTreeId, name: selected?.name });
-      goToList();
+      setSelectedTree({ id: selectedTreeId, name: selected?.name, image: selected?.image });
+      goToTreeDetail(selectedTreeId);
     } catch {
       return;
     }
-  }, [fetchTreeDetail, goToList, selectedTreeId, showToast, trees]);
+  }, [fetchTreeDetail, goToTreeDetail, selectedTreeId, showToast, trees]);
 
   return {
     trees,

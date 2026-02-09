@@ -14,6 +14,10 @@ export const useRouterNavigation = () => {
     leafId !== undefined && leafId !== null
       ? router.push(`/leaf-detail?leafId=${encodeURIComponent(String(leafId))}`)
       : router.push("/leaf-detail");
+  const goToTreeDetail = (treeId?: number) =>
+    treeId !== undefined && treeId !== null
+      ? router.push(`/tree-detail?treeId=${encodeURIComponent(String(treeId))}`)
+      : router.push("/tree-detail");
   const goToTreeAddition = () => router.replace("/tree-addition");
   const goToTreeSelection = (forestId?: number) =>
     forestId !== undefined && forestId !== null
@@ -33,6 +37,7 @@ export const useRouterNavigation = () => {
     goToList,
     goToLeafAddition,
     goToLeafDetail,
+    goToTreeDetail,
     goToTreeAddition,
     goToTreeSelection,
     goToForestSelection,
