@@ -16,7 +16,7 @@ const leafIds = Array.from({ length: 9 }, (_, index) => index + 1);
 
 export const ListContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
-  const { goToLeafDetail } = useRouterNavigation();
+  const { goToLeafDetail, goToProfile, goToSetting, goToForestSelection } = useRouterNavigation();
   const [selectedLeafId, setSelectedLeafId] = useState<number | null>(null);
   const { leavesById } = useLoadLeaves(leafIds);
   const selectedTree = getSelectedTree();
@@ -24,10 +24,17 @@ export const ListContainer = () => {
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
-      <Header name={name} userId={userId} avatarSource={avatarSource} style={styles.topHeader} />
+      <Header
+        name={name}
+        userId={userId}
+        avatarSource={avatarSource}
+        style={styles.topHeader}
+        onPressProfile={goToProfile}
+        onPressSetting={goToSetting}
+      />
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <BackTitle title="森一覧" style={styles.backTitle} />
+        <BackTitle title="森一覧" style={styles.backTitle} onPress={goToForestSelection} />
         <View style={styles.contentTop}>
           <View style={styles.nameplateWrapper}>
             <ImageBackground
