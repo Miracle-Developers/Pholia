@@ -3,8 +3,9 @@ import * as api from "@/infrastructure/api";
 export type TreeMember = {
   id?: number;
   userId?: number;
+  userHandle?: string;
+  name?: string;
   role?: string;
-  createdAt?: string;
 };
 
 export const loadTreeMembers = async (treeId: number): Promise<TreeMember[]> => {
@@ -13,7 +14,8 @@ export const loadTreeMembers = async (treeId: number): Promise<TreeMember[]> => 
   return data.map((item) => ({
     id: item.id,
     userId: item.user_id,
+    userHandle: item.user_handle,
+    name: item.name,
     role: item.role,
-    createdAt: item.created_at,
   }));
 };
