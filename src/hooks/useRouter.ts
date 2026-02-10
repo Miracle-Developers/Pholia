@@ -7,7 +7,7 @@ export const useRouterNavigation = () => {
   const goToRegister = () => router.push("/register");
   const goToRegisterProfile = () => router.push("/register-profile");
   const goToLogin = () => router.push("/login");
-  const goToHome = () => router.replace("/");
+  const goToHome = () => router.replace("/home");
   const goToList = () => router.replace("/list");
   const goToLeafAddition = () => router.replace("/leaf-addition");
   const goToLeafDetail = (leafId?: number) =>
@@ -23,6 +23,7 @@ export const useRouterNavigation = () => {
     forestId !== undefined && forestId !== null
       ? router.replace(`/tree-selection?forestId=${encodeURIComponent(String(forestId))}`)
       : router.replace("/tree-selection");
+  const goToTreeAction = () => router.replace("/tree-action");
   const goToForestSelection = () => router.replace("/forest-selection");
   const goToForestAddition = () => router.replace("/forest-addition");
   const goToSetting = () => router.push("/setting");
@@ -40,6 +41,7 @@ export const useRouterNavigation = () => {
     goToTreeDetail,
     goToTreeAddition,
     goToTreeSelection,
+    goToTreeAction,
     goToForestSelection,
     goToForestAddition,
     goToSetting,
