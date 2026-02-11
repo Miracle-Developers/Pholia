@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
+import { getSelectedTree } from "@/application/selection/state/selectedTree";
 import { loadUserStructure, type TreeOption } from "@/application/structure/usecases";
 
 export const useTreeSelection = () => {
+  const globalTree = getSelectedTree();
   const [trees, setTrees] = useState<TreeOption[]>([]);
-  const [selectedTreeId, setSelectedTreeId] = useState<number | null>(null);
+  const [selectedTreeId, setSelectedTreeId] = useState<number | null>(globalTree?.id ?? null);
   const [isLoading, setIsLoading] = useState(false);
   const [isPickerOpen, setIsPickerOpen] = useState(false);
 
@@ -14,7 +16,10 @@ export const useTreeSelection = () => {
       const data = await loadUserStructure();
       setTrees(data);
       if (data.length > 0) {
-        setSelectedTreeId((current) => current ?? data[0].id);
+        setSelectedTreeId((current) => {
+          if (current !== null && data.some((t) => t.id === current)) return current;
+          return data[0].id;
+        });
       }
     } finally {
       setIsLoading(false);
