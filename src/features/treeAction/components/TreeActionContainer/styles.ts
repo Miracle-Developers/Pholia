@@ -11,9 +11,10 @@ export const styles = StyleSheet.create({
     paddingBottom: 4,
   },
   cardsWrapper: {
+    flex: 1,
     width: "100%",
     alignItems: "center",
-    marginTop: 64,
+    justifyContent: "center",
   },
   card: {
     width: "86%",
