@@ -32,7 +32,7 @@ const formatDate = (value?: string) => {
 };
 
 export const LeafDetailContainer = () => {
-  const { goToHome, goToProfile, goToSetting } = useRouterNavigation();
+  const { goToList, goToProfile, goToSetting } = useRouterNavigation();
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [memo, setMemo] = useState("");
   const { name, userId, avatarSource } = useHeaderProfile();
@@ -61,7 +61,7 @@ export const LeafDetailContainer = () => {
         />
 
         <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-          <BackTitle title="ホーム" onPress={goToHome} style={styles.backTitle} />
+          <BackTitle title="葉の一覧" onPress={goToList} style={styles.backTitle} />
 
           <View style={styles.photoCard}>
             <Image
@@ -144,6 +144,7 @@ export const LeafDetailContainer = () => {
             </View>
             </View>
           </ImageBackground>
+
         </ScrollView>
       </View>
 

@@ -14,7 +14,7 @@ const DEFAULT_TREE_IMAGE = require("@/../assets/tree1.png");
 
 export const HomeContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
-  const { goToProfile, goToSetting, goToTreeAction } = useRouterNavigation();
+  const { goToForestAction, goToProfile, goToSetting } = useRouterNavigation();
   const { currentTree, hasTrees, isLoading, handleNext, handlePrevious } = useHomeTrees();
   const treeName = currentTree?.name
     ? `${currentTree.name}の木`
@@ -74,7 +74,7 @@ export const HomeContainer = () => {
             </View>
           </View>
 
-          <WoodenButton title="お世話へ" onPress={goToTreeAction} style={styles.careButton} />
+          <WoodenButton title="お世話へ" onPress={goToForestAction} style={styles.careButton} />
         </View>
       </View>
     </ScreenBackgroundContainer>

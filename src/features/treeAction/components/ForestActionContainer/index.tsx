@@ -2,14 +2,13 @@ import { StatusBar } from "expo-status-bar";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
 import { BackTitle } from "@/components/BackTitle";
-import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { ScreenBackgroundContainer } from "@/components/Containers/BackgroundContainer";
 import { Header } from "@/components/Header";
 import { useHeaderProfile } from "@/hooks/useHeaderProfile";
 import { useRouterNavigation } from "@/hooks/useRouter";
-import { styles } from "@/features/home/components/HomeForestContainer/styles";
+import { styles } from "./styles";
 
-export const HomeForestContainer = () => {
+export const ForestActionContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
   const { goToHome, goToProfile, goToSetting, goToForestSelection, goToForestAddition } =
     useRouterNavigation();
@@ -49,7 +48,6 @@ export const HomeForestContainer = () => {
               </View>
             </TouchableOpacity>
 
-            <WoodenButton title="決定" onPress={goToHome} style={styles.confirmButton} />
           </View>
         </View>
       </View>

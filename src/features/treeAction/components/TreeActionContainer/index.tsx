@@ -13,14 +13,12 @@ import { styles } from "@/features/treeAction/components/TreeActionContainer/sty
 export const TreeActionContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
   const {
-    goToHome,
-    goToHomeForest,
+    goToForestAction,
     goToProfile,
     goToSetting,
     goToTreeDetail,
     goToTreeAddition,
     goToTreeSelection,
-    goToList,
   } = useRouterNavigation();
   const selectedTree = getSelectedTree();
 
@@ -47,28 +45,27 @@ export const TreeActionContainer = () => {
         />
 
         <View style={styles.content}>
-          <BackTitle title="ホーム" onPress={goToHome} style={styles.backTitle} />
+          <BackTitle title="ホーム" onPress={goToForestAction} style={styles.backTitle} />
 
-          <TouchableOpacity style={styles.card} activeOpacity={0.85} onPress={handleConfirmTree}>
-            <View style={styles.cardRow}>
-              <Image source={require("@/../assets/tree2.png")} style={styles.cardIcon} />
-              <Text style={styles.cardText}>木を確認する</Text>
-            </View>
-          </TouchableOpacity>
+          <View style={styles.cardsWrapper}>
+            <TouchableOpacity style={styles.card} activeOpacity={0.85} onPress={handleConfirmTree}>
+              <View style={styles.cardRow}>
+                <Image source={require("@/../assets/tree2.png")} style={styles.cardIcon} />
+                <Text style={styles.cardText}>木を確認する</Text>
+              </View>
+            </TouchableOpacity>
 
-          <TouchableOpacity style={styles.card} activeOpacity={0.85} onPress={goToTreeAddition}>
-            <View style={styles.cardRow}>
-              <Text style={styles.cardText}>木を植える</Text>
-            </View>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.cardAccent}
+              activeOpacity={0.85}
+              onPress={goToTreeAddition}
+            >
+              <View style={styles.cardRow}>
+                <Text style={styles.cardText}>木を植える</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
 
-          <TouchableOpacity style={styles.cardAccent} activeOpacity={0.85} onPress={goToHomeForest}>
-            <View style={styles.cardRow}>
-              <Text style={styles.cardText}>木を育てる</Text>
-            </View>
-          </TouchableOpacity>
-
-          <WoodenButton title="決定" onPress={goToHome} style={styles.confirmButton} />
         </View>
       </View>
     </ScreenBackgroundContainer>

@@ -17,7 +17,7 @@ import { styles } from "./styles";
 
 export const AdditionContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
-  const { goBack, goToProfile, goToSetting } = useRouterNavigation();
+  const { goToList, goToProfile, goToSetting } = useRouterNavigation();
   const { selectedPhoto, isUploading, selectPhoto, upload } = useLeafUpload();
   const { showToast } = useToast();
   const {
@@ -36,7 +36,10 @@ export const AdditionContainer = () => {
       showToast({ title: "木を選択してください", message: "追加する木を選んでください。" });
       return;
     }
-    await upload(selectedTreeId);
+    const uploaded = await upload(selectedTreeId);
+    if (uploaded) {
+      goToList();
+    }
   };
 
   return (
@@ -55,7 +58,7 @@ export const AdditionContainer = () => {
         <View pointerEvents="none" style={[styles.cloud, styles.cloudRight]} />
         <View pointerEvents="none" style={[styles.cloud, styles.cloudLeft]} />
 
-        <BackTitle title="木詳細" onPress={goBack} style={styles.backTitle} />
+        <BackTitle title="葉の一覧" onPress={goToList} style={styles.backTitle} />
 
         <View style={styles.bannerWrapper}>
           <ImageBackground

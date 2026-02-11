@@ -8,7 +8,7 @@ import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
 
 export const useForestSelection = () => {
-  const { goToTreeSelection } = useRouterNavigation();
+  const { goToTreeAction } = useRouterNavigation();
   const { showToast } = useToast();
   const [forests, setForests] = useState<Forest[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -53,8 +53,8 @@ export const useForestSelection = () => {
       return;
     }
     setSelectedForestId(selectedForestId);
-    goToTreeSelection(selectedForestId);
-  }, [goToTreeSelection, selectedForestId, showToast]);
+    goToTreeAction();
+  }, [goToTreeAction, selectedForestId, showToast]);
 
   return {
     forests,

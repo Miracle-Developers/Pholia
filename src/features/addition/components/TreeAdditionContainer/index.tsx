@@ -27,7 +27,7 @@ import { useToast } from "@/hooks/useToast";
 
 export const TreeAdditionContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
-  const { goToHome, goToProfile, goToSetting, goToTreeSelection } = useRouterNavigation();
+  const { goToProfile, goToSetting, goToTreeAction, goToTreeSelection } = useRouterNavigation();
   const { showToast } = useToast();
   const [treeName, setTreeName] = useState("");
   const [createdTreeId, setCreatedTreeId] = useState<number | null>(null);
@@ -118,7 +118,7 @@ export const TreeAdditionContainer = () => {
         />
 
         <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-          <BackTitle title="ホーム" onPress={goToHome} style={styles.backTitle} />
+          <BackTitle title="ホーム" onPress={goToTreeAction} style={styles.backTitle} />
 
           <View style={styles.bannerWrapper}>
             <ImageBackground

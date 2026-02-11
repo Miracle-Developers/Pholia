@@ -5,7 +5,7 @@ import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
 
 export const useRegisterProfile = () => {
-  const { goToLogin, goToRegister, goToHome } = useRouterNavigation();
+  const { goToForestAddition, goToLogin, goToRegister } = useRouterNavigation();
   const { showToast } = useToast();
 
   const handleRegister = useCallback(
@@ -26,7 +26,7 @@ export const useRegisterProfile = () => {
         }
 
         if (result.status === "auto-login-success") {
-          goToHome();
+          goToForestAddition();
           showToast({ title: "ログインしました" });
           return;
         }
@@ -57,7 +57,7 @@ export const useRegisterProfile = () => {
         });
       }
     },
-    [goToHome, goToLogin, goToRegister, showToast],
+    [goToForestAddition, goToLogin, goToRegister, showToast],
   );
 
   return { handleRegister };
