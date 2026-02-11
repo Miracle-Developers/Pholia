@@ -19,12 +19,19 @@ export const useRouterNavigation = () => {
     treeId !== undefined && treeId !== null
       ? router.push(`/tree-detail?treeId=${encodeURIComponent(String(treeId))}`)
       : router.push("/tree-detail");
-  const goToTreeAddition = () => router.replace("/tree-addition");
+  const goToTreeAddition = (forestId?: number) =>
+    forestId !== undefined && forestId !== null
+      ? router.replace(`/tree-addition?forestId=${encodeURIComponent(String(forestId))}`)
+      : router.replace("/tree-addition");
+
   const goToTreeSelection = (forestId?: number) =>
     forestId !== undefined && forestId !== null
       ? router.replace(`/tree-selection?forestId=${encodeURIComponent(String(forestId))}`)
       : router.replace("/tree-selection");
-  const goToTreeAction = () => router.replace("/tree-action");
+  const goToTreeAction = (forestId?: number) =>
+    forestId !== undefined && forestId !== null
+      ? router.replace(`/tree-action?forestId=${encodeURIComponent(String(forestId))}`)
+      : router.replace("/tree-action");
   const goToForestSelection = () => router.replace("/forest-selection");
   const goToForestAddition = () => router.replace("/forest-addition");
   const goToForestAction = () => router.replace("/forest-action");

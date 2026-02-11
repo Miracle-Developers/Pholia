@@ -53,7 +53,7 @@ export const useForestSelection = () => {
       return;
     }
     setSelectedForestId(selectedForestId);
-    goToTreeAction();
+    goToTreeAction(selectedForestId);
   }, [goToTreeAction, selectedForestId, showToast]);
 
   return {

@@ -1,3 +1,4 @@
+import { useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
@@ -10,6 +11,9 @@ import { useRouterNavigation } from "@/hooks/useRouter";
 
 export const TreeActionContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
+  const params = useLocalSearchParams<{ forestId?: string }>();
+  const forestId = params.forestId ? Number(params.forestId) : undefined;
+
   const {
     goToForestSelection,
     goToProfile,
@@ -36,7 +40,11 @@ export const TreeActionContainer = () => {
           <BackTitle title="森一覧へ" onPress={goToForestSelection} style={styles.backTitle} />
 
           <View style={styles.cardsWrapper}>
-            <TouchableOpacity style={styles.card} onPressIn={() => goToTreeSelection()} activeOpacity={0.85}>
+            <TouchableOpacity
+              style={styles.card}
+              onPressIn={() => goToTreeSelection(forestId)}
+              activeOpacity={0.85}
+            >
               <View style={styles.cardRow}>
                 <Image source={require("@/../assets/tree2.png")} style={styles.cardIcon} />
                 <Text style={styles.cardText}>木を確認する</Text>
@@ -46,7 +54,7 @@ export const TreeActionContainer = () => {
             <TouchableOpacity
               style={styles.cardAccent}
               activeOpacity={0.85}
-              onPress={goToTreeAddition}
+              onPress={() => goToTreeAddition(forestId)}
             >
               <View style={styles.cardRow}>
                 <Text style={styles.cardText}>木を植える</Text>
