@@ -13,7 +13,7 @@ const TreeSelectionPage = () => {
     isLoading,
     canConfirm,
   } = useTreeSelection();
-  const { goToProfile, goToSetting } = useRouterNavigation();
+  const { goToProfile, goToSetting, goToForestSelection } = useRouterNavigation();
   const { name, userId, avatarSource } = useHeaderProfile();
 
   return (
@@ -26,6 +26,7 @@ const TreeSelectionPage = () => {
       onPrevious={handlePrevious}
       onNext={handleNext}
       onConfirm={handleTreeConfirm}
+      onBack={goToForestSelection}
       isLoading={isLoading}
       canConfirm={canConfirm}
       onPressProfile={goToProfile}

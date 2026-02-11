@@ -1,11 +1,12 @@
-import { StatusBar } from "expo-status-bar";
-import type { ImageSourcePropType } from "react-native";
-import { Text, View } from "react-native";
+import { BackTitle } from "@/components/BackTitle";
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { BackgroundContainer } from "@/components/Containers/BackgroundContainer";
 import { Header } from "@/components/Header";
 import { TreeCarousel } from "@/features/selection/components/TreeCarousel";
 import type { Tree } from "@/features/selection/types";
+import { StatusBar } from "expo-status-bar";
+import type { ImageSourcePropType } from "react-native";
+import { Text, View } from "react-native";
 import { styles } from "./styles";
 
 type TreeSelectionContainerProps = {
@@ -17,6 +18,7 @@ type TreeSelectionContainerProps = {
   onPrevious: () => void;
   onNext: () => void;
   onConfirm: () => void;
+  onBack: () => void;
   isLoading?: boolean;
   canConfirm?: boolean;
   onPressProfile: () => void;
@@ -32,6 +34,7 @@ const TreeSelectionContainer = ({
   onPrevious,
   onNext,
   onConfirm,
+  onBack,
   isLoading = false,
   canConfirm = true,
   onPressProfile,
@@ -51,6 +54,7 @@ const TreeSelectionContainer = ({
         />
 
         <View style={styles.content}>
+          <BackTitle title="森一覧" onPress={onBack} style={styles.backTitle} />
           <Text style={styles.title}>{trees[currentIndex]?.name ?? "木"}</Text>
 
           <TreeCarousel
