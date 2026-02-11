@@ -6,7 +6,7 @@ import { useToast } from "@/hooks/useToast";
 import { normalizeLoginPayload } from "@/utils/auth";
 
 export const useLogin = () => {
-  const { goToHome } = useRouterNavigation();
+  const { goToForestAction } = useRouterNavigation();
   const { showToast } = useToast();
 
   const handleLogin = useCallback(
@@ -15,7 +15,7 @@ export const useLogin = () => {
         const payload = normalizeLoginPayload(values);
         const result = await loginAndStoreToken(payload);
         if (result.status === "success") {
-          goToHome();
+          goToForestAction();
           showToast({ title: "ログインしました" });
           return;
         }
@@ -31,7 +31,7 @@ export const useLogin = () => {
         });
       }
     },
-    [goToHome, showToast],
+    [goToForestAction, showToast],
   );
 
   return { handleLogin };

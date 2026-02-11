@@ -16,7 +16,8 @@ const leafIds = Array.from({ length: 9 }, (_, index) => index + 1);
 
 export const ListContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
-  const { goToLeafDetail, goToProfile, goToSetting, goToForestSelection } = useRouterNavigation();
+  const { goToLeafAddition, goToLeafDetail, goToProfile, goToSetting, goToTreeAction } =
+    useRouterNavigation();
   const [selectedLeafId, setSelectedLeafId] = useState<number | null>(null);
   const { leavesById } = useLoadLeaves(leafIds);
   const selectedTree = getSelectedTree();
@@ -34,7 +35,7 @@ export const ListContainer = () => {
       />
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <BackTitle title="森一覧" style={styles.backTitle} onPress={goToForestSelection} />
+        <BackTitle title="ホーム" style={styles.backTitle} onPress={goToTreeAction} />
         <View style={styles.contentTop}>
           <View style={styles.nameplateWrapper}>
             <ImageBackground
@@ -57,7 +58,9 @@ export const ListContainer = () => {
                 <TouchableOpacity
                   key={leaf.id}
                   activeOpacity={0.85}
-                  onPress={() => setSelectedLeafId(leaf.leafId)}
+                  onPress={() =>
+                    setSelectedLeafId((prev) => (prev === leaf.leafId ? null : leaf.leafId))
+                  }
                   style={[styles.leafItem, isSelected && styles.leafItemSelected]}
                 >
                   <View style={styles.leafImageWrapper}>
@@ -79,10 +82,9 @@ export const ListContainer = () => {
         </View>
 
         <WoodenButton
-          title="決定"
-          onPress={() => goToLeafDetail(selectedLeaf?.id)}
+          title={selectedLeaf ? "決定" : "葉の追加"}
+          onPress={selectedLeaf ? () => goToLeafDetail(selectedLeaf.id) : goToLeafAddition}
           style={styles.confirmButton}
-          disabled={!selectedLeaf}
         />
       </ScrollView>
     </View>

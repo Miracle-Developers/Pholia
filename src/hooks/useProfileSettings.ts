@@ -14,7 +14,7 @@ interface UserProfile {
 }
 
 export const useProfileSettings = () => {
-  const { goToHome, goToLogin } = useRouterNavigation();
+  const { goToLogin, goToTop } = useRouterNavigation();
   const { showToast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState<number | null>(null);
@@ -127,7 +127,7 @@ export const useProfileSettings = () => {
     try {
       await auth.setToken(null);
       await auth.setUserId(null);
-      goToHome();
+      goToTop();
     } catch (_error) {
       showToast({ title: "エラー", message: "ログアウトに失敗しました" });
     }
