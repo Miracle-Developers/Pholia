@@ -1,5 +1,4 @@
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
 import { Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 import { getSelectedTree } from "@/application/selection/state/selectedTree";
@@ -18,10 +17,8 @@ export const ListContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
   const { goToLeafAddition, goToLeafDetail, goToProfile, goToSetting, goToTreeDetail } =
     useRouterNavigation();
-  const [selectedLeafId, setSelectedLeafId] = useState<number | null>(null);
   const { leavesById } = useLoadLeaves(leafIds);
   const selectedTree = getSelectedTree();
-  const selectedLeaf = selectedLeafId ? leavesById[selectedLeafId] : null;
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
@@ -51,17 +48,18 @@ export const ListContainer = () => {
 
           <View style={styles.leafGrid}>
             {leafItems.map((leaf) => {
-              const isSelected = leaf.leafId === selectedLeafId;
               const leafData = leavesById[leaf.leafId];
 
               return (
                 <TouchableOpacity
                   key={leaf.id}
                   activeOpacity={0.85}
-                  onPress={() =>
-                    setSelectedLeafId((prev) => (prev === leaf.leafId ? null : leaf.leafId))
-                  }
-                  style={[styles.leafItem, isSelected && styles.leafItemSelected]}
+                  onPress={() => {
+                    if (leafData) {
+                      goToLeafDetail(leafData.id);
+                    }
+                  }}
+                  style={styles.leafItem}
                 >
                   <View style={styles.leafImageWrapper}>
                     <Image
@@ -82,8 +80,8 @@ export const ListContainer = () => {
         </View>
 
         <WoodenButton
-          title={selectedLeaf ? "決定" : "葉の追加"}
-          onPress={selectedLeaf ? () => goToLeafDetail(selectedLeaf.id) : goToLeafAddition}
+          title="葉の追加"
+          onPress={goToLeafAddition}
           style={styles.confirmButton}
         />
       </ScrollView>
