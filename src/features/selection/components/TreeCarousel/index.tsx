@@ -28,7 +28,7 @@ export const TreeCarousel = ({ trees, currentIndex, onPrevious, onNext }: TreeCa
         disabled={!hasTrees}
       >
         <Image
-          source={tree?.image ?? require("@/../assets/tree1.png")}
+          source={tree?.image ?? require("@/../assets/tree(sick).png")}
           style={styles.treeImage}
           resizeMode="contain"
         />

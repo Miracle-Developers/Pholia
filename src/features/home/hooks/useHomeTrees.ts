@@ -1,15 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { getSelectedForestId } from "@/application/selection/state/selectedForest";
-import { loadUserTrees } from "@/application/structure/usecases/loadUserTrees";
 import type { TreeOption } from "@/application/structure/usecases/loadUserStructure";
+import { loadUserTrees } from "@/application/structure/usecases/loadUserTrees";
 import { useTreeCarousel } from "@/features/selection/hooks/useTreeCarousel";
 import type { Tree } from "@/features/selection/types";
 
 const fallbackImages = [
-  require("@/../assets/tree1.png"),
-  require("@/../assets/tree2.png"),
-  require("@/../assets/tree3.png"),
+  require("@/../assets/tree(sick).png"),
+  require("@/../assets/tree(normal).png"),
+  require("@/../assets/tree(fun).png"),
 ];
 
 type HomeTreeState = {

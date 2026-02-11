@@ -30,7 +30,7 @@ export const ForestActionContainer = () => {
           <View style={styles.cardsWrapper}>
             <TouchableOpacity style={styles.card} activeOpacity={0.85} onPress={goToForestSelection}>
               <View style={styles.cardRow}>
-                <Image source={require("@/../assets/tree2.png")} style={styles.cardIcon} />
+                <Image source={require("@/../assets/tree(normal).png")} style={styles.cardIcon} />
                 <Text style={styles.cardText}>森を選択する</Text>
               </View>
             </TouchableOpacity>

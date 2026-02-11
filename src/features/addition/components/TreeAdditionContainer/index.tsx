@@ -131,7 +131,7 @@ export const TreeAdditionContainer = () => {
           </View>
 
           <View style={styles.treeWrapper}>
-            <Image source={require("@/../assets/tree2.png")} style={styles.treeImage} />
+            <Image source={require("@/../assets/tree(normal).png")} style={styles.treeImage} />
           </View>
 
           <View style={styles.card}>

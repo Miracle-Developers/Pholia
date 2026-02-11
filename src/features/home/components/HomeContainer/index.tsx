@@ -10,7 +10,7 @@ import { useHomeTrees } from "@/features/home/hooks/useHomeTrees";
 import { useHeaderProfile } from "@/hooks/useHeaderProfile";
 import { useRouterNavigation } from "@/hooks/useRouter";
 
-const DEFAULT_TREE_IMAGE = require("@/../assets/tree1.png");
+const DEFAULT_TREE_IMAGE = require("@/../assets/tree(sick).png");
 
 export const HomeContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();

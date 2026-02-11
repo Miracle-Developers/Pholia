@@ -46,7 +46,7 @@ export const TreeActionContainer = () => {
               activeOpacity={0.85}
             >
               <View style={styles.cardRow}>
-                <Image source={require("@/../assets/tree2.png")} style={styles.cardIcon} />
+                <Image source={require("@/../assets/tree(normal).png")} style={styles.cardIcon} />
                 <Text style={styles.cardText}>木を確認する</Text>
               </View>
             </TouchableOpacity>

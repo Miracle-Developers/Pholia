@@ -20,9 +20,9 @@ export const useTreeSelection = () => {
 
   const treeImages = useMemo(
     () => [
-      require("@/../assets/tree1.png"),
-      require("@/../assets/tree2.png"),
-      require("@/../assets/tree3.png"),
+      require("@/../assets/tree(sick).png"),
+      require("@/../assets/tree(normal).png"),
+      require("@/../assets/tree(fun).png"),
     ],
     [],
   );
@@ -90,7 +90,7 @@ export const useTreeSelection = () => {
   useEffect(() => {
     if (!selectedTreeId) return;
     if (loadedTreeIds.current.has(selectedTreeId)) return;
-    fetchTreeDetail(selectedTreeId).catch(() => {});
+    fetchTreeDetail(selectedTreeId).catch(() => { });
   }, [fetchTreeDetail, selectedTreeId]);
 
   const handleTreeConfirm = useCallback(async () => {
