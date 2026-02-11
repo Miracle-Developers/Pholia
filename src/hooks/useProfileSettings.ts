@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
+import { clearCachedProfile } from "@/application/profile/state/cachedProfile";
 import { deleteAccount, getAvatarUrl, updateProfile } from "@/application/profile/usecases";
 import { loadProfile } from "@/application/profile/usecases/loadProfile";
 import { useRouterNavigation } from "@/hooks/useRouter";
@@ -52,6 +53,7 @@ export const useProfileSettings = () => {
 
   // ユーザー情報を再取得して画面更新
   const refreshUserData = async () => {
+    clearCachedProfile();
     try {
       const userData = await loadProfile();
       if (userData) {
@@ -124,6 +126,7 @@ export const useProfileSettings = () => {
   };
 
   const handleLogout = async () => {
+    clearCachedProfile();
     try {
       await auth.setToken(null);
       await auth.setUserId(null);
@@ -134,6 +137,7 @@ export const useProfileSettings = () => {
   };
 
   const handleDeleteAccount = async () => {
+    clearCachedProfile();
     try {
       if (!currentUserId) return;
       await deleteAccount(String(currentUserId));

@@ -1,3 +1,7 @@
+import {
+  getCachedProfile,
+  setCachedProfile,
+} from "@/application/profile/state/cachedProfile";
 import * as auth from "@/infrastructure/auth";
 import * as profile from "@/infrastructure/profile";
 import { UserProfileData } from "../types";
@@ -5,7 +9,14 @@ import { formatUserProfile } from "./formatUserProfile";
 
 export { UserProfileData };
 
-export const loadProfile = async (): Promise<UserProfileData | null> => {
+export const loadProfile = async (
+  forceReload = false,
+): Promise<UserProfileData | null> => {
+  if (!forceReload) {
+    const cached = getCachedProfile();
+    if (cached) return cached;
+  }
+
   // トークンを先に復元
   await auth.restoreToken();
 
@@ -26,5 +37,7 @@ export const loadProfile = async (): Promise<UserProfileData | null> => {
 
   const stats = await profile.getUserStats(userId);
 
-  return formatUserProfile(userData, stats);
+  const result = formatUserProfile(userData, stats);
+  setCachedProfile(result);
+  return result;
 };
