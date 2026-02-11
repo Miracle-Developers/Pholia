@@ -10,8 +10,10 @@ export const styles = StyleSheet.create({
     marginTop: 0,
   },
   backTitle: {
-    paddingHorizontal: 16,
+    alignSelf: "flex-start",
+    paddingHorizontal: 18,
     paddingTop: 6,
+    paddingBottom: 4,
   },
   content: {
     flexGrow: 1,

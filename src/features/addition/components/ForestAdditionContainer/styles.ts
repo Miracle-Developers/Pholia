@@ -18,6 +18,7 @@ export const styles = StyleSheet.create({
   backTitle: {
     alignSelf: "flex-start",
     paddingTop: 6,
+    paddingBottom: 4,
   },
   bannerWrapper: {
     marginTop: 18,

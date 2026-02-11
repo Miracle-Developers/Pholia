@@ -54,7 +54,7 @@ const TreeSelectionContainer = ({
         />
 
         <View style={styles.content}>
-          <BackTitle title="森一覧" onPress={onBack} style={styles.backTitle} />
+          <BackTitle title="木のホームへ" onPress={onBack} style={styles.backTitle} />
           <Text style={styles.title}>{trees[currentIndex]?.name ?? "木"}</Text>
 
           <TreeCarousel

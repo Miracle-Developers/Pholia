@@ -1,5 +1,5 @@
-import { StyleSheet } from "react-native";
 import { FONT_FAMILY } from "@/config/fontConfig";
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
@@ -12,8 +12,9 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 18,
   },
   backTitle: {
-    paddingTop: 8,
-    fontFamily: FONT_FAMILY.medium,
+    alignSelf: "flex-start",
+    paddingTop: 6,
+    paddingBottom: 4,
   },
   photoCard: {
     marginTop: 18,

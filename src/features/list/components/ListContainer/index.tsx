@@ -2,10 +2,10 @@ import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
+import { getSelectedTree } from "@/application/selection/state/selectedTree";
 import { BackTitle } from "@/components/BackTitle";
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { Header } from "@/components/Header";
-import { getSelectedTree } from "@/application/selection/state/selectedTree";
 import { styles } from "@/features/list/components/ListContainer/styles";
 import { useLoadLeaves } from "@/features/list/hooks/useLoadLeaves";
 import { useHeaderProfile } from "@/hooks/useHeaderProfile";
@@ -16,7 +16,7 @@ const leafIds = Array.from({ length: 9 }, (_, index) => index + 1);
 
 export const ListContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
-  const { goToLeafAddition, goToLeafDetail, goToProfile, goToSetting, goToTreeAction } =
+  const { goToLeafAddition, goToLeafDetail, goToProfile, goToSetting, goToTreeDetail } =
     useRouterNavigation();
   const [selectedLeafId, setSelectedLeafId] = useState<number | null>(null);
   const { leavesById } = useLoadLeaves(leafIds);
@@ -35,7 +35,7 @@ export const ListContainer = () => {
       />
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <BackTitle title="ホーム" style={styles.backTitle} onPress={goToTreeAction} />
+        <BackTitle title="戻る" style={styles.backTitle} onPress={goToTreeDetail} />
         <View style={styles.contentTop}>
           <View style={styles.nameplateWrapper}>
             <ImageBackground

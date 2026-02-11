@@ -13,7 +13,7 @@ const ForestSelectionPage = () => {
     isLoading,
     canConfirm,
   } = useForestSelection();
-  const { goToProfile, goToSetting } = useRouterNavigation();
+  const { goToProfile, goToSetting, goToForestAction } = useRouterNavigation();
   const { name, userId, avatarSource } = useHeaderProfile();
 
   return (
@@ -26,6 +26,7 @@ const ForestSelectionPage = () => {
       onPrevious={handlePrevious}
       onNext={handleNext}
       onConfirm={handleForestConfirm}
+      onBack={goToForestAction}
       isLoading={isLoading}
       canConfirm={canConfirm}
       onPressProfile={goToProfile}

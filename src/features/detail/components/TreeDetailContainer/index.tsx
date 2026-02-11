@@ -1,18 +1,18 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import { useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useMemo } from "react";
 import { Image, ImageBackground, Text, View } from "react-native";
-import { useLocalSearchParams } from "expo-router";
 
+import { getSelectedTree } from "@/application/selection/state/selectedTree";
 import { BackTitle } from "@/components/BackTitle";
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { ScreenBackgroundContainer } from "@/components/Containers/BackgroundContainer";
 import { Header } from "@/components/Header";
-import { getSelectedTree } from "@/application/selection/state/selectedTree";
+import { styles } from "@/features/detail/components/TreeDetailContainer/styles";
+import { useLoadTreeDetail } from "@/features/detail/hooks/useLoadTreeDetail";
 import { useHeaderProfile } from "@/hooks/useHeaderProfile";
 import { useRouterNavigation } from "@/hooks/useRouter";
-import { useLoadTreeDetail } from "@/features/detail/hooks/useLoadTreeDetail";
-import { styles } from "@/features/detail/components/TreeDetailContainer/styles";
 
 const formatDate = (value?: string) => {
   if (!value) return "";
@@ -70,7 +70,7 @@ export const TreeDetailContainer = () => {
         />
 
         <View style={styles.content}>
-          <BackTitle title="木一覧" style={styles.backTitle} onPress={goToTreeSelection} />
+          <BackTitle title="木一覧へ" style={styles.backTitle} onPress={goToTreeSelection} />
 
           <View style={styles.nameplateWrapper}>
             <ImageBackground

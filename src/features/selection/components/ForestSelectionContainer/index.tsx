@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import type { ImageSourcePropType } from "react-native";
 import { Text, View } from "react-native";
 
+import { BackTitle } from "@/components/BackTitle";
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { BackgroundContainer } from "@/components/Containers/BackgroundContainer";
 import { Header } from "@/components/Header";
@@ -18,6 +19,7 @@ type ForestSelectionContainerProps = {
   onPrevious: () => void;
   onNext: () => void;
   onConfirm: () => void;
+  onBack: () => void;
   isLoading?: boolean;
   canConfirm?: boolean;
   onPressProfile: () => void;
@@ -33,6 +35,7 @@ const ForestSelectionContainer = ({
   onPrevious,
   onNext,
   onConfirm,
+  onBack,
   isLoading = false,
   canConfirm = true,
   onPressProfile,
@@ -52,6 +55,7 @@ const ForestSelectionContainer = ({
         />
 
         <View style={styles.content}>
+          <BackTitle title="森のホームへ" onPress={onBack} style={styles.backTitle} />
           <Text style={styles.title}>{forests[currentIndex]?.name ?? "森"}</Text>
 
           <ForestCarousel

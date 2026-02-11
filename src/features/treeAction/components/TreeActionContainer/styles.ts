@@ -1,14 +1,14 @@
-import { StyleSheet } from "react-native";
-import { styles as homeStyles } from "@/features/home/components/HomeContainer/styles";
 import { FONT_FAMILY } from "@/config/fontConfig";
+import { styles as homeStyles } from "@/features/home/components/HomeContainer/styles";
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   ...homeStyles,
   backTitle: {
     alignSelf: "flex-start",
     paddingLeft: 18,
-    paddingTop: 8,
-    marginBottom: 16,
+    paddingTop: 6,
+    paddingBottom: 4,
   },
   cardsWrapper: {
     width: "100%",

@@ -58,7 +58,7 @@ export const AdditionContainer = () => {
         <View pointerEvents="none" style={[styles.cloud, styles.cloudRight]} />
         <View pointerEvents="none" style={[styles.cloud, styles.cloudLeft]} />
 
-        <BackTitle title="葉の一覧" onPress={goToList} style={styles.backTitle} />
+        <BackTitle title="戻る" onPress={goToList} style={styles.backTitle} />
 
         <View style={styles.bannerWrapper}>
           <ImageBackground

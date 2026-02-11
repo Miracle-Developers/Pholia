@@ -1,7 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
-import { BackTitle } from "@/components/BackTitle";
 import { ScreenBackgroundContainer } from "@/components/Containers/BackgroundContainer";
 import { Header } from "@/components/Header";
 import { useHeaderProfile } from "@/hooks/useHeaderProfile";
@@ -28,8 +27,6 @@ export const ForestActionContainer = () => {
         />
 
         <View style={styles.content}>
-          <BackTitle title="ホーム" onPress={goToHome} style={styles.backTitle} />
-
           <View style={styles.cardsWrapper}>
             <TouchableOpacity style={styles.card} activeOpacity={0.85} onPress={goToForestSelection}>
               <View style={styles.cardRow}>

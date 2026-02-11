@@ -1,14 +1,14 @@
+import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { ScreenBackgroundContainer } from "@/components/Containers/BackgroundContainer";
 import { Header } from "@/components/Header";
+import { styles } from "@/features/home/components/HomeContainer/styles";
+import { useHomeTrees } from "@/features/home/hooks/useHomeTrees";
 import { useHeaderProfile } from "@/hooks/useHeaderProfile";
 import { useRouterNavigation } from "@/hooks/useRouter";
-import { useHomeTrees } from "@/features/home/hooks/useHomeTrees";
-import { styles } from "@/features/home/components/HomeContainer/styles";
 
 const DEFAULT_TREE_IMAGE = require("@/../assets/tree1.png");
 
@@ -80,3 +80,4 @@ export const HomeContainer = () => {
     </ScreenBackgroundContainer>
   );
 };
+

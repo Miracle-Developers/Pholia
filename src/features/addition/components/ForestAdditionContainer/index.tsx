@@ -1,3 +1,13 @@
+import { createForest } from "@/application/forests/usecases/createForest";
+import { BackTitle } from "@/components/BackTitle";
+import { WoodenButton } from "@/components/Buttons/WoodenButton";
+import { ScreenBackgroundContainer } from "@/components/Containers/BackgroundContainer";
+import { KeyboardAvoidingContainer } from "@/components/Containers/KeyboardAvoidingContainer";
+import { Header } from "@/components/Header";
+import { styles } from "@/features/addition/components/ForestAdditionContainer/styles";
+import { useHeaderProfile } from "@/hooks/useHeaderProfile";
+import { useRouterNavigation } from "@/hooks/useRouter";
+import { useToast } from "@/hooks/useToast";
 import { MaterialIcons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
@@ -10,20 +20,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { createForest } from "@/application/forests/usecases/createForest";
-import { BackTitle } from "@/components/BackTitle";
-import { WoodenButton } from "@/components/Buttons/WoodenButton";
-import { ScreenBackgroundContainer } from "@/components/Containers/BackgroundContainer";
-import { KeyboardAvoidingContainer } from "@/components/Containers/KeyboardAvoidingContainer";
-import { Header } from "@/components/Header";
-import { styles } from "@/features/addition/components/ForestAdditionContainer/styles";
-import { useHeaderProfile } from "@/hooks/useHeaderProfile";
-import { useRouterNavigation } from "@/hooks/useRouter";
-import { useToast } from "@/hooks/useToast";
 
 export const ForestAdditionContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
-  const { goToForestSelection, goToHome, goToProfile, goToSetting } = useRouterNavigation();
+  const { goToForestAction, goToForestSelection, goToProfile, goToSetting } = useRouterNavigation();
   const { showToast } = useToast();
   const [forestName, setForestName] = useState("");
 
@@ -58,7 +58,7 @@ export const ForestAdditionContainer = () => {
         />
 
         <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-          <BackTitle title="ホーム" onPress={goToHome} style={styles.backTitle} />
+          <BackTitle title="戻る" onPress={goToForestAction} style={styles.backTitle} />
 
           <View style={styles.bannerWrapper}>
             <ImageBackground

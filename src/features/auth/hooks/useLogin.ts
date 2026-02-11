@@ -1,9 +1,9 @@
-import { useCallback } from "react";
 import type { LoginFormData } from "@/application/auth/types";
 import { loginAndStoreToken } from "@/application/auth/usecases/login";
 import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
 import { normalizeLoginPayload } from "@/utils/auth";
+import { useCallback } from "react";
 
 export const useLogin = () => {
   const { goToForestAction } = useRouterNavigation();

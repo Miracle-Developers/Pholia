@@ -1,4 +1,3 @@
-import { FONT_FAMILY } from "@/config/fontConfig";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -15,7 +14,6 @@ export const styles = StyleSheet.create({
     alignSelf: "flex-start",
     paddingTop: 6,
     paddingBottom: 4,
-    fontFamily: FONT_FAMILY.medium,
   },
   title: {
     paddingTop: 110,

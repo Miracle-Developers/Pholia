@@ -1,15 +1,3 @@
-import { MaterialIcons } from "@expo/vector-icons";
-import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
-import {
-  Image,
-  ImageBackground,
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
 import { addTreeMember } from "@/application/trees/usecases/addTreeMember";
 import { createTree } from "@/application/trees/usecases/createTree";
 import { loadTreeMembers, type TreeMember } from "@/application/trees/usecases/loadTreeMembers";
@@ -24,6 +12,18 @@ import { useForestSelection } from "@/features/addition/hooks/useForestSelection
 import { useHeaderProfile } from "@/hooks/useHeaderProfile";
 import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
+import { MaterialIcons } from "@expo/vector-icons";
+import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
+import {
+  Image,
+  ImageBackground,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export const TreeAdditionContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
@@ -118,7 +118,7 @@ export const TreeAdditionContainer = () => {
         />
 
         <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-          <BackTitle title="ホーム" onPress={goToTreeAction} style={styles.backTitle} />
+          <BackTitle title="戻る" onPress={goToTreeAction} style={styles.backTitle} />
 
           <View style={styles.bannerWrapper}>
             <ImageBackground
