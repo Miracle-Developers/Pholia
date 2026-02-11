@@ -1,18 +1,21 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useMemo } from "react";
-import { Image, ImageBackground, Text, View } from "react-native";
+import { useCallback, useMemo, useState } from "react";
+import { Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
 
 import { getSelectedTree } from "@/application/selection/state/selectedTree";
+import { deleteTree } from "@/application/trees/usecases/deleteTree";
 import { BackTitle } from "@/components/BackTitle";
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { ScreenBackgroundContainer } from "@/components/Containers/BackgroundContainer";
 import { Header } from "@/components/Header";
+import { DeleteConfirmModal } from "@/components/Modals/DeleteConfirmModal";
 import { styles } from "@/features/detail/components/TreeDetailContainer/styles";
 import { useLoadTreeDetail } from "@/features/detail/hooks/useLoadTreeDetail";
 import { useHeaderProfile } from "@/hooks/useHeaderProfile";
 import { useRouterNavigation } from "@/hooks/useRouter";
+import { useToast } from "@/hooks/useToast";
 
 const formatDate = (value?: string) => {
   if (!value) return "";
@@ -27,8 +30,11 @@ const formatDate = (value?: string) => {
 export const TreeDetailContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
   const { goToList, goToProfile, goToSetting, goToTreeSelection } = useRouterNavigation();
+  const { showToast } = useToast();
   const params = useLocalSearchParams<{ treeId?: string }>();
   const selectedTree = getSelectedTree();
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const treeId = useMemo(() => {
     if (typeof params.treeId === "string" && params.treeId.trim() !== "") {
@@ -57,6 +63,22 @@ export const TreeDetailContainer = () => {
     })
     .filter((value): value is string => Boolean(value));
 
+  const handleDelete = useCallback(() => {
+    setIsDeleteModalOpen(true);
+  }, []);
+
+  const execDelete = useCallback(async () => {
+    if (!treeId) return;
+    setIsDeleteModalOpen(false);
+    const success = await deleteTree(treeId);
+    if (success) {
+      showToast({ title: "削除しました", message: "木を削除しました。" });
+      goToTreeSelection();
+    } else {
+      showToast({ title: "削除失敗", message: "木の削除に失敗しました。" });
+    }
+  }, [treeId, showToast, goToTreeSelection]);
+
   return (
     <ScreenBackgroundContainer>
       <View style={styles.container}>
@@ -70,7 +92,14 @@ export const TreeDetailContainer = () => {
         />
 
         <View style={styles.content}>
-          <BackTitle title="木一覧へ" style={styles.backTitle} onPress={goToTreeSelection} />
+          <View style={styles.headerRow}>
+            <BackTitle title="木一覧へ" style={styles.backTitle} onPress={goToTreeSelection} />
+            {treeId && (
+              <TouchableOpacity onPress={handleDelete} style={styles.deleteButton}>
+                <MaterialIcons name="delete" size={24} color="#A46B3D" />
+              </TouchableOpacity>
+            )}
+          </View>
 
           <View style={styles.nameplateWrapper}>
             <ImageBackground
@@ -130,6 +159,14 @@ export const TreeDetailContainer = () => {
 
           <WoodenButton title="葉一覧へ" onPress={goToList} style={styles.leafListButton} />
         </View>
+
+        <DeleteConfirmModal
+          visible={isDeleteModalOpen}
+          onClose={() => setIsDeleteModalOpen(false)}
+          onConfirm={execDelete}
+          title="木を削除しますか？"
+          message="この操作は取り消せません。木を削除します。"
+        />
       </View>
     </ScreenBackgroundContainer>
   );

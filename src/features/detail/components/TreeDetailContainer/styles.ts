@@ -12,10 +12,21 @@ export const styles = StyleSheet.create({
     paddingBottom: 24,
     alignItems: "center",
   },
+  headerRow: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 6,
+    paddingHorizontal: 4,
+  },
   backTitle: {
     alignSelf: "flex-start",
     paddingTop: 6,
     paddingBottom: 4,
+  },
+  deleteButton: {
+    padding: 8,
   },
   nameplateWrapper: {
     marginTop: 12,

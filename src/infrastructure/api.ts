@@ -290,6 +290,12 @@ export const deleteUser = async (userId: string) =>
 export const deleteLeaf = async (id: number | string) =>
   request(`/leaves/${encodeURIComponent(String(id))}`, "DELETE");
 
+export const deleteTree = async (id: number | string) =>
+  request(`/trees/${encodeURIComponent(String(id))}`, "DELETE");
+
+export const deleteForest = async (id: number | string) =>
+  request(`/forests/${encodeURIComponent(String(id))}`, "DELETE");
+
 export default {
   login,
   registerUser,
@@ -310,4 +316,6 @@ export default {
   updateUser,
   deleteUser,
   deleteLeaf,
+  deleteTree,
+  deleteForest,
 };

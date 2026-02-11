@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { setSelectedForestId } from "@/application/selection/state/selectedForest";
 import { loadUserForests } from "@/application/structure/usecases";
+import { deleteForest } from "@/application/structure/usecases/deleteForest";
 import { useForestCarousel } from "@/features/selection/hooks/useForestCarousel";
 import type { Forest } from "@/features/selection/types";
 import { useRouterNavigation } from "@/hooks/useRouter";
@@ -56,6 +57,17 @@ export const useForestSelection = () => {
     goToTreeAction(selectedForestId);
   }, [goToTreeAction, selectedForestId, showToast]);
 
+  const handleDelete = useCallback(async () => {
+    if (!selectedForestId) return;
+    const success = await deleteForest(selectedForestId);
+    if (success) {
+      showToast({ title: "削除しました", message: "森を削除しました。" });
+      await loadForests();
+    } else {
+      showToast({ title: "削除失敗", message: "森の削除に失敗しました。" });
+    }
+  }, [selectedForestId, loadForests, showToast]);
+
   return {
     forests,
     currentIndex,
@@ -64,5 +76,6 @@ export const useForestSelection = () => {
     isLoading,
     canConfirm: Boolean(selectedForestId),
     handleForestConfirm,
+    handleDelete,
   };
 };

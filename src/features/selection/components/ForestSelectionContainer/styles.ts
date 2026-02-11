@@ -10,10 +10,20 @@ export const styles = StyleSheet.create({
     paddingTop: 6,
     paddingBottom: 60,
   },
+  headerRow: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 6,
+  },
   backTitle: {
     alignSelf: "flex-start",
     paddingTop: 6,
     paddingBottom: 4,
+  },
+  deleteButton: {
+    padding: 8,
   },
   title: {
     paddingTop: 110,
