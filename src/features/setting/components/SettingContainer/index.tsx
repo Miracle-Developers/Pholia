@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 import { Header } from "@/components/Header";
+import { DeleteConfirmModal } from "@/components/Modals/DeleteConfirmModal";
 import { CommonModal } from "@/features/setting/components/CommonModal";
 import { EditAvatarModal } from "@/features/setting/components/EditAvatarModal";
 import { EditPasswordModal } from "@/features/setting/components/EditPasswordModal";
@@ -197,16 +198,15 @@ export const SettingContainer = () => {
         userId={String(currentUserId || "")}
       />
 
-      <CommonModal
+      <DeleteConfirmModal
         visible={deleteAccountVisible}
-        title="アカウントを削除しますか？"
-        description="このアクションは取り消すことができません。すべてのデータが削除されます。"
         onClose={() => setDeleteAccountVisible(false)}
-        onSave={async () => {
+        onConfirm={async () => {
           await handleDeleteAccount();
           setDeleteAccountVisible(false);
         }}
-        isDanger={true}
+        title="アカウントを削除しますか？"
+        message={`このアクションは取り消すことができません。\nすべてのデータが削除されます。`}
       />
     </View>
   );
