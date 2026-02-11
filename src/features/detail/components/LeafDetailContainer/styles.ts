@@ -12,9 +12,17 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 18,
   },
   backTitle: {
-    alignSelf: "flex-start",
     paddingTop: 6,
     paddingBottom: 4,
+  },
+  headerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+  },
+  deleteButton: {
+    padding: 8,
   },
   photoCard: {
     marginTop: 18,
@@ -86,15 +94,12 @@ export const styles = StyleSheet.create({
     borderRadius: 18,
   },
   detailCard: {
-    backgroundColor: "#F9EBD3",
-    alignSelf: "center",
-    width: "94%",
-    maxWidth: 320,
+    width: "90%",
     borderRadius: 18,
-    paddingHorizontal: 16,
+    marginLeft: 25,
+    marginBottom: 10,
+    paddingHorizontal: 12,
     paddingVertical: 8,
-    marginBottom: 9,
-    transform: [{ translateX: 5 }, { translateY: 0 }],
   },
   detailRow: {
     flexDirection: "row",

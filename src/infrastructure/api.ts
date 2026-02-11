@@ -287,6 +287,9 @@ export const updateUser = async (userId: string, payload: Record<string, unknown
 export const deleteUser = async (userId: string) =>
   request(`/users/${encodeURIComponent(userId)}`, "DELETE");
 
+export const deleteLeaf = async (id: number | string) =>
+  request(`/leaves/${encodeURIComponent(String(id))}`, "DELETE");
+
 export default {
   login,
   registerUser,
@@ -306,4 +309,5 @@ export default {
   uploadLeaf,
   updateUser,
   deleteUser,
+  deleteLeaf,
 };
