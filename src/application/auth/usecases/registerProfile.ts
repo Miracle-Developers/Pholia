@@ -63,7 +63,8 @@ export const registerProfileAndLogin = async (
         loginRes && typeof loginRes === "object"
           ? (loginRes as { user?: { id?: string | number }; user_id?: string | number })
           : {};
-      const resolvedUserId = idValue ?? loginRecord.user?.id ?? loginRecord.user_id;
+      // ユーザー入力のID(Handle)ではなく、ログインレスポンスのシステムID(PK)を使用する
+      const resolvedUserId = loginRecord.user?.id ?? loginRecord.user_id;
       if (resolvedUserId !== undefined && resolvedUserId !== null) {
         auth.setUserId(String(resolvedUserId));
       }
