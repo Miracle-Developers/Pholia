@@ -11,9 +11,6 @@ import { useToast } from "@/hooks/useToast";
 import { useLocalSearchParams } from "expo-router";
 
 export const useTreeSelection = () => {
-  if (typeof __DEV__ !== "undefined" && __DEV__) {
-    console.log("useTreeSelection mount");
-  }
   const { goToTreeDetail } = useRouterNavigation();
   const { showToast } = useToast();
   const params = useLocalSearchParams<{ forestId?: string }>();
@@ -31,11 +28,6 @@ export const useTreeSelection = () => {
   );
 
   const loadTrees = useCallback(async () => {
-    if (typeof __DEV__ !== "undefined" && __DEV__) {
-      console.log("useTreeSelection loadTrees start", {
-        forestIdParam: params.forestId ?? null,
-      });
-    }
     setIsLoading(true);
     try {
       const forestIdParam = Array.isArray(params.forestId) ? params.forestId[0] : params.forestId;
@@ -51,11 +43,11 @@ export const useTreeSelection = () => {
       if (routeForestId && Number.isFinite(routeForestId)) {
         setSelectedForestId(routeForestId);
       }
-      if (!selectedForestId || !Number.isFinite(selectedForestId)) {
-        setTrees([]);
-        return;
-      }
-      const data = await loadUserTrees(selectedForestId);
+      const forestId =
+        typeof selectedForestId === "number" && Number.isFinite(selectedForestId)
+          ? selectedForestId
+          : undefined;
+      const data = await loadUserTrees(forestId);
       const mapped = data.map((tree, index) => ({
         id: tree.id,
         name: tree.name,

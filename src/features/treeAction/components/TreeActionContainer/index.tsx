@@ -14,6 +14,7 @@ export const TreeActionContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
   const {
     goToHome,
+    goToHomeForest,
     goToProfile,
     goToSetting,
     goToTreeDetail,
@@ -61,7 +62,7 @@ export const TreeActionContainer = () => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.cardAccent} activeOpacity={0.85} onPress={goToList}>
+          <TouchableOpacity style={styles.cardAccent} activeOpacity={0.85} onPress={goToHomeForest}>
             <View style={styles.cardRow}>
               <Text style={styles.cardText}>木を育てる</Text>
             </View>

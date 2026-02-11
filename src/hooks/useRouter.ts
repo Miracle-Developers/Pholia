@@ -26,6 +26,7 @@ export const useRouterNavigation = () => {
   const goToTreeAction = () => router.replace("/tree-action");
   const goToForestSelection = () => router.replace("/forest-selection");
   const goToForestAddition = () => router.replace("/forest-addition");
+  const goToHomeForest = () => router.replace("/home-forest");
   const goToSetting = () => router.push("/setting");
   const goToProfile = () => router.push("/profile");
 
@@ -44,6 +45,7 @@ export const useRouterNavigation = () => {
     goToTreeAction,
     goToForestSelection,
     goToForestAddition,
+    goToHomeForest,
     goToSetting,
     goToProfile,
   };
