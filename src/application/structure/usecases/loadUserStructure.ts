@@ -9,6 +9,7 @@ export type TreeOption = {
   label: string;
   forestId?: number;
   imageUrl?: string;
+  leafCount?: number;
 };
 
 type ApiStructureLike = {
@@ -50,14 +51,17 @@ const toTreeOption = (
       typeof item.forest_name === "string"
         ? item.forest_name
         : (() => {
-            const forest = toRecord(item.forest);
-            return forest && typeof forest.name === "string" ? forest.name : undefined;
-          })();
+          const forest = toRecord(item.forest);
+          return forest && typeof forest.name === "string" ? forest.name : undefined;
+        })();
   }
 
   if (typeof id !== "number" || !name) return null;
   const label = resolvedForest ? `${resolvedForest} / ${name}` : name;
-  return { id, name, label, forestId: resolvedForestId, imageUrl };
+  const leaves = Array.isArray(item.leaves) ? item.leaves : [];
+  const leafCount = leaves.length;
+
+  return { id, name, label, forestId: resolvedForestId, imageUrl, leafCount };
 };
 
 export const collectTrees = (data: unknown, defaultForestId?: number): TreeOption[] => {

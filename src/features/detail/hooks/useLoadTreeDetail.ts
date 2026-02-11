@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 
 import { loadForest } from "@/application/forests/usecases/loadForest";
+import { loadUserForests } from "@/application/structure/usecases/loadUserForests";
 import { loadTree } from "@/application/trees/usecases/loadTree";
 import { loadTreeMembers, type TreeMember } from "@/application/trees/usecases/loadTreeMembers";
-import { loadUserForests } from "@/application/structure/usecases/loadUserForests";
+import type { ApiLeafResponse } from "@/infrastructure/api";
+import * as api from "@/infrastructure/api";
+import * as auth from "@/infrastructure/auth";
 
 export type TreeDetailData = {
   id: number;
@@ -18,6 +21,7 @@ export type TreeDetailData = {
 export const useLoadTreeDetail = (treeId?: number | null) => {
   const [isLoading, setIsLoading] = useState(false);
   const [treeDetail, setTreeDetail] = useState<TreeDetailData | null>(null);
+  const [leaves, setLeaves] = useState<ApiLeafResponse[]>([]);
 
   useEffect(() => {
     let isActive = true;
@@ -60,6 +64,24 @@ export const useLoadTreeDetail = (treeId?: number | null) => {
         } catch {
           members = [];
         }
+        let leaves: ApiLeafResponse[] = [];
+        try {
+          let userId = auth.getUserId();
+          if (!userId) {
+            userId = await auth.restoreUserId();
+          }
+
+          if (userId) {
+            const structure = await api.getUserStructure(userId, { filter: "leaves", treeId });
+            const data = structure as { leaves?: ApiLeafResponse[] };
+            if (Array.isArray(data.leaves)) {
+              leaves = data.leaves;
+            }
+          }
+        } catch (error) {
+          console.warn("Failed to load leaves for tree detail:", error);
+        }
+
         if (!isActive) return;
 
         setTreeDetail({
@@ -71,9 +93,11 @@ export const useLoadTreeDetail = (treeId?: number | null) => {
           forestName,
           members,
         });
+        setLeaves(leaves);
       } catch {
         if (isActive) {
           setTreeDetail(null);
+          setLeaves([]);
         }
       } finally {
         if (isActive) {
@@ -88,5 +112,5 @@ export const useLoadTreeDetail = (treeId?: number | null) => {
     };
   }, [treeId]);
 
-  return { isLoading, treeDetail };
+  return { isLoading, treeDetail, leaves };
 };

@@ -5,12 +5,7 @@ import type { TreeOption } from "@/application/structure/usecases/loadUserStruct
 import { loadUserTrees } from "@/application/structure/usecases/loadUserTrees";
 import { useTreeCarousel } from "@/features/selection/hooks/useTreeCarousel";
 import type { Tree } from "@/features/selection/types";
-
-const fallbackImages = [
-  require("@/../assets/tree(sick).png"),
-  require("@/../assets/tree(normal).png"),
-  require("@/../assets/tree(fun).png"),
-];
+import { getTreeImageSource } from "@/utils/treeImage";
 
 type HomeTreeState = {
   currentTree: Tree | null;
@@ -25,10 +20,12 @@ export const useHomeTrees = (): HomeTreeState => {
   const [isLoading, setIsLoading] = useState(true);
   const displayTrees = useMemo<Tree[]>(
     () =>
-      trees.map((tree, index) => ({
+      trees.map((tree) => ({
         id: tree.id,
         name: tree.name,
-        image: tree.imageUrl ? { uri: tree.imageUrl } : fallbackImages[index % fallbackImages.length],
+        image: tree.imageUrl
+          ? { uri: tree.imageUrl }
+          : getTreeImageSource(tree.leafCount ?? 0),
       })),
     [trees],
   );

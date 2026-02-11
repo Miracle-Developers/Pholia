@@ -16,6 +16,7 @@ import { useLoadTreeDetail } from "@/features/detail/hooks/useLoadTreeDetail";
 import { useHeaderProfile } from "@/hooks/useHeaderProfile";
 import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
+import { getTreeImageSource } from "@/utils/treeImage";
 
 const formatDate = (value?: string) => {
   if (!value) return "";
@@ -44,15 +45,16 @@ export const TreeDetailContainer = () => {
     return selectedTree?.id;
   }, [params.treeId, selectedTree?.id]);
 
-  const { treeDetail } = useLoadTreeDetail(treeId);
+  const { treeDetail, leaves } = useLoadTreeDetail(treeId);
   const treeName = treeDetail?.name ?? selectedTree?.name ?? "○○";
   const forestName = treeDetail?.forestName ?? "未設定";
   const createdAt = formatDate(treeDetail?.createdAt) || "未設定";
+
   const treeImageSource = treeDetail?.imageUrl
     ? { uri: treeDetail.imageUrl }
     : selectedTree?.image
       ? selectedTree.image
-      : require("@/../assets/tree(sick).png");
+      : getTreeImageSource(leaves?.length ?? 0);
 
   const memberTags = (treeDetail?.members ?? [])
     .map((member) => {

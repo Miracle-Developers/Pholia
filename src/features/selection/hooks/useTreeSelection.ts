@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { getSelectedForestId, setSelectedForestId } from "@/application/selection/state/selectedForest";
 import { setSelectedTree } from "@/application/selection/state/selectedTree";
@@ -8,6 +8,7 @@ import { useTreeCarousel } from "@/features/selection/hooks/useTreeCarousel";
 import type { Tree } from "@/features/selection/types";
 import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
+import { getTreeImageSource } from "@/utils/treeImage";
 import { useLocalSearchParams } from "expo-router";
 
 export const useTreeSelection = () => {
@@ -18,14 +19,7 @@ export const useTreeSelection = () => {
   const [isLoading, setIsLoading] = useState(false);
   const loadedTreeIds = useRef<Set<number>>(new Set());
 
-  const treeImages = useMemo(
-    () => [
-      require("@/../assets/tree(sick).png"),
-      require("@/../assets/tree(normal).png"),
-      require("@/../assets/tree(fun).png"),
-    ],
-    [],
-  );
+
 
   const loadTrees = useCallback(async () => {
     setIsLoading(true);
@@ -51,7 +45,9 @@ export const useTreeSelection = () => {
       const mapped = data.map((tree, index) => ({
         id: tree.id,
         name: tree.name,
-        image: tree.imageUrl ? { uri: tree.imageUrl } : treeImages[index % treeImages.length],
+        image: tree.imageUrl
+          ? { uri: tree.imageUrl }
+          : getTreeImageSource(tree.leafCount ?? 0),
       }));
       setTrees(mapped);
     } catch (error) {
@@ -61,7 +57,7 @@ export const useTreeSelection = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [params.forestId, showToast, treeImages]);
+  }, [params.forestId, showToast]);
 
   useEffect(() => {
     loadTrees();
@@ -112,9 +108,10 @@ export const useTreeSelection = () => {
 
   return {
     trees,
-    currentIndex,
-    handleNext,
+    selectedTreeId,
     handlePrevious,
+    handleNext,
+    currentIndex,
     isLoading,
     canConfirm: Boolean(selectedTreeId),
     handleTreeConfirm,
