@@ -18,7 +18,6 @@ export const useForestSelection = () => {
     () => [
       require("@/../assets/forest1.png"),
       require("@/../assets/forest2.png"),
-      require("@/../assets/forest3.png"),
     ],
     [],
   );
