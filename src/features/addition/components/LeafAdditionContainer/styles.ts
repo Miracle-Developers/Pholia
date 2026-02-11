@@ -70,13 +70,9 @@ export const styles = StyleSheet.create({
     transform: [{ rotate: "-6deg" }],
   },
   previewImage: {
-    position: "absolute",
-    top: 27,
-    alignSelf: "center",
     width: 96,
     height: 96,
     borderRadius: 12,
-    transform: [{ rotate: "-6deg" }],
     borderWidth: 2,
     borderColor: "#FFF",
     resizeMode: "cover",

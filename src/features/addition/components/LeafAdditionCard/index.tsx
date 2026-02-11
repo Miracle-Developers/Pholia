@@ -4,7 +4,7 @@ import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { styles } from "./styles";
 
 type LeafAdditionCardProps = {
-  hasSelectedPhoto: boolean;
+  selectedPhotoCount: number;
   isStructureLoading: boolean;
   selectedTreeLabel: string | null;
   onPressSelectPhoto: () => void;
@@ -12,7 +12,7 @@ type LeafAdditionCardProps = {
 };
 
 export const LeafAdditionCard = ({
-  hasSelectedPhoto,
+  selectedPhotoCount,
   isStructureLoading,
   selectedTreeLabel,
   onPressSelectPhoto,
@@ -44,7 +44,9 @@ export const LeafAdditionCard = ({
         </View>
         <View style={styles.fieldContent}>
           <Text style={styles.fieldPlaceholder}>
-            {hasSelectedPhoto ? "写真を選択済み" : "追加する写真を選択"}
+            {selectedPhotoCount > 0
+              ? `${selectedPhotoCount}枚の写真を選択済み`
+              : "追加する写真を選択"}
           </Text>
         </View>
         <View style={styles.actionButton}>

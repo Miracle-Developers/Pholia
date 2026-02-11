@@ -1,11 +1,13 @@
 import { StatusBar } from "expo-status-bar";
-import { Image, ImageBackground, ScrollView, Text, View } from "react-native";
+import { useState } from "react";
+import { Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 import { BackTitle } from "@/components/BackTitle";
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { KeyboardAvoidingContainer } from "@/components/Containers/KeyboardAvoidingContainer";
 import { Header } from "@/components/Header";
 import { LeafAdditionCard } from "@/features/addition/components/LeafAdditionCard";
+import { PhotosModal } from "@/features/addition/components/PhotosModal";
 import { TreePickerModal } from "@/features/addition/components/TreePickerModal";
 import { useLeafUpload } from "@/features/addition/hooks/useLeafUpload";
 import { useTreeSelection } from "@/features/addition/hooks/useTreeSelection";
@@ -18,8 +20,9 @@ import { styles } from "./styles";
 export const AdditionContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
   const { goToList, goToProfile, goToSetting } = useRouterNavigation();
-  const { selectedPhoto, isUploading, selectPhoto, upload } = useLeafUpload();
+  const { selectedPhotos, photoCount, isUploading, selectPhoto, upload } = useLeafUpload();
   const { showToast } = useToast();
+  const [isPhotosModalOpen, setIsPhotosModalOpen] = useState(false);
   const {
     trees,
     selectedTree,
@@ -72,13 +75,35 @@ export const AdditionContainer = () => {
 
         <View style={[styles.leafWrapper, { justifyContent: "center" }]}>
           <Image source={require("@/../assets/leaf.png")} style={styles.leafImage} />
-          {selectedPhoto?.uri ? (
-            <Image source={{ uri: selectedPhoto.uri }} style={styles.previewImage} />
+          {photoCount > 0 ? (
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={() => setIsPhotosModalOpen(true)}
+              style={{ position: "absolute", top: 27, alignSelf: "center" }}
+            >
+              {selectedPhotos.slice(0, 3).map((photo, index) => (
+                <Image
+                  key={photo.uri}
+                  source={{ uri: photo.uri }}
+                  style={[
+                    styles.previewImage,
+                    {
+                      position: index === 0 ? "relative" : "absolute",
+                      top: index === 0 ? 0 : index * -2,
+                      left: index === 0 ? 0 : index * 4,
+                      transform: [{ rotate: `${-6 + index * 6}deg` }],
+                      zIndex: 3 - index,
+                      opacity: 1 - index * 0.15,
+                    },
+                  ]}
+                />
+              ))}
+            </TouchableOpacity>
           ) : null}
         </View>
 
         <LeafAdditionCard
-          hasSelectedPhoto={Boolean(selectedPhoto)}
+          selectedPhotoCount={photoCount}
           isStructureLoading={isStructureLoading}
           selectedTreeLabel={selectedTree?.label ?? null}
           onPressSelectPhoto={selectPhoto}
@@ -98,6 +123,12 @@ export const AdditionContainer = () => {
         trees={trees}
         onClose={closePicker}
         onSelectTree={selectTree}
+      />
+
+      <PhotosModal
+        visible={isPhotosModalOpen}
+        photos={selectedPhotos}
+        onClose={() => setIsPhotosModalOpen(false)}
       />
     </KeyboardAvoidingContainer>
   );

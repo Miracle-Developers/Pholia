@@ -15,7 +15,7 @@ const getFileName = (asset: ImagePicker.ImagePickerAsset) => {
 
 export const useLeafUpload = () => {
   const { showToast } = useToast();
-  const [selectedPhoto, setSelectedPhoto] = useState<ImagePicker.ImagePickerAsset | null>(null);
+  const [selectedPhotos, setSelectedPhotos] = useState<ImagePicker.ImagePickerAsset[]>([]);
   const [isUploading, setIsUploading] = useState(false);
 
   const selectPhoto = useCallback(async () => {
@@ -31,16 +31,21 @@ export const useLeafUpload = () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
       quality: 0.9,
+      allowsMultipleSelection: true,
+      selectionLimit: 10,
     });
 
-    if (!result.canceled && result.assets?.[0]) {
-      setSelectedPhoto(result.assets[0]);
+    if (!result.canceled && result.assets && result.assets.length > 0) {
+      setSelectedPhotos(result.assets);
+      if (result.assets.length > 1) {
+        showToast({ title: "選択完了", message: `${result.assets.length}枚の写真を選択しました` });
+      }
     }
   }, [showToast]);
 
   const upload = useCallback(
     async (treeId?: number) => {
-      if (!selectedPhoto) {
+      if (selectedPhotos.length === 0) {
         showToast({
           title: "写真が未選択です",
           message: "アップロードする写真を選んでください。",
@@ -59,22 +64,43 @@ export const useLeafUpload = () => {
         return false;
       }
 
-      const name = getFileName(selectedPhoto);
-      const type = selectedPhoto.mimeType || "image/jpeg";
-
       setIsUploading(true);
+      let successCount = 0;
+      let failureCount = 0;
+
       try {
-        await uploadLeaf(
-          {
-            uri: selectedPhoto.uri,
-            name,
-            type,
-          },
-          treeId,
-        );
-        showToast({ title: "アップロード完了", message: "写真を追加しました。" });
-        setSelectedPhoto(null);
-        return true;
+        for (const photo of selectedPhotos) {
+          const name = getFileName(photo);
+          const type = photo.mimeType || "image/jpeg";
+          try {
+            await uploadLeaf(
+              {
+                uri: photo.uri,
+                name,
+                type,
+              },
+              treeId,
+            );
+            successCount++;
+          } catch (error) {
+            console.warn(`Leaf upload failed for ${name}:`, error);
+            failureCount++;
+          }
+        }
+
+        if (successCount === 0) {
+          showToast({ title: "アップロード失敗", message: "全てのアップロードに失敗しました。" });
+          return false;
+        } else if (failureCount > 0) {
+          showToast({ title: "完了", message: `${successCount}枚成功、${failureCount}枚失敗しました` });
+          setSelectedPhotos([]); // 部分的成功でもクリア
+          return true;
+        } else {
+          showToast({ title: "アップロード完了", message: `${successCount}枚の写真を追加しました。` });
+          setSelectedPhotos([]);
+          return true;
+        }
+
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
         if (message.includes("401")) {
@@ -88,11 +114,12 @@ export const useLeafUpload = () => {
         setIsUploading(false);
       }
     },
-    [isUploading, selectedPhoto, showToast],
+    [isUploading, selectedPhotos, showToast],
   );
 
   return {
-    selectedPhoto,
+    selectedPhotos,
+    photoCount: selectedPhotos.length,
     isUploading,
     selectPhoto,
     upload,
