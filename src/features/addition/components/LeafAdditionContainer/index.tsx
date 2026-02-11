@@ -70,8 +70,11 @@ export const AdditionContainer = () => {
           </ImageBackground>
         </View>
 
-        <View style={styles.leafWrapper}>
+        <View style={[styles.leafWrapper, { justifyContent: "center" }]}>
           <Image source={require("@/../assets/leaf.png")} style={styles.leafImage} />
+          {selectedPhoto?.uri ? (
+            <Image source={{ uri: selectedPhoto.uri }} style={styles.previewImage} />
+          ) : null}
         </View>
 
         <LeafAdditionCard
