@@ -5,23 +5,23 @@ import { Ionicons } from "@expo/vector-icons";
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { ScreenBackgroundContainer } from "@/components/Containers/BackgroundContainer";
 import { Header } from "@/components/Header";
-import { getSelectedTree } from "@/application/selection/state/selectedTree";
 import { useHeaderProfile } from "@/hooks/useHeaderProfile";
 import { useRouterNavigation } from "@/hooks/useRouter";
+import { useHomeTrees } from "@/features/home/hooks/useHomeTrees";
 import { styles } from "@/features/home/components/HomeContainer/styles";
 
 const DEFAULT_TREE_IMAGE = require("@/../assets/tree1.png");
 
 export const HomeContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
-  const { goToProfile, goToSetting, goToTreeAction, goToTreeSelection } = useRouterNavigation();
-  const selectedTree = getSelectedTree();
-  const treeName = selectedTree?.name ? `${selectedTree.name}の木` : "○○の木";
-  const treeImage = selectedTree?.image ?? DEFAULT_TREE_IMAGE;
-
-  const handleOpenTreeSelection = () => {
-    goToTreeSelection();
-  };
+  const { goToProfile, goToSetting, goToTreeAction } = useRouterNavigation();
+  const { currentTree, hasTrees, isLoading, handleNext, handlePrevious } = useHomeTrees();
+  const treeName = currentTree?.name
+    ? `${currentTree.name}の木`
+    : isLoading
+      ? "読み込み中..."
+      : "○○の木";
+  const treeImage = currentTree?.image ?? DEFAULT_TREE_IMAGE;
 
   return (
     <ScreenBackgroundContainer>
@@ -52,24 +52,22 @@ export const HomeContainer = () => {
             <View style={styles.treeRow}>
               <TouchableOpacity
                 style={styles.arrowButton}
-                onPress={handleOpenTreeSelection}
+                onPress={handlePrevious}
                 activeOpacity={0.85}
+                disabled={!hasTrees}
               >
                 <Ionicons name="chevron-back" size={40} color="#7A4A2B" />
               </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.treeWrapper}
-                onPress={handleOpenTreeSelection}
-                activeOpacity={0.9}
-              >
+              <View style={styles.treeWrapper}>
                 <Image source={treeImage} style={styles.treeImage} resizeMode="contain" />
-              </TouchableOpacity>
+              </View>
 
               <TouchableOpacity
                 style={styles.arrowButton}
-                onPress={handleOpenTreeSelection}
+                onPress={handleNext}
                 activeOpacity={0.85}
+                disabled={!hasTrees}
               >
                 <Ionicons name="chevron-forward" size={40} color="#7A4A2B" />
               </TouchableOpacity>

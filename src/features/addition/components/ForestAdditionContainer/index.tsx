@@ -23,7 +23,7 @@ import { useToast } from "@/hooks/useToast";
 
 export const ForestAdditionContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
-  const { goBack, goToProfile, goToSetting } = useRouterNavigation();
+  const { goToForestSelection, goToHome, goToProfile, goToSetting } = useRouterNavigation();
   const { showToast } = useToast();
   const [forestName, setForestName] = useState("");
 
@@ -37,6 +37,7 @@ export const ForestAdditionContainer = () => {
       await createForest({ name: trimmedName });
       showToast({ title: "作成しました", message: "森を作成しました。" });
       setForestName("");
+      goToForestSelection();
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       showToast({ title: "作成に失敗しました", message });
@@ -57,7 +58,7 @@ export const ForestAdditionContainer = () => {
         />
 
         <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-          <BackTitle title="ホーム" onPress={goBack} style={styles.backTitle} />
+          <BackTitle title="ホーム" onPress={goToHome} style={styles.backTitle} />
 
           <View style={styles.bannerWrapper}>
             <ImageBackground

@@ -21,22 +21,6 @@ export const loadUserTrees = async (forestId?: number): Promise<TreeOption[]> =>
   if (forestId && trees.length === 0) {
     const full = await api.getUserStructure(userId);
     trees = collectTrees(full, forestId).filter((tree) => tree.forestId === forestId);
-    if (typeof __DEV__ !== "undefined" && __DEV__) {
-      console.log("loadUserTrees fallback", {
-        userId,
-        forestId,
-        fallbackCount: trees.length,
-        fullType: Array.isArray(full) ? "array" : typeof full,
-      });
-    }
-  }
-  if (typeof __DEV__ !== "undefined" && __DEV__) {
-    console.log("loadUserTrees", {
-      userId,
-      forestId,
-      responseType: Array.isArray(structure) ? "array" : typeof structure,
-      treeCount: trees.length,
-    });
   }
   return trees;
 };
