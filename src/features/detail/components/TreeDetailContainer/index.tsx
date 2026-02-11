@@ -93,7 +93,7 @@ export const TreeDetailContainer = () => {
           <View style={styles.detailCard}>
             <View style={styles.detailRow}>
               <View style={styles.iconBadge}>
-                <Image source={require("@/../assets/leaf_icon.png")} style={styles.iconImage} />
+                <Image source={require("@/../assets/tree2.png")} style={styles.iconImage} />
               </View>
               <Text style={styles.detailText}>{forestName}</Text>
               <View style={styles.dashLine} />

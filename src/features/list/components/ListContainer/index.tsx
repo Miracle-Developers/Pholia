@@ -35,7 +35,7 @@ export const ListContainer = () => {
       />
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <BackTitle title="戻る" style={styles.backTitle} onPress={goToTreeDetail} />
+        <BackTitle title="戻る" style={styles.backTitle} onPress={() => goToTreeDetail(selectedTree?.id)} />
         <View style={styles.contentTop}>
           <View style={styles.nameplateWrapper}>
             <ImageBackground
