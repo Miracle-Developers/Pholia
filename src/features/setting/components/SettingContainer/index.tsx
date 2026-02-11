@@ -5,6 +5,7 @@ import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 import { Header } from "@/components/Header";
 import { DeleteConfirmModal } from "@/components/Modals/DeleteConfirmModal";
+import { LogoutConfirmModal } from "@/components/Modals/LogoutConfirmModal";
 import { CommonModal } from "@/features/setting/components/CommonModal";
 import { EditAvatarModal } from "@/features/setting/components/EditAvatarModal";
 import { EditPasswordModal } from "@/features/setting/components/EditPasswordModal";
@@ -34,6 +35,7 @@ export const SettingContainer = () => {
   const [editEmailVisible, setEditEmailVisible] = useState(false);
   const [editPasswordVisible, setEditPasswordVisible] = useState(false);
   const [deleteAccountVisible, setDeleteAccountVisible] = useState(false);
+  const [logoutVisible, setLogoutVisible] = useState(false);
   const { name, userId, avatarSource } = useHeaderProfile();
 
   return (
@@ -120,7 +122,7 @@ export const SettingContainer = () => {
 
           <TouchableOpacity
             style={[styles.settingItem, styles.settingItemLogout]}
-            onPress={handleLogout}
+            onPress={() => setLogoutVisible(true)}
           >
             <View style={styles.settingItemLabel}>
               <MaterialIcons name="logout" size={20} color="#8B6F47" />
@@ -207,6 +209,15 @@ export const SettingContainer = () => {
         }}
         title="アカウントを削除しますか？"
         message={`このアクションは取り消すことができません。\nすべてのデータが削除されます。`}
+      />
+
+      <LogoutConfirmModal
+        visible={logoutVisible}
+        onClose={() => setLogoutVisible(false)}
+        onConfirm={async () => {
+          setLogoutVisible(false);
+          await handleLogout();
+        }}
       />
     </View>
   );
