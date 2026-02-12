@@ -1,30 +1,33 @@
 import { StatusBar } from "expo-status-bar";
-import { Dimensions, Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 import { getSelectedTree } from "@/application/selection/state/selectedTree";
 import { BackTitle } from "@/components/BackTitle";
 import { WoodenButton } from "@/components/Buttons/WoodenButton";
 import { Header } from "@/components/Header";
 import { styles } from "@/features/list/components/ListContainer/styles";
+import { useLeafPager } from "@/features/list/hooks/useLeafPager";
 import { useLoadLeaves } from "@/features/list/hooks/useLoadLeaves";
 import { useHeaderProfile } from "@/hooks/useHeaderProfile";
 import { useRouterNavigation } from "@/hooks/useRouter";
 
-const windowWidth = Dimensions.get("window").width;
-
-const chunk = <T,>(array: T[], size: number): T[][] => {
-  return array.reduce(
-    (acc, _, i) => (i % size ? acc : [...acc, array.slice(i, i + size)]),
-    [] as T[][],
-  );
-};
-
-const ListContainer = () => {
+export const ListContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
   const { goToLeafAddition, goToLeafDetail, goToProfile, goToSetting, goToTreeDetail } =
     useRouterNavigation();
   const { leaves } = useLoadLeaves();
   const selectedTree = getSelectedTree();
+  const {
+    pages,
+    currentPage,
+    totalPages,
+    selectedLeaf,
+    selectedLeafId,
+    pageWidth,
+    onMomentumScrollEnd,
+    onSelectLeaf,
+  } = useLeafPager(leaves);
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
@@ -37,7 +40,7 @@ const ListContainer = () => {
         onPressSetting={goToSetting}
       />
 
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <View style={styles.content}>
         <BackTitle title="戻る" style={styles.backTitle} onPress={() => goToTreeDetail(selectedTree?.id)} />
         <View style={styles.contentTop}>
           <View style={styles.nameplateWrapper}>
@@ -52,62 +55,64 @@ const ListContainer = () => {
             </ImageBackground>
           </View>
 
-          <View style={{ height: 420 }}>
+          <View style={styles.pagerArea}>
             <ScrollView
               horizontal
               pagingEnabled
               showsHorizontalScrollIndicator={false}
-              style={{ width: windowWidth }}
+              style={{ width: pageWidth }}
+              onMomentumScrollEnd={onMomentumScrollEnd}
             >
-              {chunk(leaves, 9).map((pageLeaves, pageIndex) => {
-                const filledPage = [...pageLeaves, ...Array(9 - pageLeaves.length).fill(null)];
-
-                return (
-                  <View key={pageIndex} style={[styles.leafGrid, { width: windowWidth }]}>
-                    {filledPage.map((leaf, index) => {
-                      if (!leaf) {
-                        return <View key={`placeholder-${index}`} style={styles.leafItem} />;
-                      }
-                      return (
-                        <TouchableOpacity
-                          key={leaf.id}
-                          activeOpacity={0.85}
-                          onPress={() => {
-                            goToLeafDetail(leaf.id);
-                          }}
-                          style={styles.leafItem}
-                        >
-                          <View style={styles.leafImageWrapper}>
-                            <Image
-                              source={require("@/../assets/leaf.png")}
-                              style={styles.leafImage}
-                              resizeMode="contain"
-                            />
-                            {leaf.imageUrl ? (
-                              <View style={styles.leafPhotoWrapper}>
-                                <Image source={{ uri: leaf.imageUrl }} style={styles.leafPhoto} />
-                              </View>
-                            ) : null}
-                          </View>
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-                );
-              })}
+              {pages.map((page) => (
+                <View key={page.key} style={[styles.leafGrid, { width: pageWidth }]}>
+                  {page.slots.map((slot) => {
+                    const leaf = slot.leaf;
+                    if (!leaf) {
+                      return <View key={slot.key} style={styles.leafItem} />;
+                    }
+                    const isSelected = leaf.id === selectedLeafId;
+                    return (
+                      <TouchableOpacity
+                        key={slot.key}
+                        activeOpacity={0.85}
+                        onPress={() => onSelectLeaf(leaf.id)}
+                        style={[styles.leafItem, isSelected && styles.leafItemSelected]}
+                      >
+                        <View style={styles.leafImageWrapper}>
+                          <Image
+                            source={require("@/../assets/leaf.png")}
+                            style={styles.leafImage}
+                            resizeMode="contain"
+                          />
+                          {leaf.imageUrl ? (
+                            <View style={styles.leafPhotoWrapper}>
+                              <Image source={{ uri: leaf.imageUrl }} style={styles.leafPhoto} />
+                            </View>
+                          ) : null}
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              ))}
             </ScrollView>
+          </View>
+          <Text style={styles.pagerText}>{`${currentPage + 1}/${totalPages}`}</Text>
+          <View style={styles.swipeHint}>
+            <MaterialIcons name="chevron-left" size={24} color="#B79066" />
+            <Text style={styles.swipeHintText}>横にスワイプ</Text>
+            <MaterialIcons name="chevron-right" size={24} color="#B79066" />
           </View>
         </View>
 
         <WoodenButton
-          title="葉の追加"
-          onPress={goToLeafAddition}
+          title={selectedLeafId ? "決定" : "葉の追加"}
+          onPress={
+            selectedLeaf ? () => goToLeafDetail(selectedLeaf.id) : goToLeafAddition
+          }
           style={styles.confirmButton}
         />
-      </ScrollView>
+      </View>
     </View>
   );
 };
-
-export { ListContainer };
-

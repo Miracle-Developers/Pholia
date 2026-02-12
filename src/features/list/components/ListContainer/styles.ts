@@ -48,7 +48,7 @@ export const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     paddingHorizontal: 20,
-    paddingVertical: 24,
+    paddingVertical: 18,
   },
   leafItem: {
     width: "30%",
@@ -89,6 +89,28 @@ export const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     resizeMode: "cover",
+  },
+  pagerArea: {
+    height: 380,
+  },
+  pagerText: {
+    marginTop: -4,
+    fontSize: 20,
+    color: "#7A4B2A",
+    textAlign: "center",
+    fontFamily: FONT_FAMILY.medium,
+  },
+  swipeHint: {
+    marginTop: -2,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+  },
+  swipeHintText: {
+    fontSize: 14,
+    color: "#B79066",
+    fontFamily: FONT_FAMILY.medium,
   },
   confirmButton: {
     marginTop: 24,
