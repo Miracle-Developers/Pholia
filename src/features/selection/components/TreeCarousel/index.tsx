@@ -28,6 +28,7 @@ export const TreeCarousel = ({ trees, currentIndex, onPrevious, onNext }: TreeCa
         disabled={!hasTrees}
       >
         <Image
+          key={`${tree?.id}-${tree?.leafCount}`}
           source={tree?.image ?? require("@/../assets/tree(sick).png")}
           style={styles.treeImage}
           resizeMode="contain"

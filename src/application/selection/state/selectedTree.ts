@@ -4,6 +4,7 @@ type SelectedTree = {
   id: number;
   name?: string;
   image?: ImageSourcePropType;
+  leafCount?: number;
 };
 
 let selectedTree: SelectedTree | null = null;

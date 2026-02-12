@@ -52,9 +52,7 @@ export const TreeDetailContainer = () => {
 
   const treeImageSource = treeDetail?.imageUrl
     ? { uri: treeDetail.imageUrl }
-    : selectedTree?.image
-      ? selectedTree.image
-      : getTreeImageSource(leaves?.length ?? 0);
+    : getTreeImageSource(leaves?.length ?? selectedTree?.leafCount ?? 0);
 
   const memberTags = (treeDetail?.members ?? [])
     .map((member) => {

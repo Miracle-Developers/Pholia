@@ -12,6 +12,7 @@ export type Tree = {
   name: string;
   image: ImageSourcePropType;
   nameplate?: ImageSourcePropType;
+  leafCount?: number;
 };
 
 export type ForestCarouselState = {

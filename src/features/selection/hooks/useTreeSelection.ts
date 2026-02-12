@@ -9,7 +9,7 @@ import type { Tree } from "@/features/selection/types";
 import { useRouterNavigation } from "@/hooks/useRouter";
 import { useToast } from "@/hooks/useToast";
 import { getTreeImageSource } from "@/utils/treeImage";
-import { useLocalSearchParams } from "expo-router";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
 
 export const useTreeSelection = () => {
   const { goToTreeDetail } = useRouterNavigation();
@@ -48,6 +48,7 @@ export const useTreeSelection = () => {
         image: tree.imageUrl
           ? { uri: tree.imageUrl }
           : getTreeImageSource(tree.leafCount ?? 0),
+        leafCount: tree.leafCount,
       }));
       setTrees(mapped);
     } catch (error) {
@@ -59,9 +60,11 @@ export const useTreeSelection = () => {
     }
   }, [params.forestId, showToast]);
 
-  useEffect(() => {
-    loadTrees();
-  }, [loadTrees]);
+  useFocusEffect(
+    useCallback(() => {
+      loadTrees();
+    }, [loadTrees])
+  );
 
   const { selectedTreeId, currentIndex, handleNext, handlePrevious } = useTreeCarousel(trees, 1);
 
@@ -99,7 +102,12 @@ export const useTreeSelection = () => {
         await fetchTreeDetail(selectedTreeId);
       }
       const selected = trees.find((tree) => tree.id === selectedTreeId);
-      setSelectedTree({ id: selectedTreeId, name: selected?.name, image: selected?.image });
+      setSelectedTree({
+        id: selectedTreeId,
+        name: selected?.name,
+        image: selected?.image,
+        leafCount: selected?.leafCount,
+      });
       goToTreeDetail(selectedTreeId);
     } catch {
       return;

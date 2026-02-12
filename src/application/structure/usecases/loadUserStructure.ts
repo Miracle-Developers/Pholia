@@ -59,7 +59,7 @@ const toTreeOption = (
   if (typeof id !== "number" || !name) return null;
   const label = resolvedForest ? `${resolvedForest} / ${name}` : name;
   const leaves = Array.isArray(item.leaves) ? item.leaves : [];
-  const leafCount = leaves.length;
+  const leafCount = typeof item.leaf_count === "number" ? item.leaf_count : leaves.length;
 
   return { id, name, label, forestId: resolvedForestId, imageUrl, leafCount };
 };
