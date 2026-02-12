@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   Image,
   ImageBackground,
@@ -42,8 +42,7 @@ export const LeafDetailContainer = () => {
   const [memo, setMemo] = useState("");
   const { name, userId, avatarSource } = useHeaderProfile();
   const params = useLocalSearchParams<{ leafId?: string }>();
-  const leafIds = useMemo(() => Array.from({ length: 9 }, (_, index) => index + 1), []);
-  const { leavesById } = useLoadLeaves(leafIds);
+  const { leaves } = useLoadLeaves();
   const { showToast } = useToast();
   const selectedLeafId =
     typeof params.leafId === "string" && params.leafId.trim() !== ""
@@ -51,7 +50,7 @@ export const LeafDetailContainer = () => {
       : null;
   const leafData =
     selectedLeafId && Number.isFinite(selectedLeafId)
-      ? Object.values(leavesById).find((leaf) => leaf.id === selectedLeafId)
+      ? leaves.find((leaf) => leaf.id === selectedLeafId)
       : null;
 
   const handleDelete = () => {

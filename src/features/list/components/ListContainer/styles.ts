@@ -44,10 +44,11 @@ export const styles = StyleSheet.create({
   },
   leafGrid: {
     width: "100%",
-    marginTop: 24,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
+    paddingHorizontal: 20,
+    paddingVertical: 24,
   },
   leafItem: {
     width: "30%",
@@ -78,6 +79,8 @@ export const styles = StyleSheet.create({
     position: "absolute",
     width: "62%",
     height: "62%",
+    top: "19%",
+    left: "19%",
     borderRadius: 12,
     overflow: "hidden",
     transform: [{ translateY: -2 }],

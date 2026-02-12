@@ -1,7 +1,7 @@
 import type { LeafData } from "@/application/leaves/types";
 import type { ApiLeafResponse } from "@/infrastructure/api";
-import { toRecord } from "@/utils/record";
 import { getApiBaseUrl } from "@/lib/apiBaseUrl";
+import { toRecord } from "@/utils/record";
 
 const FILE_BASE_URL = getApiBaseUrl();
 
@@ -33,9 +33,9 @@ export const formatLeaf = (apiLeaf: ApiLeafResponse): LeafData => {
       : typeof leafRecord.treeName === "string"
         ? leafRecord.treeName
         : (() => {
-            const tree = toRecord(leafRecord.tree);
-            return tree && typeof tree.name === "string" ? tree.name : undefined;
-          })();
+          const tree = toRecord(leafRecord.tree);
+          return tree && typeof tree.name === "string" ? tree.name : undefined;
+        })();
   const locationText =
     typeof leafRecord.location_text === "string"
       ? leafRecord.location_text

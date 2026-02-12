@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 import { getSelectedTree } from "@/application/selection/state/selectedTree";
 import { BackTitle } from "@/components/BackTitle";
@@ -9,15 +9,21 @@ import { styles } from "@/features/list/components/ListContainer/styles";
 import { useLoadLeaves } from "@/features/list/hooks/useLoadLeaves";
 import { useHeaderProfile } from "@/hooks/useHeaderProfile";
 import { useRouterNavigation } from "@/hooks/useRouter";
-import { leafItems } from "@/utils/leafItems";
 
-const leafIds = Array.from({ length: 9 }, (_, index) => index + 1);
+const windowWidth = Dimensions.get("window").width;
 
-export const ListContainer = () => {
+const chunk = <T,>(array: T[], size: number): T[][] => {
+  return array.reduce(
+    (acc, _, i) => (i % size ? acc : [...acc, array.slice(i, i + size)]),
+    [] as T[][],
+  );
+};
+
+const ListContainer = () => {
   const { name, userId, avatarSource } = useHeaderProfile();
   const { goToLeafAddition, goToLeafDetail, goToProfile, goToSetting, goToTreeDetail } =
     useRouterNavigation();
-  const { leavesById } = useLoadLeaves(leafIds);
+  const { leaves } = useLoadLeaves();
   const selectedTree = getSelectedTree();
   return (
     <View style={styles.container}>
@@ -46,36 +52,50 @@ export const ListContainer = () => {
             </ImageBackground>
           </View>
 
-          <View style={styles.leafGrid}>
-            {leafItems.map((leaf) => {
-              const leafData = leavesById[leaf.leafId];
+          <View style={{ height: 420 }}>
+            <ScrollView
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              style={{ width: windowWidth }}
+            >
+              {chunk(leaves, 9).map((pageLeaves, pageIndex) => {
+                const filledPage = [...pageLeaves, ...Array(9 - pageLeaves.length).fill(null)];
 
-              return (
-                <TouchableOpacity
-                  key={leaf.id}
-                  activeOpacity={0.85}
-                  onPress={() => {
-                    if (leafData) {
-                      goToLeafDetail(leafData.id);
-                    }
-                  }}
-                  style={styles.leafItem}
-                >
-                  <View style={styles.leafImageWrapper}>
-                    <Image
-                      source={require("@/../assets/leaf.png")}
-                      style={styles.leafImage}
-                      resizeMode="contain"
-                    />
-                    {leafData?.imageUrl ? (
-                      <View style={styles.leafPhotoWrapper}>
-                        <Image source={{ uri: leafData.imageUrl }} style={styles.leafPhoto} />
-                      </View>
-                    ) : null}
+                return (
+                  <View key={pageIndex} style={[styles.leafGrid, { width: windowWidth }]}>
+                    {filledPage.map((leaf, index) => {
+                      if (!leaf) {
+                        return <View key={`placeholder-${index}`} style={styles.leafItem} />;
+                      }
+                      return (
+                        <TouchableOpacity
+                          key={leaf.id}
+                          activeOpacity={0.85}
+                          onPress={() => {
+                            goToLeafDetail(leaf.id);
+                          }}
+                          style={styles.leafItem}
+                        >
+                          <View style={styles.leafImageWrapper}>
+                            <Image
+                              source={require("@/../assets/leaf.png")}
+                              style={styles.leafImage}
+                              resizeMode="contain"
+                            />
+                            {leaf.imageUrl ? (
+                              <View style={styles.leafPhotoWrapper}>
+                                <Image source={{ uri: leaf.imageUrl }} style={styles.leafPhoto} />
+                              </View>
+                            ) : null}
+                          </View>
+                        </TouchableOpacity>
+                      );
+                    })}
                   </View>
-                </TouchableOpacity>
-              );
-            })}
+                );
+              })}
+            </ScrollView>
           </View>
         </View>
 
@@ -88,3 +108,6 @@ export const ListContainer = () => {
     </View>
   );
 };
+
+export { ListContainer };
+
