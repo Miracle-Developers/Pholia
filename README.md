@@ -12,7 +12,7 @@
 
 |                                                                   |                                                                     |                                                                       |
 | ----------------------------------------------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| <img src="img/Pholia_トップ.jpg" alt="Flocka Home" width="200" /> | <img src="img/Pholia_木.jpg" alt="Flocka Collection" width="200" /> | <img src="img/Pholia_アルバム.jpg" alt="Flocka Detail" width="200" /> |
+| <img src="img/Pholia_トップ.jpg" alt="Pholia Home" width="200" /> | <img src="img/Pholia_木.jpg" alt="Pholia" width="200" /> | <img src="img/Pholia_アルバム.jpg" alt="Pholia" width="200" /> |
 
 ## 主要技術
 
